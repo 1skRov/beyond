@@ -3,9 +3,13 @@ import SideBar from "./components/MainComponents/SideBar.vue";
 import Theme from "@/pages/Profile/Theme.vue";
 import Chapter from "@/pages/Profile/Chapter.vue";
 import Contents from "@/pages/Profile/Contents.vue";
+import MainHeader from "@/components/MainComponents/MainHeader.vue";
 </script>
 
 <template>
+  <div class="mb-32 w-full">
+    <main-header/>
+  </div>
 <div class="w-full h-full flex items-center gap-5">
   <div class="side">
     <side-bar/>
