@@ -15,7 +15,7 @@
           <path opacity="0.5" d="M20.9129 5.88881C21.25 6.39325 21.25 7.09549 21.25 8.49995V21.2499H21.75C22.1642 21.2499 22.5 21.5857 22.5 21.9999C22.5 22.4142 22.1642 22.7499 21.75 22.7499H1.75C1.33579 22.7499 1 22.4142 1 21.9999C1 21.5857 1.33579 21.2499 1.75 21.2499H2.25V8.49995C2.25 7.09549 2.25 6.39325 2.58706 5.88881C2.73298 5.67043 2.92048 5.48293 3.13886 5.33701C3.58008 5.04219 5.67561 5.00524 6.75702 5.00061C6.75291 5.292 6.75294 5.59649 6.75298 5.91045L6.75299 5.99995V7.24995H4.25C3.83579 7.24995 3.5 7.58573 3.5 7.99995C3.5 8.41416 3.83579 8.74995 4.25 8.74995H6.75299V10.2499H4.25C3.83579 10.2499 3.5 10.5857 3.5 10.9999C3.5 11.4142 3.83579 11.7499 4.25 11.7499H6.75299V13.2499H4.25C3.83579 13.2499 3.5 13.5857 3.5 13.9999C3.5 14.4142 3.83579 14.7499 4.25 14.7499H6.75299V21.2499H16.7529V14.7499H19.25C19.6642 14.7499 20 14.4142 20 13.9999C20 13.5857 19.6642 13.2499 19.25 13.2499H16.7529V11.7499H19.25C19.6642 11.7499 20 11.4142 20 10.9999C20 10.5857 19.6642 10.2499 19.25 10.2499H16.7529V8.74995H19.25C19.6642 8.74995 20 8.41416 20 7.99995C20 7.58573 19.6642 7.24995 19.25 7.24995H16.7529V5.99995L16.7529 5.91046V5.91043C16.753 5.59648 16.753 5.292 16.7489 5.00061C17.8303 5.00524 19.9199 5.04219 20.3611 5.33701C20.5795 5.48293 20.767 5.67043 20.9129 5.88881Z"></path>
         </g>
       </svg>
-      <p>Beyond</p>
+      <p><router-link to="/">Beyond</router-link></p>
     </div>
   </div>
   <div class="central-menus option-bg">
@@ -30,9 +30,9 @@
           <path d="M14.5 21.25H9.5L4 21.25L2 21.25C1.58579 21.25 1.25 21.5858 1.25 22C1.25 22.4142 1.58579 22.75 2 22.75H22C22.4142 22.75 22.75 22.4142 22.75 22C22.75 21.5858 22.4142 21.25 22 21.25L20 21.25L14.5 21.25Z"></path>
         </g>
       </svg>
-      <p>Главная</p>
+      <p><router-link to="/">Главная</router-link></p>
     </div>
-    <div class="menu-option central-bg">
+    <div class="menu-option-c central-bg">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -45,9 +45,9 @@
         <path d="M17.481 17.8267C17.5684 17.8558 17.653 17.884 17.735 17.9113Z"></path>
         </g>
       </svg>
-      <p>Roadmap</p>
+      <p><router-link to="/">Roadmap</router-link></p>
     </div>
-    <div class="menu-option central-bg">
+    <div class="menu-option-c central-bg">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="-mb-0.5">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -58,9 +58,9 @@
           <path d="M12.5 15.7262C12.5025 15.7249 12.505 15.7236 12.5074 15.7223C13.1174 15.4009 14.1634 14.8896 15 14.6852C15.4375 14.5783 15.9839 14.5147 16.4901 14.477C17.3207 14.4151 18 13.7437 18 12.9108V7.45154C18 6.64543 17.3619 5.98216 16.5568 6.0217C15.9405 6.05197 15.2404 6.12099 14.7 6.27079C13.9685 6.47356 13.0752 6.95027 12.5219 7.27042C12.5147 7.27462 12.5073 7.27874 12.5 7.28277V15.7262Z"></path>
         </g>
       </svg>
-      <p>Тесты</p>
+      <p><router-link to="/">Тесты</router-link></p>
     </div>
-    <div class="menu-option central-bg">
+    <div class="menu-option-c central-bg">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -69,9 +69,9 @@
           <path opacity="0.5" d="M5 11.2581L9.78281 13.5003C11.2038 14.1665 12.7963 14.1665 14.2173 13.5003L19 11.2581V16.6252C19 17.6333 18.4965 18.577 17.6147 19.0654C16.1463 19.8786 13.796 20.9998 12 20.9998C10.204 20.9998 7.8537 19.8786 6.38533 19.0654C5.5035 18.577 5 17.6333 5 16.6252V11.2581Z"></path>
         </g>
       </svg>
-      <p>Университеты</p>
+
     </div>
-    <div class="menu-option central-bg">
+    <div class="menu-option-c central-bg">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -81,7 +81,7 @@
           <path fill-rule="evenodd" clip-rule="evenodd" d="M17.2955 12.5H6.49951C5.09505 12.5 4.39282 12.5 3.88837 12.8371C3.66999 12.983 3.48249 13.1705 3.33657 13.3889C2.99951 13.8933 2.99951 14.5955 2.99951 16C2.99951 17.4045 2.99951 18.1067 3.33657 18.6111C3.48249 18.8295 3.66999 19.017 3.88837 19.1629C4.39282 19.5 5.09505 19.5 6.49951 19.5H17.2955C17.9531 19.5 18.2819 19.5 18.5836 19.4018C18.7167 19.3585 18.8449 19.3013 18.966 19.2312C19.2407 19.0723 19.4604 18.8277 19.8997 18.3384C20.7504 17.3911 21.1757 16.9174 21.2781 16.3638C21.3226 16.1233 21.3226 15.8767 21.2781 15.6362C21.1757 15.0826 20.7504 14.6089 19.8997 13.6616C19.4604 13.1723 19.2407 12.9277 18.966 12.7688C18.8449 12.6987 18.7167 12.6415 18.5836 12.5982C18.2819 12.5 17.9531 12.5 17.2955 12.5ZM8.25 16C8.25 15.5858 8.58579 15.25 9 15.25H15C15.4142 15.25 15.75 15.5858 15.75 16C15.75 16.4142 15.4142 16.75 15 16.75H9C8.58579 16.75 8.25 16.4142 8.25 16Z"></path>
         </g>
       </svg>
-      <p>Образовательные программы</p>
+      <p><router-link to="/">Образовательные программы</router-link></p>
     </div>
   </div>
   <div class="personal-option option-bg">
@@ -94,7 +94,7 @@
           <path d="M17.1001 18.1219L20.7664 21.7882C21.0487 22.0705 21.5064 22.0705 21.7887 21.7882C22.071 21.5059 22.071 21.0482 21.7887 20.7659L18.1224 17.0996C17.809 17.4666 17.4671 17.8085 17.1001 18.1219Z"></path>
         </g>
       </svg>
-      <p class="m-0 ml-1.5 text-gray-400 text-xs">введите...</p>
+      <p class="m-0 ml-1.5 text-white text-xs">введите...</p>
     </div>
     <div class="flex items-center ">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -105,11 +105,11 @@
           <path d="M7.24316 18.5454C7.8941 20.5506 9.77767 22.0002 11.9998 22.0002C14.222 22.0002 16.1055 20.5506 16.7565 18.5454C13.611 19.1357 10.3886 19.1357 7.24316 18.5454Z"></path>
         </g>
       </svg>
-      <p class="m-0 ml-1 text-gray-400 font-medium" style="font-size: 10px;">12</p>
+      <p class="m-0 ml-1 text-white font-medium" style="font-size: 10px;">12</p>
     </div>
     <div class="rounded-full z-10">
       <div class="avatar">
-        <img src="@/assets/images/user1.webp" alt="">
+        <router-link to="/profile"><img src="@/assets/images/user1.webp" alt=""></router-link>
       </div>
     </div>
   </div>
@@ -125,36 +125,47 @@
   svg {
     width: 18px;
     height: 18px;
-    fill: #cecbcb;
+    fill: #ffffff;
   }
   p {
-    @apply m-0 text-gray-200;
+    @apply m-0 text-white;
+    letter-spacing: 1.25px;
+  }
+}
+.menu-option-c {
+  @apply rounded-full px-3.5 py-2 flex items-center gap-2 cursor-pointer;
+  svg {
+    width: 18px;
+    height: 18px;
+    fill:  #8aa1cc;
+  }
+  p {
+    @apply m-0;
+    color:  #8aa1cc;
     letter-spacing: 1.25px;
   }
 }
 .option-bg {
-  background: #063058;
+  background: #4278de;
 }
-.central-bg {
-  background: #063058;
-}
+
 .active-option {
-  background: #fed6bd;
+  background: #4278de;
 }
 
 .central-menus {
-  @apply flex gap-4 rounded-full px-1.5 py-1;
+  @apply flex gap-4 rounded-full px-1.5 py-1 bg-blue-50;
 }
 .active-option {
   @apply rounded-full px-3.5 py-2 flex items-center gap-2 cursor-pointer ;
   svg {
     width: 18px;
     height: 18px;
-    fill: #063058;
+    fill: #ffffff;
   }
   p {
     @apply m-0;
-    color: #063058;
+    color: #ffffff;
     letter-spacing: 1.25px;
   }
 }
@@ -169,7 +180,7 @@
   svg {
     width: 18px;
     height: 18px;
-    fill: #cecbcb;
+    fill: #ffffff;
   }
 }
 </style>
