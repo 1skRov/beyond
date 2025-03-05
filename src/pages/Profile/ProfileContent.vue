@@ -1,5 +1,6 @@
 <script setup>
 
+import ProfileInformation from "@/pages/Profile/ProfileInformation.vue";
 </script>
 
 <template>
@@ -9,8 +10,8 @@
   </div>
   <div class="navs">
     <div class="flex gap-4">
-      <button class="active">О себе</button>
-      <button>Цель</button>
+      <button class="active">Информация</button>
+      <button>Достижения</button>
       <button>Редактировать</button>
     </div>
     <div class="absolute" style="top : 17px; left: 198px"><p class="m-0 font-semibold" style="color: #8ba6c7; font-size: 20px;">@lizzie_olsen</p></div>
@@ -18,7 +19,9 @@
       <img src="@/assets/images/user1.webp" alt="" style="width: 100%; height: 100%; object-fit: cover">
     </div>
   </div>
-  <div class="content"></div>
+  <div class="content mt-10">
+    <profile-information></profile-information>
+  </div>
 </div>
 </template>
 
