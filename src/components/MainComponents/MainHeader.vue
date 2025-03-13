@@ -30,7 +30,7 @@
           <path d="M14.5 21.25H9.5L4 21.25L2 21.25C1.58579 21.25 1.25 21.5858 1.25 22C1.25 22.4142 1.58579 22.75 2 22.75H22C22.4142 22.75 22.75 22.4142 22.75 22C22.75 21.5858 22.4142 21.25 22 21.25L20 21.25L14.5 21.25Z"></path>
         </g>
       </svg>
-      <p><router-link to="/">Главная</router-link></p>
+      <p style="font-weight: 500;"><router-link to="/">Главная</router-link></p>
     </div>
     <div class="menu-option-c central-bg">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@
           <path opacity="0.5" d="M5 11.2581L9.78281 13.5003C11.2038 14.1665 12.7963 14.1665 14.2173 13.5003L19 11.2581V16.6252C19 17.6333 18.4965 18.577 17.6147 19.0654C16.1463 19.8786 13.796 20.9998 12 20.9998C10.204 20.9998 7.8537 19.8786 6.38533 19.0654C5.5035 18.577 5 17.6333 5 16.6252V11.2581Z"></path>
         </g>
       </svg>
-
+      <p><router-link to="/university">Университеты</router-link></p>
     </div>
     <div class="menu-option-c central-bg">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
