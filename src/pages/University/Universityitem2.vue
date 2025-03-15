@@ -144,7 +144,8 @@
       </div>
     </div>
     <div class="options">
-      <div class="options-1"><h1>Информация по опциям</h1></div>
+      <div class="options-1"><h1>Информация по опциям</h1>
+      <div class="rounded-lg p-3"></div></div>
       <div class="options-2"><h1>Фотогалерея</h1></div>
     </div>
   </div>
@@ -225,13 +226,17 @@ i {
 }
 
 .options {
-  @applt flex w-full gap-2.5 bg-red-100;
+  @apply flex w-full gap-2.5 py-4;
 
   h1 {
     @apply text-gray-600 font-medium;
   }
 
   .options-1 {
+    @apply w-1/2 bg-gray-50;
+  }
+  .options-2 {
+    @apply p-3 w-1/2;
   }
 }
 </style>
