@@ -1,5 +1,6 @@
 <script setup>
 import TopicItem from "@/pages/Test/TopicItem.vue";
+import {useRouter} from "vue-router";
 const topics = [
   {
     iconTheme: "fi fi-sr-function",
@@ -184,6 +185,10 @@ const multipleTopics = [
     testCount: "9"
   },
 ];
+const router = useRouter();
+const goToTestList = () => {
+  router.push("/test-list");
+};
 
 </script>
 
@@ -204,6 +209,7 @@ const multipleTopics = [
             :icon-color="topic.iconColor"
             :topic="topic.topic"
             :test-count="topic.testCount"
+            @click="goToTestList"
         />
       </div>
     </div>
