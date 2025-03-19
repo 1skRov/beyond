@@ -7,6 +7,19 @@ import App from './App.vue'
 import '@flaticon/flaticon-uicons/css/all/all.css';
 import { createPinia } from 'pinia';
 import router from '@/routes.js'
+import 'primeicons/primeicons.css'
+
+import SelectButton from 'primevue/selectbutton';
+import Select from 'primevue/select';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+import Toolbar from 'primevue/toolbar';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import FloatLabel from 'primevue/floatlabel';
+import Tag from 'primevue/tag';
+import Paginator from 'primevue/paginator';
+
 
 
 const app = createApp(App);
@@ -38,5 +51,15 @@ app.use(PrimeVue, {
         }
     }
 });
+app.component('Button', Button);
+app.component('InputText', InputText);
+app.component('SelectButton', SelectButton);
+app.component('Select', Select);
+app.component('IconField', IconField);
+app.component('InputIcon', InputIcon);
+app.component('Toolbar', Toolbar);
+app.component('FloatLabel', FloatLabel);
+app.component('Tag', Tag);
+app.component('Paginator', Paginator);
 app.use(router);
 app.mount('#app');
