@@ -1,12 +1,26 @@
 <script>
+import QuestionItem from "@/pages/Test/QuestionItem.vue";
+import questionsData from "@/db/question2.json";
+
 export default {
   name: "TestItem",
+  components: { QuestionItem },
   data() {
     return {
-      value: '0'
+      value: "0",
+      questions: [],
+      selectedAnswers: {}
     };
+  },
+  async mounted() {
+    this.questions = questionsData;
+  },
+  methods: {
+    updateAnswers(questionId, answers) {
+      this.selectedAnswers[questionId] = answers;
+    }
   }
-}
+};
 </script>
 
 <template>
@@ -18,87 +32,26 @@ export default {
     <div>
       <Tabs v-model:value="value">
         <TabList>
-          <Tab value="0" class="text-xs">Вопрос 1</Tab>
-          <Tab value="1" class="text-xs">Вопрос 2</Tab>
-          <Tab value="2" class="text-xs">Вопрос 3</Tab>
+          <Tab v-for="(question, index) in questions" :key="question.id" :value="index" class="text-xs">
+            Вопрос {{ index + 1 }}
+          </Tab>
         </TabList>
         <TabPanels>
-          <TabPanel value="0">
-            <p class="m-0" style="border-bottom: 1px solid #e7e3e3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <div class="flex flex-col gap-2 mt-4">
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel value="1">
-            <p class="m-0" style="border-bottom: 1px solid #e7e3e3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <div class="flex flex-col gap-2 mt-4">
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel value="2">
-            <p class="m-0" style="border-bottom: 1px solid #e7e3e3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <div class="flex flex-col gap-2 mt-4">
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <RadioButton name="pizza" value="Cheese"></RadioButton>
-                <label>Lorem ipsum.</label>
-              </div>
-            </div>
+          <TabPanel v-for="(question, index) in questions" :key="question.id" :value="index">
+            <QuestionItem :question="question" :selectedAnswers="selectedAnswers[question.id] || []"
+                          @update:answers="updateAnswers(question.id, $event)" />
           </TabPanel>
         </TabPanels>
       </Tabs>
     </div>
     <div class="flex mt-1.5 gap-2 justify-end">
-      <Button @click="value = '0'" rounded label="1" class="w-8 h-8 p-0" :outlined="value !== '0'" />
-      <Button @click="value = '1'" rounded label="2" class="w-8 h-8 p-0" :outlined="value !== '1'" />
-      <Button @click="value = '2'" rounded label="3" class="w-8 h-8 p-0" :outlined="value !== '2'" />
+      <Button v-for="(question, index) in questions" :key="question.id" @click="value = index.toString()" rounded :label="index + 1"
+              class="w-8 h-8 p-0" :outlined="value !== index.toString()" />
     </div>
   </div>
-  <div class="flex justify-between items-center mt-3">
+  <div class="flex justify-between items-center mt-5">
     <p class="text-xs text-gray-500">После истечения времени тест автоматически завершится даже если вы не успели отметить все вопросы</p>
     <p class="text-xs font-medium text-gray-700">оставшееся время <span class="text-sm font-bold">1час 20минут</span></p>
     <Button label="Завершить тест" severity="warn" variant="outlined" size="small"/>
   </div>
 </template>
-
-<style scoped>
-
-</style>

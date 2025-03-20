@@ -24,6 +24,10 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
+import Panel from 'primevue/panel';
+import RadioButton from 'primevue/radiobutton';
+import Checkbox from 'primevue/checkbox';
+
 
 const app = createApp(App);
 const MyPreset = definePreset(Aura, {
@@ -69,5 +73,8 @@ app.component('Tab', Tab);
 app.component('TabPanels', TabPanels);
 app.component('TabPanel', TabPanel);
 app.component('Paginator', Paginator);
+app.component('RadioButton', RadioButton);
+app.component('Panel', Panel);
+app.component('Checkbox', Checkbox);
 app.use(router);
 app.mount('#app');
