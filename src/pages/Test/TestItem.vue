@@ -7,20 +7,45 @@ export default {
   components: { QuestionItem },
   data() {
     return {
-      value: 0, // Изменено: используем число вместо строки
+      value: 0,
       questions: [],
-      selectedAnswers: {}
+      selectedAnswers: {},
+      timeLeft: 4800,
+      timer: null
     };
   },
   async mounted() {
     this.questions = questionsData;
     if (this.questions.length > 0) {
-      this.value = 0; // Убедимся, что первый вопрос активен
+      this.value = 0;
     }
+    this.startTimer();
+  },
+  beforeUnmount() {
+    clearInterval(this.timer);
   },
   methods: {
     updateAnswers(questionId, answers) {
       this.selectedAnswers[questionId] = answers;
+    },
+    startTimer() {
+      this.timer = setInterval(() => {
+        if (this.timeLeft > 0) {
+          this.timeLeft--;
+        } else {
+          clearInterval(this.timer);
+          this.finishTest();
+        }
+      }, 1000);
+    },
+    finishTest() {
+      alert("Время вышло! Тест завершен.");
+    },
+    formatTime(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
   }
 };
@@ -42,19 +67,22 @@ export default {
         <TabPanels>
           <TabPanel v-for="(question, index) in questions" :key="question.id" :value="index">
             <QuestionItem :question="question" :selectedAnswers="selectedAnswers[question.id] || []"
-                          @update:answers="updateAnswers(question.id, $event)" />
+                          @update:answers="updateAnswers(question.id, $event)"/>
           </TabPanel>
         </TabPanels>
       </Tabs>
     </div>
     <div class="flex mt-1.5 gap-2 justify-center">
-      <Button v-for="(question, index) in questions" :key="question.id" @click="value = index" rounded :label="index + 1"
-              class="w-8 h-8 p-0" :outlined="value !== index" />
+      <Button v-for="(question, index) in questions" :key="question.id" @click="value = index" rounded
+              :label="index + 1"
+              class="w-8 h-8 p-0" :outlined="value !== index"/>
     </div>
   </div>
   <div class="flex justify-between items-center mt-5">
-    <p class="text-xs text-gray-500">После истечения времени тест автоматически завершится даже если вы не успели отметить все вопросы</p>
-    <p class="text-xs font-medium text-gray-700">оставшееся время <span class="text-sm font-bold">1час 20минут</span></p>
-    <Button label="Завершить тест" severity="warn" variant="outlined" size="small"/>
+    <p class="text-xs text-gray-500">После истечения времени тест автоматически завершится даже если вы не успели
+      отметить все вопросы</p>
+    <p class="text-xs font-medium text-gray-700">оставшееся время <span
+        class="font-bold" style="letter-spacing: 1.5px; font-size: 15px;">{{ formatTime(timeLeft) }}</span></p>
+    <Button label="Завершить тест" severity="warn" variant="outlined" size="small" @click="finishTest"/>
   </div>
 </template>
