@@ -7,13 +7,16 @@ export default {
   components: { QuestionItem },
   data() {
     return {
-      value: "0",
+      value: 0, // Изменено: используем число вместо строки
       questions: [],
       selectedAnswers: {}
     };
   },
   async mounted() {
     this.questions = questionsData;
+    if (this.questions.length > 0) {
+      this.value = 0; // Убедимся, что первый вопрос активен
+    }
   },
   methods: {
     updateAnswers(questionId, answers) {
@@ -45,8 +48,8 @@ export default {
       </Tabs>
     </div>
     <div class="flex mt-1.5 gap-2 justify-end">
-      <Button v-for="(question, index) in questions" :key="question.id" @click="value = index.toString()" rounded :label="index + 1"
-              class="w-8 h-8 p-0" :outlined="value !== index.toString()" />
+      <Button v-for="(question, index) in questions" :key="question.id" @click="value = index" rounded :label="index + 1"
+              class="w-8 h-8 p-0" :outlined="value !== index" />
     </div>
   </div>
   <div class="flex justify-between items-center mt-5">
