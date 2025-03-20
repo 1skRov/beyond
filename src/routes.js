@@ -4,6 +4,7 @@ import Profile from "@/pages/Profile/Profile.vue";
 import University from "@/pages/University/UniversityItem2.vue";
 import TestMainPage from "@/pages/Test/Main.vue"
 import TestList from "@/pages/Test/TestList.vue"
+import TestItem from "@/pages/Test/TestItem.vue"
 import HomeView from "@/components/TestPage/TestPage.vue"
 import TestView from "@/components/TestPage/TestView.vue"
 import Result from "@/components/TestPage/Result.vue"
@@ -18,6 +19,7 @@ const routes = [
     { path: '/university', name: 'University', component: University },
     { path: '/tests', name: 'tests', component: TestMainPage },
     { path: '/test-list', name: 'testList', component: TestList },
+    { path: '/test-item', name: 'testItem', component: TestItem },
 
     // { path: '/tests', component: HomeView },
     // { path: '/quiz', component: TestView },

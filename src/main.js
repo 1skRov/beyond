@@ -19,8 +19,11 @@ import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Tag from 'primevue/tag';
 import Paginator from 'primevue/paginator';
-
-
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import Tab from 'primevue/tab';
+import TabPanels from 'primevue/tabpanels';
+import TabPanel from 'primevue/tabpanel';
 
 const app = createApp(App);
 const MyPreset = definePreset(Aura, {
@@ -60,6 +63,11 @@ app.component('InputIcon', InputIcon);
 app.component('Toolbar', Toolbar);
 app.component('FloatLabel', FloatLabel);
 app.component('Tag', Tag);
+app.component('Tabs', Tabs);
+app.component('TabList', TabList);
+app.component('Tab', Tab);
+app.component('TabPanels', TabPanels);
+app.component('TabPanel', TabPanel);
 app.component('Paginator', Paginator);
 app.use(router);
 app.mount('#app');
