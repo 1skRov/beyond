@@ -33,7 +33,7 @@ export default {
   </div>
   <div class="border flex flex-col justify-between p-2.5 rounded-lg" style="min-height: 87vh; height: 87vh">
     <div>
-      <Tabs v-model:value="value">
+      <Tabs v-model:value="value" scrollable>
         <TabList>
           <Tab v-for="(question, index) in questions" :key="question.id" :value="index" class="text-xs">
             Вопрос {{ index + 1 }}
@@ -47,7 +47,7 @@ export default {
         </TabPanels>
       </Tabs>
     </div>
-    <div class="flex mt-1.5 gap-2 justify-end">
+    <div class="flex mt-1.5 gap-2 justify-center">
       <Button v-for="(question, index) in questions" :key="question.id" @click="value = index" rounded :label="index + 1"
               class="w-8 h-8 p-0" :outlined="value !== index" />
     </div>
