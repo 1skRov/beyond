@@ -39,7 +39,7 @@ export default {
       }, 1000);
     },
     finishTest() {
-      alert("Время вышло! Тест завершен.");
+      this.$router.push({ name: 'Result' });
     },
     formatTime(seconds) {
       const h = Math.floor(seconds / 3600);

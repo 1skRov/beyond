@@ -12,6 +12,7 @@
     "@flaticon/flaticon-uicons": "^3.3.1",
     "@primeuix/themes": "^1.0.0",
     "axios": "^1.8.3",
+    "chart.js": "^4.4.8",
     "pinia": "^3.0.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.2",

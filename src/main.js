@@ -27,6 +27,9 @@ import TabPanel from 'primevue/tabpanel';
 import Panel from 'primevue/panel';
 import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
+import Chart from 'primevue/chart';
+
+import ConfirmDialog from 'primevue/confirmdialog';
 
 
 const app = createApp(App);
@@ -76,5 +79,8 @@ app.component('Paginator', Paginator);
 app.component('RadioButton', RadioButton);
 app.component('Panel', Panel);
 app.component('Checkbox', Checkbox);
+app.component('Chart', Chart);
+app.component('ConfirmDialog', ConfirmDialog);
+
 app.use(router);
 app.mount('#app');
