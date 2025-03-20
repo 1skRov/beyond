@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "text": "Что такое синус?",
+    "answers": [
+      { "text": "Функция в тригонометрии", "correct": true },
+      { "text": "Тип уравнения", "correct": false },
+      { "text": "Часть круга", "correct": false }
+    ],
+    "type": "single"
+  },
+  {
+    "id": 2,
+    "text": "Выберите правильные тождества",
+    "answers": [
+      { "text": "sin²x + cos²x = 1", "correct": true },
+      { "text": "tgx = sinx / cosx", "correct": true },
+      { "text": "sinx * cosx = 1", "correct": false }
+    ],
+    "type": "multiple"
+  }
+]
