@@ -9,7 +9,7 @@
   font-family: "Montserrat", sans-serif;
 }
 
-@font-face {
+/*@font-face {
   font-family: 'BlackMango';
   src: url('@/assets/fonts/black-mango-bold.ttf') format('ttf');
   font-weight: bold;
@@ -19,7 +19,7 @@
 
 .BlackMango {
   font-family: 'BlackMango', sans-serif;
-}
+}*/
 
 body {
   margin: 0;
@@ -28,6 +28,8 @@ body {
     line-height: 0;
     font-size: 18px;
   }
+
+  font-size: 14px;
 }
 
 #app {
@@ -38,11 +40,12 @@ body {
 /* main side-bar */
 .sidebar-item {
   @apply rounded-lg w-full p-1.5 transition-colors duration-100 ease-in-out;
-  @apply flex justify-between items-center;
+  @apply flex justify-between items-center border border-transparent;
   &:hover {
     @apply bg-sky-50 border border-sky-100;
   }
 }
+
 .sidebar-item .user-settings {
   &:hover {
     @apply bg-sky-100;

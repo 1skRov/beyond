@@ -31,6 +31,7 @@ import Chart from 'primevue/chart';
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
 import ConfirmDialog from 'primevue/confirmdialog';
+import Popover from 'primevue/popover';
 
 
 const app = createApp(App);
@@ -84,6 +85,7 @@ app.component('Chart', Chart);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
+app.component('Popover', Popover);
 
 app.use(router);
 app.mount('#app');
