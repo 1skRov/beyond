@@ -1,6 +1,8 @@
 <script setup>
 import TopicItem from "@/pages/Test/TopicItem.vue";
+import SideBar from "@/components/MainComponents/SideBar.vue";
 import {useRouter} from "vue-router";
+
 const topics = [
   {
     iconTheme: "fi fi-sr-function",
@@ -193,50 +195,62 @@ const goToTestList = () => {
 </script>
 
 <template>
-  <div class="test-page">
-    <div class="single-test">
-      <p>Тесты по предметам</p>
-      <div class="flex gap-5 flex-wrap">
-        <TopicItem
-            :isMultiple="false"
-            v-for="(topic, index) in topics"
-            :key="index"
-            :icon-theme="topic.iconTheme"
-            :icon-name="topic.iconName"
-            :shadow-color="topic.shadowColor"
-            :bg="topic.bg"
-            :border="topic.border"
-            :icon-color="topic.iconColor"
-            :topic="topic.topic"
-            :test-count="topic.testCount"
-            @click="goToTestList"
-        />
-      </div>
+  <div class="flex gap-2 w-full h-full">
+    <div class="sidebar-box">
+      <SideBar></SideBar>
     </div>
-    <div class="multiple-test">
-      <p>Комплексные тесты / тесты по нескольким предметам / ЕНТ</p>
-      <div class="flex gap-5 flex-wrap">
-        <TopicItem
-            :isMultiple="true"
-            v-for="(topic, index) in multipleTopics"
-            :key="index"
-            :icon-theme="topic.iconTheme"
-            :icon-name="topic.iconName"
-            :shadow-color="topic.shadowColor"
-            :bg="topic.bg"
-            :border="topic.border"
-            :icon-color="topic.iconColor"
-            :topic="topic.topic"
-            :test-count="topic.testCount"
-        />
+    <div class="test-page border">
+      <div class="single-test">
+        <p>Тесты по предметам</p>
+        <div class="flex gap-5 flex-wrap">
+          <TopicItem
+              :isMultiple="false"
+              v-for="(topic, index) in topics"
+              :key="index"
+              :icon-theme="topic.iconTheme"
+              :icon-name="topic.iconName"
+              :shadow-color="topic.shadowColor"
+              :bg="topic.bg"
+              :border="topic.border"
+              :icon-color="topic.iconColor"
+              :topic="topic.topic"
+              :test-count="topic.testCount"
+              @click="goToTestList"
+          />
+        </div>
+      </div>
+      <div class="multiple-test">
+        <p>Комплексные тесты / тесты по нескольким предметам / ЕНТ</p>
+        <div class="flex gap-5 flex-wrap">
+          <TopicItem
+              :isMultiple="true"
+              v-for="(topic, index) in multipleTopics"
+              :key="index"
+              :icon-theme="topic.iconTheme"
+              :icon-name="topic.iconName"
+              :shadow-color="topic.shadowColor"
+              :bg="topic.bg"
+              :border="topic.border"
+              :icon-color="topic.iconColor"
+              :topic="topic.topic"
+              :test-count="topic.testCount"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.sidebar-box {
+  width: 450px;
+  min-width: 450px;
+  height: 100%;
+  @apply p-1.5;
+}
+
 .test-page {
-  @apply flex flex-col gap-10 w-full;
+  @apply flex flex-col gap-10 w-full p-1.5;
 
   p {
     line-height: 30px;

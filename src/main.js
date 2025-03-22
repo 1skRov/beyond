@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import PrimeVue from 'primevue/config';
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
-import './style.css'
+import './style.scss'
 import App from './App.vue'
 import '@flaticon/flaticon-uicons/css/all/all.css';
 import { createPinia } from 'pinia';
@@ -28,7 +28,8 @@ import Panel from 'primevue/panel';
 import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
 import Chart from 'primevue/chart';
-
+import Avatar from 'primevue/avatar';
+import AvatarGroup from 'primevue/avatargroup';
 import ConfirmDialog from 'primevue/confirmdialog';
 
 
@@ -81,6 +82,8 @@ app.component('Panel', Panel);
 app.component('Checkbox', Checkbox);
 app.component('Chart', Chart);
 app.component('ConfirmDialog', ConfirmDialog);
+app.component('Avatar', Avatar);
+app.component('AvatarGroup', AvatarGroup);
 
 app.use(router);
 app.mount('#app');
