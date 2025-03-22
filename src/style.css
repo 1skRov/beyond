@@ -7,6 +7,16 @@
 .montserrat-base {
     font-family: "Montserrat", sans-serif;
 }
+@font-face {
+    font-family: 'BlackMango';
+    src: url('@/assets/fonts/black-mango-bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+.BlackMango {
+    font-family: 'BlackMango', sans-serif;
+}
 
 body {
     margin: 0;

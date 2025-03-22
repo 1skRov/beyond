@@ -1,4 +1,5 @@
 <script setup>
+import MainHeader from "@/components/MainComponents/MainHeader.vue"
 </script>
 
 <template>
@@ -27,8 +28,8 @@
     <main>
       <section>
         <div>
-          <h1>Beyond</h1>
-          <p>За пределами заучивания — к настоящему пониманию</p>
+          <h1 class="BlackMango text-sky-900 font-semibold" style="font-size: 60px;">Beyond</h1>
+          <p class="text-blue-700 font-medium">За пределами заучивания — к настоящему пониманию</p>
         </div>
         <div class="arrows">
           <div></div>
@@ -38,6 +39,7 @@
       </section>
     </main>
   </div>
+  <main-header/>
 </template>
 
 <style scoped>
@@ -46,7 +48,7 @@
 .sky-container {
   position: relative;
   width: 100vw;
-  height: 85vh;
+  height: 90vh;
   overflow: hidden;
   font-family: "Asap", sans-serif;
   color: black;
