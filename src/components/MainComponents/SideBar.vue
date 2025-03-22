@@ -43,8 +43,16 @@ export default {
       </div>
       <div class="sidebar-menu">
         <div class="" v-for="m in menu" :key="m.id">
-          <router-link :to="m.link">
-            <div class="menu-item">
+          <router-link
+              :to="m.link"
+              class="block"
+              active-class="router-link-active"
+              exact-active-class="router-link-exact-active"
+          >
+            <div
+                class="menu-item"
+                :class="{ 'active-item': $route.path === m.link }"
+            >
               <i :class="m.icon"></i>
               <p>{{ m.title }}</p>
             </div>
@@ -146,5 +154,8 @@ export default {
 
 .sidebar-menu {
   @apply flex flex-col w-full gap-1;
+}
+.active-item {
+  @apply font-medium text-sky-600 border-r-8 border-r-sky-500 border-sky-200 bg-sky-100;
 }
 </style>
