@@ -32,6 +32,7 @@ import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Popover from 'primevue/popover';
+import Tooltip from 'primevue/tooltip';
 
 
 const app = createApp(App);
@@ -86,6 +87,7 @@ app.component('ConfirmDialog', ConfirmDialog);
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
 app.component('Popover', Popover);
+app.directive('tooltip', Tooltip);
 
 app.use(router);
 app.mount('#app');

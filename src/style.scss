@@ -39,16 +39,29 @@ body {
 
 /* main side-bar */
 .sidebar-item {
-  @apply rounded-lg w-full p-1.5 transition-colors duration-100 ease-in-out;
+  @apply rounded-lg w-full p-1.5;
   @apply flex justify-between items-center border border-transparent;
-  &:hover {
-    @apply bg-sky-50 border border-sky-100;
-  }
 }
 
 .sidebar-item .user-settings {
+  @apply transition-colors duration-100 ease-in-out;
   &:hover {
     @apply bg-sky-100;
+  }
+}
+.menu-item {
+  @apply rounded-lg w-full p-2 cursor-pointer text-gray-600;
+  @apply flex gap-2.5 items-center border border-transparent;
+  @apply transition-colors duration-100 ease-in-out;
+  p {
+    @apply m-0;
+    font-size: 16px;
+  }
+  i {
+    @apply block;
+  }
+  &:hover {
+    @apply bg-sky-50 border border-sky-100 text-sky-600;
   }
 }
 
