@@ -195,10 +195,10 @@ const goToTestList = () => {
 </script>
 
 <template>
-  <div class="flex gap-2 w-full h-full">
-    <div class="sidebar-box">
-      <SideBar></SideBar>
-    </div>
+  <div class="">
+<!--    <div class="sidebar-box">-->
+<!--      <SideBar></SideBar>-->
+<!--    </div>-->
     <div class="test-page border">
       <div class="single-test">
         <p>Тесты по предметам</p>
@@ -243,10 +243,7 @@ const goToTestList = () => {
 
 <style scoped>
 .sidebar-box {
-  width: 450px;
-  min-width: 450px;
-  height: 100%;
-  @apply p-1.5;
+
 }
 
 .test-page {
