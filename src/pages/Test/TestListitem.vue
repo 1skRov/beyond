@@ -27,7 +27,7 @@ export default {
   @apply p-3 flex gap-3 bg-blue-50 w-full rounded;
 
   .icon {
-    @apply w-10 h-10 bg-indigo-200 flex items-center justify-center rounded-md;
+    @apply  rounded-md;
 
     i {
       font-size: 20px;

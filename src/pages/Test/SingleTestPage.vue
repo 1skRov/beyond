@@ -179,12 +179,21 @@ export default {
           countUser: "540",
           rating: "4.7"
         }
-      ]
+      ],
+      value: 'С временем',
+      selectedCity: "null",
+      cities: [
+        {name: 'Сложный', code: 'NY'},
+        {name: 'Простой', code: 'RM'},
+        {name: 'Средний', code: 'LDN'},
+      ],
+      options: ['С временем', 'Без времени']
     }
   },
   methods: {
-    openTest() {
-      console.log("test");
+    startTest(){
+      const routeData = this.$router.resolve({ name: 'testItem' });
+      window.open(routeData.href, '_blank');
     }
   }
 }
@@ -208,11 +217,32 @@ export default {
           @click="openTest"
       />
     </div>
+    <div class="filters-test-page py-2.5">
+      <Toolbar>
+        <template #start>
+          <span class="font-medium text-gray-600" style="font-size: 16px;">Математика</span>
+        </template>
+        <template #center>
+          <div class="flex gap-2.5 items-center">
+            <FloatLabel class="w-full md:w-56" variant="on">
+              <Select v-model="selectedCity" inputId="on_label" :options="cities" optionLabel="name" class="w-full text-sm" size="small" />
+              <label for="on_label" class="text-sm">Выберите сложность</label>
+            </FloatLabel>
+            <SelectButton v-model="value" :options="options" size="small" class="text-sm"/>
+          </div>
+        </template>
+        <template #end>
+          <IconField>
+            <InputIcon>
+              <i class="pi pi-search"/>
+            </InputIcon>
+            <InputText placeholder="Найти" size="small" class="text-sm"/>
+          </IconField>
+        </template>
+      </Toolbar>
+    </div>
     <div>
       <DataTable :value="testItems" tableStyle="min-width: 50rem" showGridlines class="cursor-pointer">
-        <template #header>
-          <span class="font-bold">Математика</span>
-        </template>
         <Column header="Изображение">
           <template #body="slotProps">
             <div class="flex items-center justify-center">
@@ -240,6 +270,7 @@ export default {
         </template>
       </DataTable>
     </div>
+    <button @click="startTest">start</button>
   </div>
 </template>
 
