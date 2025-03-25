@@ -46,22 +46,22 @@ body {
 .sidebar-item .user-settings {
   @apply transition-colors duration-100 ease-in-out;
   &:hover {
-    @apply bg-sky-100;
+    @apply bg-sky-400;
   }
 }
 .menu-item {
-  @apply rounded-lg w-full p-2 cursor-pointer text-gray-600;
-  @apply flex gap-2.5 items-center border border-transparent;
+  @apply rounded-lg w-full p-2 cursor-pointer text-white;
+  @apply flex gap-2.5 items-center;
   @apply transition-colors duration-100 ease-in-out;
   p {
     @apply m-0;
-    font-size: 16px;
+    font-size: 15px;
   }
   i {
     @apply block;
   }
   &:hover {
-    @apply bg-sky-50 border border-sky-100 text-sky-600;
+    @apply bg-sky-400 text-white;
   }
 }
 

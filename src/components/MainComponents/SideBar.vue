@@ -67,8 +67,8 @@ export default {
             <img src="@/assets/images/user1.webp" alt="" class="w-full h-full object-cover">
           </div>
           <div class="user-name">
-            <p class="text-gray-600 m-0 text-medium">Elizabeth olsen</p>
-            <p class="m-0 text-gray-500 text-xs">@lizzie_olsen</p>
+            <p class="text-white m-0 font-medium">Elizabeth olsen</p>
+            <p class="m-0 text-white text-xs">@lizzie_olsen</p>
           </div>
         </div>
         <div class="user-settings" @click="toggle">
@@ -99,7 +99,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply border border-blue-100 flex flex-col justify-between h-full p-2 rounded bg-white;
+  @apply flex flex-col justify-between h-full p-2 rounded bg-sky-500;
 }
 
 .settings {
@@ -119,11 +119,11 @@ export default {
 }
 
 .user-settings i {
-  @apply text-sky-600;
+  @apply text-white;
 }
 
 .popover-setting {
-  @apply flex gap-2.5 p-2 items-center cursor-pointer hover:bg-sky-50 border border-transparent rounded-lg hover:border-sky-100;
+  @apply flex gap-2.5 p-2 items-center cursor-pointer hover:bg-sky-100 rounded-lg;
 }
 
 .popover-setting i {
@@ -139,23 +139,23 @@ export default {
 }
 
 .logout {
-  @apply w-8 h-8 text-sky-600 flex items-center justify-center rounded-lg cursor-pointer;
+  @apply w-8 h-8 text-white flex items-center justify-center rounded-lg cursor-pointer;
 }
 
 .logout:hover {
-  @apply bg-sky-100;
+  @apply bg-sky-400;
 }
 
 .head-title {
   font-size: 25px;
   letter-spacing: 1.5px;
-  @apply font-medium text-gray-700;
+  @apply font-bold text-white;
 }
 
 .sidebar-menu {
   @apply flex flex-col w-full gap-1;
 }
 .active-item {
-  @apply font-medium text-sky-600 border-r-8 border-r-sky-500 border-sky-200 bg-sky-100;
+  @apply font-medium text-white border-r-8 border-r-sky-200 border-sky-400 bg-sky-400;
 }
 </style>
