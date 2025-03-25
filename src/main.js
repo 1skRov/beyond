@@ -34,6 +34,11 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import Popover from 'primevue/popover';
 import Tooltip from 'primevue/tooltip';
 
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';                   // optional
+
 
 const app = createApp(App);
 const MyPreset = definePreset(Aura, {
@@ -88,6 +93,10 @@ app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
 app.component('Popover', Popover);
 app.directive('tooltip', Tooltip);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
 
 app.use(router);
 app.mount('#app');
