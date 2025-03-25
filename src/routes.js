@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import MainPage from '@/pages/MainPage/MainPage.vue';
 import Profile from "@/pages/Profile/Profile.vue";
 import University from "@/pages/University/UniversityItem2.vue";
@@ -19,28 +19,31 @@ const routes = [
         path: '/',
         component: EmptyLayout,
         children: [
-            { path: '', name: 'Home', component: MainPage },
+            {path: '', name: 'Home', component: MainPage},
         ]
     },
     {
         path: '/test-item',
         component: EmptyLayout,
         children: [
-            { path: '', name: 'testItem', component: TestItem }
+            {path: '', name: 'testItem', component: TestItem}
         ]
     },
     {
         path: '/',
         component: DefaultLayout,
         children: [
-            { path: 'profile', name: 'Profile', component: Profile },
-            { path: 'university', name: 'University', component: University },
-            { path: 'tests', name: 'tests', component: TestMainPage, children: [
+            {path: 'profile', name: 'Profile', component: Profile},
+            {path: 'university', name: 'University', component: University},
+            {
+                path: 'tests', name: 'tests', component: TestMainPage, children: [
+                    {path: '', redirect: {name: 'single-tests'}},
                     {path: 'single-test', name: 'single-tests', component: SingleTestPage},
                     {path: 'multiple-test', name: 'multiple-tests', component: MultipleTestPage},
-                ] },
-            { path: 'test-list', name: 'testList', component: TestList },
-            { path: 'result', name: 'Result', component: Result }
+                ]
+            },
+            {path: 'test-list', name: 'testList', component: TestList},
+            {path: 'result', name: 'Result', component: Result}
         ]
     }
 ];

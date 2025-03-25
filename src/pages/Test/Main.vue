@@ -1,35 +1,47 @@
 <script>
 import TopicItem from "@/pages/Test/TopicItem.vue";
-import SingleTestPage from "@/pages/Test/SingleTestPage.vue";
-import MultipleTestPage from "@/pages/Test/MultipleTestPage.vue";
-// import {useRouter} from "vue-router";
 export default {
   name: "MainTestPage",
-  components: {MultipleTestPage, SingleTestPage, TopicItem},
+  components: { TopicItem },
   data() {
     return {
-      valuePicker: "Тесты по предметам",
       optionsPicker: ["Тесты по предметам", "Комплексные тесты"],
+      valueToRouteMap: {
+        "Тесты по предметам": "single-tests",
+        "Комплексные тесты": "multiple-tests"
+      }
+    };
+  },
+  watch: {
+    valuePicker(newValue) {
+      const routeName = this.valueToRouteMap[newValue];
+      if (routeName) {
+        this.$router.push({ name: routeName });
+      }
     }
   },
-}
-
+  computed: {
+    valuePicker: {
+      get() {
+        const currentRoute = this.$route.name;
+        if (currentRoute === 'single-tests') return "Тесты по предметам";
+        if (currentRoute === 'multiple-tests') return "Комплексные тесты";
+        return "Тесты по предметам";
+      },
+      set(value) {
+        const routeName = this.valueToRouteMap[value];
+        if (routeName) {
+          this.$router.push({ name: routeName });
+        }
+      }
+    }
+  }
+};
 </script>
 
 <template>
   <div class="test-page">
     <SelectButton v-model="valuePicker" :options="optionsPicker"/>
-    <div v-if="valuePicker === 'Тесты по предметам'">
-      <single-test-page></single-test-page>
-    </div>
-    <div v-else>
-      <multiple-test-page></multiple-test-page>
-    </div>
+    <router-view />
   </div>
 </template>
-
-<style scoped>
-.test-page {
-
-}
-</style>
