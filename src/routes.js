@@ -4,11 +4,12 @@ import Profile from "@/pages/Profile/Profile.vue";
 import University from "@/pages/University/UniversityItem2.vue";
 // test
 import TestMainPage from "@/pages/Test/Main.vue"
-import TestList from "@/pages/Test/TestList.vue"
 import SingleTestPage from "@/pages/Test/SingleTestPage.vue";
 import MultipleTestPage from "@/pages/Test/MultipleTestPage.vue";
 import TestItem from "@/pages/Test/TestItem.vue"
 import Result from "@/pages/Test/TestResult.vue"
+// roadmap
+import MainRoadMapPage from "@/pages/Roadmap/MainRoadMapPage.vue";
 // layouts
 import DefaultLayout from '@/pages/DefaultLayout.vue';
 import EmptyLayout from '@/pages/EmptyLayout.vue';
@@ -42,8 +43,8 @@ const routes = [
                     {path: 'multiple-test', name: 'multiple-tests', component: MultipleTestPage},
                 ]
             },
-            {path: 'test-list', name: 'testList', component: TestList},
-            {path: 'result', name: 'Result', component: Result}
+            {path: 'result', name: 'Result', component: Result},
+            {path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage},
         ]
     }
 ];

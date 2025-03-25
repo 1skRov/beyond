@@ -8,7 +8,7 @@ export default {
         {title: "Тестирование", icon: "fi fi-rr-apps", link:"/tests"},
         {title: "Материалы", icon: "fi fi-rr-apps", link:"/"},
         {title: "Университеты", icon: "fi fi-rr-apps", link:"/university"},
-        {title: "Образовательные маршруты", icon: "fi fi-rr-apps", link:"/"},
+        {title: "Образовательные маршруты", icon: "fi fi-rr-apps", link:"/roadmap"},
         {title: "Образовательные программы", icon: "fi fi-rr-apps", link:"/"},
       ]
     }

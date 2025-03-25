@@ -8,6 +8,8 @@ import '@flaticon/flaticon-uicons/css/all/all.css';
 import { createPinia } from 'pinia';
 import router from '@/routes.js'
 import 'primeicons/primeicons.css'
+import '@vue-flow/core/dist/style.css'
+import '@vue-flow/core/dist/theme-default.css'
 
 import SelectButton from 'primevue/selectbutton';
 import Select from 'primevue/select';
