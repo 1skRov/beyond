@@ -35,7 +35,8 @@ import AvatarGroup from 'primevue/avatargroup';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Popover from 'primevue/popover';
 import Tooltip from 'primevue/tooltip';
-
+import Drawer from 'primevue/drawer';
+import AutoComplete from 'primevue/autocomplete';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
@@ -99,6 +100,8 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
+app.component('Drawer', Drawer);
+app.component('AutoComplete', AutoComplete);
 
 app.use(router);
 app.mount('#app');
