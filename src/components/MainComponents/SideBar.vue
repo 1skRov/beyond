@@ -4,12 +4,12 @@ export default {
   data() {
     return {
       menu: [
-        {title: "Главная", icon: "fi fi-rr-apps", link:"/"},
-        {title: "Тестирование", icon: "fi fi-rr-apps", link:"/tests"},
-        {title: "Материалы", icon: "fi fi-rr-apps", link:"/"},
-        {title: "Университеты", icon: "fi fi-rr-apps", link:"/university"},
-        {title: "Образовательные маршруты", icon: "fi fi-rr-apps", link:"/roadmap"},
-        {title: "Образовательные программы", icon: "fi fi-rr-apps", link:"/"},
+        {title: "Главная", icon: "fi fi-rr-apps", link: "/"},
+        {title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests"},
+        {title: "Материалы", icon: "fi fi-rr-folder", link: "/"},
+        {title: "Roadmap", icon: "fi fi-tr-deep-learning", link: "/roadmap"},
+        {title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university"},
+        {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
       ]
     }
   },
@@ -27,8 +27,8 @@ export default {
     <div class="sidebar-content">
       <div class="sidebar-header mb-3">
         <p class="head-title">Beyond</p>
-        <div class="logout" v-tooltip.right="{
-          value: 'Выйти',
+        <div class="hidden" v-tooltip.right="{
+          value: 'Свернуть',
             pt: {
                 arrow: {
                     style: {
@@ -38,7 +38,7 @@ export default {
                 text: '!bg-primary !text-primary-contrast !font-medium'
             }
           }">
-          <i class="fi fi-ss-arrow-left-from-arc"></i>
+          <i class="fi fi-rr-angle-double-small-left"></i>
         </div>
       </div>
       <div class="sidebar-menu">
@@ -91,6 +91,12 @@ export default {
               <p>Уведомления</p>
             </div>
           </router-link>
+          <div class="popover-setting">
+            <div class="text-sky-600">
+              <i class="fi fi-ss-arrow-left-from-arc"></i>
+            </div>
+            <p>Выйти</p>
+          </div>
         </Popover>
       </div>
     </div>
@@ -138,11 +144,11 @@ export default {
   @apply flex justify-between items-center w-full p-1.5 border-0 border-b border-gray-200;
 }
 
-.logout {
+.hidden {
   @apply w-8 h-8 text-white flex items-center justify-center rounded-lg cursor-pointer;
 }
 
-.logout:hover {
+.hidden:hover {
   @apply bg-sky-400;
 }
 
@@ -155,6 +161,7 @@ export default {
 .sidebar-menu {
   @apply flex flex-col w-full gap-1;
 }
+
 .active-item {
   @apply font-medium text-white border-r-8 border-r-sky-200 border-sky-400 bg-sky-400;
 }
