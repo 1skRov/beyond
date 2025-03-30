@@ -6,7 +6,7 @@ export default {
       menu: [
         {title: "Главная", icon: "fi fi-rr-apps", link: "/"},
         {title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests"},
-        {title: "Материалы", icon: "fi fi-rr-folder", link: "/"},
+        {title: "Материалы", icon: "fi fi-rr-folder", link: "/courses"},
         {title: "Roadmap", icon: "fi fi-tr-deep-learning", link: "/roadmap"},
         {title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university"},
         {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
