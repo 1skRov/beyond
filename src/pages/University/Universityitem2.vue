@@ -1,4 +1,34 @@
-<script setup>
+<script>
+import OptionsInformation from "@/pages/University/OptionsInformation.vue";
+
+export default {
+  name: "UniversityPage",
+  components: {OptionsInformation},
+  data(){
+    return {
+      images: [],
+      activeIndex: 0,
+      displayCustom: false,
+      responsiveOptions: [
+        { breakpoint: '1024px', numVisible: 5 },
+        { breakpoint: '768px', numVisible: 3 },
+        { breakpoint: '560px', numVisible: 1 }
+      ]
+    }
+  },
+  mounted() {
+    this.images = Array.from({ length: 6 }, (_, i) => ({
+      src: new URL(`@/assets/images/photo${i + 1}.jpg`, import.meta.url).href,
+      alt: `Photo ${i + 1}`
+    }));
+  },
+  methods: {
+    imageClick(index) {
+      this.activeIndex = index;
+      this.displayCustom = true;
+    }
+  }
+}
 
 </script>
 
@@ -144,9 +174,25 @@
       </div>
     </div>
     <div class="options">
-      <div class="options-1"><h1>Информация по опциям</h1>
-      <div class="rounded-lg p-3"></div></div>
-      <div class="options-2"><h1>Фотогалерея</h1></div>
+      <div class="options-1">
+        <h1>Информация по опциям</h1>
+        <div class="rounded-lg">
+<options-information></options-information>
+        </div>
+      </div>
+      <div class="options-2">
+        <h1>Фотогалерея</h1>
+        <div>
+          <div class="card flex flex-wrap gap-2.5">
+            <img src="@/assets/images/Без%20имени.jpg" alt="" style="width: 150px; height: 150px">
+            <img src="@/assets/images/avwwfcawer.jpg" alt="" style="width: 150px; height: 150px">
+            <img src="@/assets/images/erhgasdcfefwcwf.jpg" alt="" style="width: 150px; height: 150px">
+            <img src="@/assets/images/sdfsdfsdfsdfsdfsdf.jpg" alt="" style="width: 150px; height: 150px">
+            <img src="@/assets/images/sdfsdfsf.jpg" alt="" style="width: 150px; height: 150px">
+            <img src="@/assets/images/wegwfaf.jpg" alt="" style="width: 150px; height: 150px">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -233,8 +279,9 @@ i {
   }
 
   .options-1 {
-    @apply w-1/2 bg-gray-50;
+    @apply w-1/2;
   }
+
   .options-2 {
     @apply p-3 w-1/2;
   }
