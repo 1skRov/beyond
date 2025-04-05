@@ -42,6 +42,13 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 
+import Stepper from 'primevue/stepper';
+import StepList from 'primevue/steplist';
+import StepPanels from 'primevue/steppanels';
+import StepItem from 'primevue/stepitem';
+import Step from 'primevue/step';
+import StepPanel from 'primevue/steppanel';
+
 
 const app = createApp(App);
 const MyPreset = definePreset(Aura, {
@@ -102,6 +109,12 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Drawer', Drawer);
 app.component('AutoComplete', AutoComplete);
+app.component('Stepper',Stepper);
+app.component('StepList',StepList);
+app.component('StepPanels',StepPanels);
+app.component('StepItem',StepItem);
+app.component('Step',Step);
+app.component('StepPanel',StepPanel);
 
 app.use(router);
 app.mount('#app');
