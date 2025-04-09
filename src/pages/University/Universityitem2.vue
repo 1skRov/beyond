@@ -4,20 +4,20 @@ import OptionsInformation from "@/pages/University/OptionsInformation.vue";
 export default {
   name: "UniversityPage",
   components: {OptionsInformation},
-  data(){
+  data() {
     return {
       images: [],
       activeIndex: 0,
       displayCustom: false,
       responsiveOptions: [
-        { breakpoint: '1024px', numVisible: 5 },
-        { breakpoint: '768px', numVisible: 3 },
-        { breakpoint: '560px', numVisible: 1 }
+        {breakpoint: '1024px', numVisible: 5},
+        {breakpoint: '768px', numVisible: 3},
+        {breakpoint: '560px', numVisible: 1}
       ]
     }
   },
   mounted() {
-    this.images = Array.from({ length: 6 }, (_, i) => ({
+    this.images = Array.from({length: 6}, (_, i) => ({
       src: new URL(`@/assets/images/photo${i + 1}.jpg`, import.meta.url).href,
       alt: `Photo ${i + 1}`
     }));
@@ -177,7 +177,7 @@ export default {
       <div class="options-1">
         <h1>Информация по опциям</h1>
         <div class="rounded-lg">
-<options-information></options-information>
+          <options-information></options-information>
         </div>
       </div>
       <div class="options-2">

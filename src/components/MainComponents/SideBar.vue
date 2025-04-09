@@ -4,10 +4,10 @@ export default {
   data() {
     return {
       menu: [
-        {title: "Главная", icon: "fi fi-rr-apps", link: "/"},
+        {title: "Главная", icon: "fi fi-rr-store-alt", link: "/"},
         {title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests"},
         {title: "Материалы", icon: "fi fi-rr-folder", link: "/courses"},
-        {title: "Roadmap", icon: "fi fi-tr-deep-learning", link: "/roadmap"},
+        {title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap"},
         {title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university"},
         {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
       ]
