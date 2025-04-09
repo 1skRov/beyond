@@ -57,11 +57,11 @@ export default {
         <p class="value">18</p>
       </div>
       <div class="item">
-        <p class="title">Правильно ответили</p>
+        <p class="title">Правильно</p>
         <p class="value">5</p>
       </div>
       <div class="item">
-        <p class="title">Неправильно ответили</p>
+        <p class="title">Неправильно</p>
         <p class="value">10</p>
       </div>
       <div class="item">
