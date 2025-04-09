@@ -16,7 +16,10 @@
     "@vue-flow/core": "^1.42.4",
     "axios": "^1.8.3",
     "chart.js": "^4.4.8",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "gojs": "^3.0.20",
+    "openai": "^4.93.0",
     "pinia": "^3.0.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.2",
@@ -40,5 +43,18 @@
     "tailwindcss": "^3.4.17",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.1.0"
-  }
+  },
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1skRov/beyond.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1skRov/beyond/issues"
+  },
+  "homepage": "https://github.com/1skRov/beyond#readme",
+  "description": ""
 }

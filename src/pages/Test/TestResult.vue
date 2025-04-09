@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       chartData: null,
+      ans: null,
       chartOptions: {
         cutout: '60%'
       }
@@ -12,8 +13,23 @@ export default {
   mounted() {
     this.chartData = this.setChartData();
     this.chartOptions = this.setChartOptions();
+    this.server();
   },
   methods: {
+    server(){
+      const wrongAnswers = [1, 2, 3, 4, 5];
+
+      fetch('http://localhost:3000/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wrongAnswers })
+      })
+          .then(res => res.json())
+          .then(data => {
+            console.log('Ответ GPT:', data.result);
+            this.ans = JSON.parse(data.result);
+          });
+    },
     setChartData() {
       const documentStyle = getComputedStyle(document.body);
 
@@ -74,7 +90,16 @@ export default {
       </div>
     </div>
   </div>
-  <div class="w-full min-h-96 overflow-y-auto bg-indigo-50">анализ неправильных ответов</div>
+  <div class="w-full min-h-96 overflow-y-auto bg-indigo-50">
+    <p v-if="!ans">AI думает...</p>
+    <div v-else>
+      <p>анализ неправильных ответов</p>
+      <div v-for="s in ans" class="mb-2.5 font-medium text-sm">
+        <p>{{s.id}} вопрос</p>
+        <p>{{s.explanation}}</p>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
