@@ -47,114 +47,66 @@ export default defineComponent({
   },
   setup() {
     const nodes = ref([
-      {
-        id: '1',
-        type: 'custom',
-        label: 'Введение в колониальную эпоху',
-        position: { x: 100, y: 100 },
-        data: {
-          title: 'Введение в колониальную эпоху',
-          description: 'Основы колониального периода в истории Казахстана.',
-          tags: ['start'],
-          materials: [],
-          status: 'not_started',
-          difficulty: 'easy'
-        },
-      },
-      {
-        id: '2',
-        type: 'custom',
-        label: 'Восстание Кенесары',
-        position: { x: 400, y: 50 },
-        data: {
-          title: 'Восстание Кенесары',
-          description: 'Антиколониальное движение 1837–1847 гг.',
-          tags: ['персональная рекомендация'],
-          materials: [],
-          status: 'not_started',
-          difficulty: 'medium'
-        },
-      },
-      {
-        id: '3',
-        type: 'custom',
-        label: 'Административные реформы',
-        position: { x: 400, y: 150 },
-        data: {
-          title: 'Административные реформы',
-          description: 'Изменения управления в 19 веке.',
-          tags: [],
-          materials: [],
-          status: 'in_progress',
-          difficulty: 'medium'
-        },
-      },
-      {
-        id: '4',
-        type: 'custom',
-        label: 'Ислам и просвещение',
-        position: { x: 700, y: 20 },
-        data: {
-          title: 'Ислам и просвещение',
-          description: 'Распространение исламского образования.',
-          tags: ['не обязательно, но интересно'],
-          materials: [],
-          status: 'not_started',
-          difficulty: 'easy'
-        },
-      },
-      {
-        id: '5',
-        type: 'custom',
-        label: 'Реформы 1867-1868 гг.',
-        position: { x: 700, y: 100 },
-        data: {
-          title: 'Реформы 1867-1868',
-          description: 'Изменение административного устройства.',
-          tags: ['альтернатива'],
-          materials: [],
-          status: 'not_started',
-          difficulty: 'hard'
-        },
-      },
-      {
-        id: '6',
-        type: 'custom',
-        label: 'Экономические изменения',
-        position: { x: 700, y: 180 },
-        data: {
-          title: 'Экономические изменения',
-          description: 'Развитие торговли и землевладения.',
-          tags: [],
-          materials: [],
-          status: 'completed',
-          difficulty: 'medium'
-        },
-      },
-      {
-        id: '7',
-        type: 'custom',
-        label: 'Культура и письменность',
-        position: { x: 1000, y: 100 },
-        data: {
-          title: 'Культура и письменность',
-          description: 'Формирование казахской идентичности.',
-          tags: ['персональная рекомендация'],
-          materials: [],
-          status: 'not_started',
-          difficulty: 'easy'
-        },
-      }
+      // Центральный узел
+      { id: '0', type: 'custom', label: 'История Казахстана', position: { x: 800, y: 50 }, data: { title: 'История Казахстана', tags: ['start'], status: 'not_started' } },
+
+      // Основные ветки
+      { id: '1', type: 'custom', label: 'Древность', position: { x: 250, y: 200 }, data: { title: 'Древность', status: 'not_started' } },
+      { id: '2', type: 'custom', label: 'Средние века', position: { x: 700, y: 200 }, data: { title: 'Средние века', status: 'not_started' } },
+      { id: '3', type: 'custom', label: 'Колониальный период', position: { x: 1150, y: 200 }, data: { title: 'Колониальный период', status: 'not_started' } },
+      { id: '4', type: 'custom', label: 'Современность', position: { x: 800, y: 500 }, data: { title: 'Современность', status: 'not_started' } },
+
+      // Древность → потомки
+      { id: '5', type: 'custom', label: 'Сакские племена', position: { x: 70, y: 350 }, data: { title: 'Сакские племена', status: 'not_started' } },
+      { id: '6', type: 'custom', label: 'Гунны и хунну', position: { x: 250, y: 450 }, data: { title: 'Гунны и хунну', status: 'not_started' } },
+      { id: '7', type: 'custom', label: 'Зарождение государственности', position: { x: 400, y: 450 }, data: { title: 'Зарождение государственности', status: 'not_started' } },
+
+      // Средние века → потомки
+      { id: '8', type: 'custom', label: 'Тюркский каганат', position: { x: 500, y: 350 }, data: { title: 'Тюркский каганат', status: 'not_started' } },
+      { id: '9', type: 'custom', label: 'Караханиды', position: { x: 680, y: 350 }, data: { title: 'Караханиды', status: 'not_started' } },
+      { id: '10', type: 'custom', label: 'Золотая Орда', position: { x: 800, y: 350 }, data: { title: 'Золотая Орда', status: 'not_started' } },
+
+      // Колониальный период → потомки
+      { id: '11', type: 'custom', label: 'Присоединение к России', position: { x: 1050, y: 350 }, data: { title: 'Присоединение к России', status: 'not_started' } },
+      { id: '12', type: 'custom', label: 'Восстание Кенесары', position: { x: 1150, y: 450 }, data: { title: 'Восстание Кенесары', status: 'not_started' } },
+      { id: '13', type: 'custom', label: 'Реформы 1867-1868', position: { x: 1250, y: 550 }, data: { title: 'Реформы 1867-1868', status: 'not_started' } },
+      { id: '14', type: 'custom', label: 'Социально-экономические изменения', position: { x: 1350, y: 650 }, data: { title: 'Социально-экономические изменения', status: 'not_started' } },
+
+      // Современность → потомки
+      { id: '15', type: 'custom', label: 'КазССР', position: { x: 600, y: 650 }, data: { title: 'КазССР', status: 'not_started' } },
+      { id: '16', type: 'custom', label: '1917 год в Казахстане', position: { x: 700, y: 650 }, data: { title: '1917 год в Казахстане', status: 'not_started' } },
+      { id: '17', type: 'custom', label: 'Репрессии и голод', position: { x: 800, y: 800 }, data: { title: 'Репрессии и голод', status: 'not_started' } },
+      { id: '18', type: 'custom', label: 'Декабрь 1986', position: { x: 950, y: 700 }, data: { title: 'Декабрь 1986', status: 'not_started' } },
+      { id: '19', type: 'custom', label: 'Независимость Казахстана', position: { x: 1100, y: 650 }, data: { title: 'Независимость Казахстана', status: 'not_started' } },
+      { id: '20', type: 'custom', label: 'Первая Конституция', position: { x: 800, y: 950 }, data: { title: 'Первая Конституция', status: 'not_started' } }
     ]);
 
 
     const edges = ref([
-      { id: 'e1-2', source: '1', target: '2', markerEnd: MarkerType.ArrowClosed },
-      { id: 'e1-3', source: '1', target: '3', markerEnd: MarkerType.ArrowClosed },
-      { id: 'e2-4', source: '2', target: '4', markerEnd: MarkerType.ArrowClosed },
-      { id: 'e2-5', source: '2', target: '5', markerEnd: MarkerType.ArrowClosed },
-      { id: 'e3-6', source: '3', target: '6', markerEnd: MarkerType.ArrowClosed },
-      { id: 'e6-7', source: '6', target: '7', markerEnd: MarkerType.ArrowClosed }
+      { id: 'e0-1', source: '0', target: '1', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e0-2', source: '0', target: '2', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e0-3', source: '0', target: '3', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e0-4', source: '0', target: '4', markerEnd: MarkerType.ArrowClosed },
+
+      { id: 'e1-5', source: '1', target: '5', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e1-6', source: '1', target: '6', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e1-7', source: '1', target: '7', markerEnd: MarkerType.ArrowClosed },
+
+      { id: 'e2-8', source: '2', target: '8', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e2-9', source: '2', target: '9', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e2-10', source: '2', target: '10', markerEnd: MarkerType.ArrowClosed },
+
+      { id: 'e3-11', source: '3', target: '11', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e3-12', source: '3', target: '12', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e3-13', source: '3', target: '13', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e3-14', source: '3', target: '14', markerEnd: MarkerType.ArrowClosed },
+
+      { id: 'e4-15', source: '4', target: '15', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e4-16', source: '4', target: '16', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e4-17', source: '4', target: '17', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e4-18', source: '4', target: '18', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e4-19', source: '4', target: '19', markerEnd: MarkerType.ArrowClosed },
+      { id: 'e19-20', source: '19', target: '20', markerEnd: MarkerType.ArrowClosed }
     ]);
 
 
@@ -195,5 +147,4 @@ export default defineComponent({
 </script>
 
 <style>
-/* PrimeVue или Tailwind стили можно подключить здесь */
 </style>
