@@ -10,6 +10,7 @@ import TestItem from "@/pages/Test/TestItem.vue"
 import Result from "@/pages/Test/TestResult.vue"
 // roadmap
 import MainRoadMapPage from "@/pages/Roadmap/MainRoadMapPage.vue";
+import RoadItem from "@/pages/Roadmap/Flo.vue"
 // courses
 import MainCoursesPage from "@/pages/Courses/MainCoursesPage.vue";
 // layouts
@@ -46,7 +47,8 @@ const routes = [
                 ]
             },
             {path: 'result', name: 'Result', component: Result},
-            {path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage},
+            {path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage, children: []},
+            {path: 'road-item', name: 'RoadItem', component: RoadItem},
             {path: 'courses', name: 'Courses', component: MainCoursesPage},
         ]
     }

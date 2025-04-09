@@ -41,13 +41,13 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
-
 import Stepper from 'primevue/stepper';
 import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
 import StepItem from 'primevue/stepitem';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
+import ProgressBar from 'primevue/progressbar';
 
 
 const app = createApp(App);
@@ -115,6 +115,7 @@ app.component('StepPanels',StepPanels);
 app.component('StepItem',StepItem);
 app.component('Step',Step);
 app.component('StepPanel',StepPanel);
+app.component('ProgressBar',ProgressBar);
 
 app.use(router);
 app.mount('#app');
