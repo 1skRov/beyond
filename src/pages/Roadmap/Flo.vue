@@ -52,14 +52,14 @@ export default defineComponent({
 
       // Основные ветки
       { id: '1', type: 'custom', label: 'Древность', position: { x: 250, y: 200 }, data: { title: 'Древность', status: 'not_started' } },
-      { id: '2', type: 'custom', label: 'Средние века', position: { x: 700, y: 200 }, data: { title: 'Средние века', status: 'not_started' } },
-      { id: '3', type: 'custom', label: 'Колониальный период', position: { x: 1150, y: 200 }, data: { title: 'Колониальный период', status: 'not_started' } },
+      { id: '2', type: 'custom', label: 'Средние века', position: { x: 700, y: 200 }, data: { title: 'Средние века', status: 'not_started', tags: ['персональная рекомендация'], } },
+      { id: '3', type: 'custom', label: 'Колониальный период', position: { x: 1150, y: 200 }, data: { title: 'Колониальный период', status: 'not_started', tags: ['альтернатива'], } },
       { id: '4', type: 'custom', label: 'Современность', position: { x: 800, y: 500 }, data: { title: 'Современность', status: 'not_started' } },
 
       // Древность → потомки
       { id: '5', type: 'custom', label: 'Сакские племена', position: { x: 70, y: 350 }, data: { title: 'Сакские племена', status: 'not_started' } },
       { id: '6', type: 'custom', label: 'Гунны и хунну', position: { x: 250, y: 450 }, data: { title: 'Гунны и хунну', status: 'not_started' } },
-      { id: '7', type: 'custom', label: 'Зарождение государственности', position: { x: 400, y: 450 }, data: { title: 'Зарождение государственности', status: 'not_started' } },
+      { id: '7', type: 'custom', label: 'Зарождение государственности', position: { x: 400, y: 450 }, data: { title: 'Зарождение государственности', status: 'not_started', tags: ['не обязательно, но интересно'], } },
 
       // Средние века → потомки
       { id: '8', type: 'custom', label: 'Тюркский каганат', position: { x: 500, y: 350 }, data: { title: 'Тюркский каганат', status: 'not_started' } },
@@ -69,7 +69,7 @@ export default defineComponent({
       // Колониальный период → потомки
       { id: '11', type: 'custom', label: 'Присоединение к России', position: { x: 1050, y: 350 }, data: { title: 'Присоединение к России', status: 'not_started' } },
       { id: '12', type: 'custom', label: 'Восстание Кенесары', position: { x: 1150, y: 450 }, data: { title: 'Восстание Кенесары', status: 'not_started' } },
-      { id: '13', type: 'custom', label: 'Реформы 1867-1868', position: { x: 1250, y: 550 }, data: { title: 'Реформы 1867-1868', status: 'not_started' } },
+      { id: '13', type: 'custom', label: 'Реформы 1867-1868', position: { x: 1250, y: 550 }, data: { title: 'Реформы 1867-1868', status: 'not_started', tags: ['персональная рекомендация'], } },
       { id: '14', type: 'custom', label: 'Социально-экономические изменения', position: { x: 1350, y: 650 }, data: { title: 'Социально-экономические изменения', status: 'not_started' } },
 
       // Современность → потомки
@@ -78,7 +78,7 @@ export default defineComponent({
       { id: '17', type: 'custom', label: 'Репрессии и голод', position: { x: 800, y: 800 }, data: { title: 'Репрессии и голод', status: 'not_started' } },
       { id: '18', type: 'custom', label: 'Декабрь 1986', position: { x: 950, y: 700 }, data: { title: 'Декабрь 1986', status: 'not_started' } },
       { id: '19', type: 'custom', label: 'Независимость Казахстана', position: { x: 1100, y: 650 }, data: { title: 'Независимость Казахстана', status: 'not_started' } },
-      { id: '20', type: 'custom', label: 'Первая Конституция', position: { x: 800, y: 950 }, data: { title: 'Первая Конституция', status: 'not_started' } }
+      { id: '20', type: 'custom', label: 'Первая Конституция', position: { x: 800, y: 950 }, data: { title: 'Первая Конституция', status: 'not_started', tags: ['альтернатива'], } }
     ]);
 
 
