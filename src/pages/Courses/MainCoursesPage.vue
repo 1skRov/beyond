@@ -12,6 +12,7 @@ export default {
     <TabList>
       <Tab value="0">Список курсов</Tab>
       <Tab value="1">Список авторов</Tab>
+      <Tab value="1">В процессе</Tab>
     </TabList>
     <TabPanels>
       <TabPanel value="0">
