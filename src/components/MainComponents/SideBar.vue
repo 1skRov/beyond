@@ -67,8 +67,8 @@ export default {
             <img src="@/assets/images/user1.webp" alt="" class="w-full h-full object-cover">
           </div>
           <div class="user-name">
-            <p class="text-white m-0 font-medium">Elizabeth olsen</p>
-            <p class="m-0 text-white text-xs">@lizzie_olsen</p>
+            <p class="text-slate-700 m-0 font-medium">Elizabeth olsen</p>
+            <p class="m-0 text-slate-700 text-xs">@lizzie_olsen</p>
           </div>
         </div>
         <div class="user-settings" @click="toggle">
@@ -77,7 +77,7 @@ export default {
         <Popover ref="op">
           <router-link to="/profile">
             <div class="popover-setting">
-              <div class="text-sky-600">
+              <div class="text-blue-600">
                 <i class="fi fi-rs-circle-user"></i>
               </div>
               <p>Профиль</p>
@@ -85,14 +85,14 @@ export default {
           </router-link>
           <router-link to="#">
             <div class="popover-setting">
-              <div class="text-sky-600">
+              <div class="text-blue-600">
                 <i class="fi fi-rr-bell"></i>
               </div>
               <p>Уведомления</p>
             </div>
           </router-link>
           <div class="popover-setting">
-            <div class="text-sky-600">
+            <div class="text-blue-600">
               <i class="fi fi-ss-arrow-left-from-arc"></i>
             </div>
             <p>Выйти</p>
@@ -105,7 +105,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply flex flex-col justify-between h-full p-2 rounded bg-sky-500;
+  @apply flex flex-col justify-between h-full p-2 rounded bg-slate-50;
 }
 
 .settings {
@@ -125,11 +125,11 @@ export default {
 }
 
 .user-settings i {
-  @apply text-white;
+  @apply text-slate-700;
 }
 
 .popover-setting {
-  @apply flex gap-2.5 p-2 items-center cursor-pointer hover:bg-sky-100 rounded-lg;
+  @apply flex gap-2.5 p-2 items-center cursor-pointer hover:bg-blue-100 rounded-lg;
 }
 
 .popover-setting i {
@@ -137,7 +137,7 @@ export default {
 }
 
 .popover-setting p {
-  @apply m-0 text-gray-500 font-medium -mt-1;
+  @apply m-0 text-slate-700 font-medium -mt-1;
 }
 
 .sidebar-header {
@@ -145,24 +145,24 @@ export default {
 }
 
 .hidden {
-  @apply w-8 h-8 text-white flex items-center justify-center rounded-lg cursor-pointer;
+  @apply w-8 h-8 text-slate-700 flex items-center justify-center rounded-lg cursor-pointer;
 }
 
 .hidden:hover {
-  @apply bg-sky-400;
+  @apply bg-blue-200;
 }
 
 .head-title {
   font-size: 25px;
   letter-spacing: 1.5px;
-  @apply font-bold text-white;
+  @apply font-bold text-slate-600;
 }
 
 .sidebar-menu {
-  @apply flex flex-col w-full gap-1;
+  @apply flex flex-col w-full gap-1 font-medium;
 }
 
 .active-item {
-  @apply font-medium text-white border-r-8 border-r-sky-200 border-sky-400 bg-sky-400;
+  @apply font-medium text-white border-blue-400 bg-blue-600;
 }
 </style>

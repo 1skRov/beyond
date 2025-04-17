@@ -22,8 +22,8 @@ export default {
   @apply flex w-full h-full overflow-hidden p-2 gap-2;
 }
 .sidebar-box {
-  width: 450px;
-  min-width: 450px;
+  width: 400px;
+  min-width: 400px;
   height: 100%;
   @apply overflow-hidden shadow-md rounded-lg;
 }
