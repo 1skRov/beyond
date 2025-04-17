@@ -30,11 +30,46 @@ export default {
         },
       ],
       drawerVisible: false,
+      courseItem: null,
+      tags: [
+        "История",
+        "История Казахстана",
+        "Шёлковый путь",
+        "Казахское ханство",
+        "СССР",
+        "Независимость",
+        "Археология",
+        "Этнография",
+        "Культура",
+        "Государственность",
+        "Политика",
+        "Экономика",
+        "Образование",
+        "Современность",
+        "Исторические источники",
+        "Монгольское нашествие",
+        "Золотая Орда",
+        "Революция 1917",
+        "Индустриализация",
+        "Репрессии",
+        "Вторая мировая война",
+        "Независимый Казахстан",
+        "Конституция",
+        "Торговля",
+        "Цивилизации",
+        "Хронология",
+        "Геополитика",
+        "Национальное самосознание"
+      ]
     }
   },
   methods: {
-    openDrawer() {
-      this.drawerVisible = true
+    openDrawer(item) {
+      this.drawerVisible = true;
+      this.courseItem = item;
+    },
+    startCourse(){
+      this.$router.push({ name: "CoursesItem" });
     }
   }
 }
@@ -53,8 +88,8 @@ export default {
       <th align="left"></th>
     </tr>
     <tr v-for="(c, index) in courses" :key="index">
-      <td @click="openDrawer">{{ c.name }}</td>
-      <td @click="openDrawer">
+      <td>{{ c.name }}</td>
+      <td>
         <div class="flex items-center gap-2">
           <img
               v-if="c.authorImage"
@@ -66,20 +101,77 @@ export default {
           {{ c.author }}
         </div>
       </td>
-      <td @click="openDrawer">{{ c.duration }} ч.</td>
-      <td @click="openDrawer">
+      <td>{{ c.duration }} ч.</td>
+      <td>
         <div class="flex gap-2 items-center">
           {{ c.rating }}<i class="fi fi-sr-star text-yellow-500 text-xs block -mb-0.5"></i>
         </div>
       </td>
       <td>
-        <Button class="flex items-center text-xs gap-2" size="small" @click="openDrawer"><i
+        <Button class="flex items-center text-xs gap-2" size="small" @click="openDrawer(c)"><i
             class="fi fi-rr-info block"></i></Button>
       </td>
     </tr>
   </table>
-  <Drawer v-model:visible="drawerVisible" position="right" :modal="true">
-    -----
+  <Drawer v-model:visible="drawerVisible" position="right" :modal="true" style="width: 50vw">
+    <template #header>
+      <p class="text-lg">{{courseItem.name}}</p>
+    </template>
+    <Accordion value="0">
+      <AccordionPanel value="0">
+        <AccordionHeader>Информация про автора</AccordionHeader>
+        <AccordionContent>
+          <div class="flex gap-2 items-center text-slate-500">
+            <img
+                v-if="courseItem.authorImage"
+                :src="courseItem.authorImage"
+                alt="author"
+                class="w-8 h-8 rounded-full object-cover"
+            />
+            <i v-else class="fi fi-rr-circle-user block text-blue-500 text-2xl -mb-1"></i>
+            {{ courseItem.author }}
+          </div>
+          <div class="pt-2 text-slate-500">Преподаватель истории казахстана</div>
+        </AccordionContent>
+      </AccordionPanel>
+      <AccordionPanel value="1">
+        <AccordionHeader>Информация про курс</AccordionHeader>
+        <AccordionContent>
+          <p class="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div>
+            <p class="my-3">Курс содержит следующие теги</p>
+            <div class="flex flex-wrap gap-2">
+              <div v-for="t in tags" class="rounded-full py-1 px-2 bg-indigo-100 text-indigo-600 cursor-pointer hover:bg-indigo-200 hover:text-indigo-800">
+                {{t}}
+              </div>
+            </div>
+          </div>
+        </AccordionContent>
+      </AccordionPanel>
+      <AccordionPanel value="2">
+        <AccordionHeader>Содержание курса</AccordionHeader>
+        <AccordionContent>
+
+        </AccordionContent>
+      </AccordionPanel>
+      <AccordionPanel value="3">
+        <AccordionHeader>Отзывы</AccordionHeader>
+        <AccordionContent>
+          <p class="m-0">
+            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+            qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+          </p>
+        </AccordionContent>
+      </AccordionPanel>
+    </Accordion>
+    <template #footer>
+      <div class="flex justify-end">
+        <Button label="Перейти к курсу" size="small" @click="startCourse"></Button>
+      </div>
+    </template>
   </Drawer>
 </template>
 
@@ -99,5 +191,8 @@ tr:hover {
 
 img {
   vertical-align: middle;
+}
+.info-item {
+  @apply py-2 border-0 border-b border-gray-200;
 }
 </style>

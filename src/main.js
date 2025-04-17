@@ -48,6 +48,11 @@ import StepItem from 'primevue/stepitem';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
 import ProgressBar from 'primevue/progressbar';
+import Accordion from 'primevue/accordion';
+import AccordionPanel from 'primevue/accordionpanel';
+import AccordionHeader from 'primevue/accordionheader';
+import AccordionContent from 'primevue/accordioncontent';
+import Timeline from 'primevue/timeline';
 
 
 const app = createApp(App);
@@ -116,6 +121,12 @@ app.component('StepItem',StepItem);
 app.component('Step',Step);
 app.component('StepPanel',StepPanel);
 app.component('ProgressBar',ProgressBar);
+app.component('Accordion',Accordion);
+app.component('AccordionPanel',AccordionPanel);
+app.component('AccordionHeader',AccordionHeader);
+app.component('AccordionContent',AccordionContent);
+app.component('Timeline',Timeline);
+
 
 app.use(router);
 app.mount('#app');

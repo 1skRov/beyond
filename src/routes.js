@@ -13,6 +13,7 @@ import MainRoadMapPage from "@/pages/Roadmap/MainRoadMapPage.vue";
 import RoadItem from "@/pages/Roadmap/Flo.vue"
 // courses
 import MainCoursesPage from "@/pages/Courses/MainCoursesPage.vue";
+import CourseItemPage from "@/pages/Courses/CourseItemPage.vue";
 // layouts
 import DefaultLayout from '@/pages/DefaultLayout.vue';
 import EmptyLayout from '@/pages/EmptyLayout.vue';
@@ -24,6 +25,7 @@ const routes = [
         component: EmptyLayout,
         children: [
             {path: '', name: 'Home', component: MainPage},
+            {path: 'courses-item', name: 'CoursesItem', component: CourseItemPage},
         ]
     },
     {
