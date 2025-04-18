@@ -1,9 +1,7 @@
 <script>
-import TopicItem from "@/pages/Test/TopicItem.vue";
 
 export default {
   name: "MultipleTestPage",
-  components: {TopicItem},
   data() {
     return {
       multipleTopics: [

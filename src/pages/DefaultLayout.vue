@@ -28,6 +28,6 @@ export default {
   @apply overflow-hidden shadow-md rounded-lg;
 }
 .main-content {
-  @apply w-full h-full overflow-y-auto shadow-md bg-white rounded-lg p-2;
+  @apply w-full h-full overflow-y-auto shadow-md bg-slate-50 rounded-lg p-2;
 }
 </style>

@@ -1,8 +1,6 @@
 <script>
-import TopicItem from "@/pages/Test/TopicItem.vue";
 export default {
   name: "MainTestPage",
-  components: { TopicItem },
   data() {
     return {
       optionsPicker: ["Тесты по предметам", "Комплексные тесты"],
@@ -41,7 +39,7 @@ export default {
 
 <template>
   <div class="test-page">
-    <SelectButton v-model="valuePicker" :options="optionsPicker"/>
+    <SelectButton v-model="valuePicker" :options="optionsPicker" size="small"/>
     <router-view />
   </div>
 </template>

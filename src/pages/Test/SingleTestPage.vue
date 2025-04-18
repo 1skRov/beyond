@@ -1,129 +1,55 @@
 <script>
-import TopicItem from "@/pages/Test/TopicItem.vue";
 
 export default {
   name: "SingleTestPage",
-  components: {TopicItem},
   data() {
     return {
       topics: [
         {
-          iconTheme: "fi fi-sr-function",
-          iconName: "fi fi-rs-square-root",
-          shadowColor: "#818cf850",
-          bg: "bg-indigo-50",
-          border: "border-indigo-100",
-          iconColor: "text-indigo-500",
           topic: "Математика",
           testCount: "140"
         },
         {
-          iconTheme: "fi fi-sr-globe",
-          iconName: "fi fi-rs-map-marker",
-          shadowColor: "#22c55e50",
-          bg: "bg-green-50",
-          border: "border-green-100",
-          iconColor: "text-green-500",
           topic: "География",
           testCount: "100"
         },
         {
-          iconTheme: "fi fi-tr-react",
-          iconName: "fi fi-rs-flask",
-          shadowColor: "#60a5fa50",
-          bg: "bg-blue-50",
-          border: "border-blue-100",
-          iconColor: "text-blue-500",
           topic: "Физика",
           testCount: "120"
         },
         {
-          iconTheme: "fi fi-sr-dna",
-          iconName: "fi fi-rs-leaf",
-          shadowColor: "#34d39950",
-          bg: "bg-emerald-50",
-          border: "border-emerald-100",
-          iconColor: "text-emerald-500",
           topic: "Биология",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-tr-scroll-document-story",
-          iconName: "fi fi-rs-book",
-          shadowColor: "#f8717150",
-          bg: "bg-red-50",
-          border: "border-red-100",
-          iconColor: "text-red-500",
           topic: "История Казахстана",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-rs-scroll-old",
-          iconName: "fi fi-bs-earth-americas",
-          shadowColor: "#fb923c50",
-          bg: "bg-orange-50",
-          border: "border-orange-100",
-          iconColor: "text-orange-500",
           topic: "Всемирная история",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-rr-tubes",
-          iconName: "fi fi-rs-flask",
-          shadowColor: "#a855f750",
-          bg: "bg-purple-50",
-          border: "border-purple-100",
-          iconColor: "text-purple-500",
           topic: "Химия",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-sr-language",
-          iconName: "fi fi-rs-comment-alt",
-          shadowColor: "#eab30850",
-          bg: "bg-yellow-50",
-          border: "border-yellow-100",
-          iconColor: "text-yellow-500",
           topic: "English",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-sr-language",
-          iconName: "fi fi-rs-comment-alt",
-          shadowColor: "#84cc1650",
-          bg: "bg-lime-50",
-          border: "border-lime-100",
-          iconColor: "text-lime-500",
           topic: "Казахский язык",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-sr-language",
-          iconName: "fi fi-rs-comment-alt",
-          shadowColor: "#ef444450",
-          bg: "bg-rose-50",
-          border: "border-rose-100",
-          iconColor: "text-rose-500",
           topic: "Русский язык",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-sr-laptop",
-          iconName: "fi fi-brands-visual-basic",
-          shadowColor: "#3b82f650",
-          bg: "bg-sky-50",
-          border: "border-sky-100",
-          iconColor: "text-sky-500",
           topic: "Информатика",
           testCount: "900"
         },
         {
-          iconTheme: "fi fi-rs-compliance-document",
-          iconName: "fi fi-rr-shield-check",
-          shadowColor: "#facc1550",
-          bg: "bg-amber-50",
-          border: "border-amber-100",
-          iconColor: "text-amber-500",
           topic: "Право",
           testCount: "900"
         },
@@ -186,8 +112,8 @@ export default {
     }
   },
   methods: {
-    startTest(){
-      const routeData = this.$router.resolve({ name: 'testItem' });
+    startTest() {
+      const routeData = this.$router.resolve({name: 'testItem'});
       window.open(routeData.href, '_blank');
     }
   }
@@ -195,77 +121,121 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div class="flex gap-2 overflow-x-auto w-full py-3.5">
-      <TopicItem
-          :isMultiple="false"
-          v-for="(topic, index) in topics"
-          :key="index"
-          :icon-theme="topic.iconTheme"
-          :icon-name="topic.iconName"
-          :shadow-color="topic.shadowColor"
-          :bg="topic.bg"
-          :border="topic.border"
-          :icon-color="topic.iconColor"
-          :topic="topic.topic"
-          :test-count="topic.testCount"
-          @click="openTest"
-      />
-    </div>
-    <div class="filters-test-page py-2.5">
-      <Toolbar>
-        <template #start>
-          <span class="font-medium text-gray-600" style="font-size: 16px;">Математика</span>
-        </template>
-        <template #center>
-          <div class="flex gap-2.5 items-center">
-            <FloatLabel class="w-full md:w-56" variant="on">
-              <Select v-model="selectedCity" inputId="on_label" :options="cities" optionLabel="name" class="w-full text-sm" size="small" />
-              <label for="on_label" class="text-sm">Выберите сложность</label>
-            </FloatLabel>
-            <SelectButton v-model="value" :options="options" size="small" class="text-sm"/>
+  <div class="w-full flex gap-2">
+    <div class="side-test-bar">
+      <div class="test-folder">
+        <div class="test-folder-item" v-for="t in topics">
+          <div class="folder-icon">
+            <i class="fi fi-rr-folder-open"></i>
           </div>
-        </template>
-        <template #end>
-          <IconField>
-            <InputIcon>
-              <i class="pi pi-search"/>
-            </InputIcon>
-            <InputText placeholder="Найти" size="small" class="text-sm"/>
-          </IconField>
-        </template>
-      </Toolbar>
+          <div class="folder-content">
+            <p class="font-medium py-1" style="font-size: 18px;">{{ t.topic }}</p>
+            <p class="text-xs">{{t.testCount}} вопросов</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <DataTable :value="testItems" tableStyle="min-width: 50rem" showGridlines class="cursor-pointer">
-        <Column header="Изображение">
-          <template #body="slotProps">
-            <div class="flex items-center justify-center">
-              <img v-if="slotProps.data.image" :src="slotProps.data.image" class="w-16 rounded-lg"/>
-              <div v-else class="w-10 h-10 bg-indigo-100 flex items-center justify-center rounded-lg">
-                <i class="fi fi-ts-quiz text-2xl text-indigo-600"></i>
-              </div>
-            </div>
-          </template>
-        </Column>
-        <Column field="name" header="Название теста"/>
-        <Column field="time" header="Время (мин)"/>
-        <Column field="questionsCount" header="Вопросов"/>
-        <Column field="difficulty" header="Сложность">
-          <template #body="slotProps">
-            <Tag :severity="slotProps.data.difficulty.type" :value="slotProps.data.difficulty.title" rounded></Tag>
-          </template>
-        </Column>
-        <Column field="countUser" header="Прошли"/>
-        <Column field="rating" header="Рейтинг"/>
-        <template #footer>
-          Всего тестов: {{ testItems.length }}
-        </template>
-      </DataTable>
-    </div>
-    <button @click="startTest">start</button>
+  </div>
+  <div>
+    <!--    <div class="flex gap-2 overflow-x-auto w-full py-3.5">-->
+    <!--      <TopicItem-->
+    <!--          :isMultiple="false"-->
+    <!--          v-for="(topic, index) in topics"-->
+    <!--          :key="index"-->
+    <!--          :icon-theme="topic.iconTheme"-->
+    <!--          :icon-name="topic.iconName"-->
+    <!--          :shadow-color="topic.shadowColor"-->
+    <!--          :bg="topic.bg"-->
+    <!--          :border="topic.border"-->
+    <!--          :icon-color="topic.iconColor"-->
+    <!--          :topic="topic.topic"-->
+    <!--          :test-count="topic.testCount"-->
+    <!--          @click="openTest"-->
+    <!--      />-->
+    <!--    </div>-->
+    <!--    <div class="filters-test-page py-2.5">-->
+    <!--      <Toolbar>-->
+    <!--        <template #start>-->
+    <!--          <span class="font-medium text-gray-600" style="font-size: 16px;">Математика</span>-->
+    <!--        </template>-->
+    <!--        <template #center>-->
+    <!--          <div class="flex gap-2.5 items-center">-->
+    <!--            <FloatLabel class="w-full md:w-56" variant="on">-->
+    <!--              <Select v-model="selectedCity" inputId="on_label" :options="cities" optionLabel="name" class="w-full text-sm" size="small" />-->
+    <!--              <label for="on_label" class="text-sm">Выберите сложность</label>-->
+    <!--            </FloatLabel>-->
+    <!--            <SelectButton v-model="value" :options="options" size="small" class="text-sm"/>-->
+    <!--          </div>-->
+    <!--        </template>-->
+    <!--        <template #end>-->
+    <!--          <IconField>-->
+    <!--            <InputIcon>-->
+    <!--              <i class="pi pi-search"/>-->
+    <!--            </InputIcon>-->
+    <!--            <InputText placeholder="Найти" size="small" class="text-sm"/>-->
+    <!--          </IconField>-->
+    <!--        </template>-->
+    <!--      </Toolbar>-->
+    <!--    </div>-->
+    <!--    <div>-->
+    <!--      <DataTable :value="testItems" tableStyle="min-width: 50rem" showGridlines class="cursor-pointer">-->
+    <!--        <Column header="Изображение">-->
+    <!--          <template #body="slotProps">-->
+    <!--            <div class="flex items-center justify-center">-->
+    <!--              <img v-if="slotProps.data.image" :src="slotProps.data.image" class="w-16 rounded-lg"/>-->
+    <!--              <div v-else class="w-10 h-10 bg-indigo-100 flex items-center justify-center rounded-lg">-->
+    <!--                <i class="fi fi-ts-quiz text-2xl text-indigo-600"></i>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </template>-->
+    <!--        </Column>-->
+    <!--        <Column field="name" header="Название теста"/>-->
+    <!--        <Column field="time" header="Время (мин)"/>-->
+    <!--        <Column field="questionsCount" header="Вопросов"/>-->
+    <!--        <Column field="difficulty" header="Сложность">-->
+    <!--          <template #body="slotProps">-->
+    <!--            <Tag :severity="slotProps.data.difficulty.type" :value="slotProps.data.difficulty.title" rounded></Tag>-->
+    <!--          </template>-->
+    <!--        </Column>-->
+    <!--        <Column field="countUser" header="Прошли"/>-->
+    <!--        <Column field="rating" header="Рейтинг"/>-->
+    <!--        <template #footer>-->
+    <!--          Всего тестов: {{ testItems.length }}-->
+    <!--        </template>-->
+    <!--      </DataTable>-->
+    <!--    </div>-->
+    <!--    <button @click="startTest">start</button>-->
   </div>
 </template>
 
 <style scoped>
+.side-test-bar {
+  width: 25%;
+  @apply py-3 h-full overflow-y-auto;
+}
+
+.test-folder {
+  @apply flex flex-col gap-2.5 w-full;
+}
+
+.test-folder-item {
+  @apply w-full flex justify-between rounded-lg gap-2 cursor-pointer border border-slate-200 overflow-hidden;
+}
+
+.test-folder-item:hover {
+  @apply shadow-md;
+}
+
+.folder-content {
+  @apply w-full flex flex-col gap-1.5 text-slate-600;
+}
+
+.folder-icon {
+  @apply p-2 bg-indigo-200 w-16 h-16 flex items-center justify-center rounded-lg;
+}
+
+.folder-icon i {
+  @apply text-indigo-600 block;
+  font-size: 30px;
+}
 </style>
