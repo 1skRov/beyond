@@ -10,6 +10,7 @@ export default {
         {title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap"},
         {title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university"},
         {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
+        {title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics"},
       ]
     }
   },

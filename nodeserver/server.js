@@ -10,10 +10,11 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
+const apiKey = import.meta.env.VITE_API_KEY;
 
 // GPT
 const openai = new OpenAI({
-    apiKey: '', // ЗАМЕНИ на свой ключ
+    apiKey: apiKey, // ЗАМЕНИ на свой ключ
 });
 // Загрузка вопросов
 const questionsRaw = await fs.readFile('./question2.json', 'utf-8');
@@ -32,7 +33,9 @@ app.post('/explain', async (req, res) => {
             },
             {
                 role: 'user',
-                content: `Вот список вопросов, на которые пользователь ответил неправильно. Объясни, почему их неправильные ответы неверны, и укажи, какой ответ правильный и почему. Ответ дай в виде массива объектов {id, explanation}:
+                content: `Вот список вопросов, на которые пользователь ответил неправильно. 
+                Объясни, почему их неправильные ответы неверны, и укажи, какой ответ правильный и почему. 
+                Ответ дай в виде массива объектов {id, explanation}:
 
 ${JSON.stringify(wrongQuestions, null, 2)}
         `,
