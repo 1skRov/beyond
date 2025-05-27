@@ -106,7 +106,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply flex flex-col justify-between h-full p-2 rounded bg-slate-50;
+  @apply flex flex-col justify-between h-full p-2 rounded bg-transparent;
 }
 
 .settings {

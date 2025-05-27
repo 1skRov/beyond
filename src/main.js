@@ -55,6 +55,8 @@ import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 import Timeline from 'primevue/timeline';
+import CascadeSelect from 'primevue/cascadeselect';
+
 
 
 const app = createApp(App);
@@ -128,6 +130,7 @@ app.component('AccordionPanel',AccordionPanel);
 app.component('AccordionHeader',AccordionHeader);
 app.component('AccordionContent',AccordionContent);
 app.component('Timeline',Timeline);
+app.component("CascadeSelect",CascadeSelect);
 
 
 app.use(router);

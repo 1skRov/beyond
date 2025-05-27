@@ -1,49 +1,107 @@
-<script>
-import DayHead from "@/pages/Test/DayHead.vue";
+<script setup>
+import {ref} from "vue";
 
-export default {
-  name: "MainTestPage",
-  components: {DayHead},
-  data() {
-    return {
-      optionsPicker: ["Тесты по предметам", "Комплексные тесты"],
-      valueToRouteMap: {
-        "Тесты по предметам": "single-tests",
-        "Комплексные тесты": "multiple-tests"
-      }
-    };
-  },
-  watch: {
-    valuePicker(newValue) {
-      const routeName = this.valueToRouteMap[newValue];
-      if (routeName) {
-        this.$router.push({ name: routeName });
-      }
-    }
-  },
-  computed: {
-    valuePicker: {
-      get() {
-        const currentRoute = this.$route.name;
-        if (currentRoute === 'single-tests') return "Тесты по предметам";
-        if (currentRoute === 'multiple-tests') return "Комплексные тесты";
-        return "Тесты по предметам";
+const selectedCity = ref();
+const countries = ref([
+  {
+    name: 'Australia',
+    code: 'AU',
+    states: [
+      {
+        name: 'New South Wales',
+        cities: [
+          {cname: 'Sydney', code: 'A-SY'},
+          {cname: 'Newcastle', code: 'A-NE'},
+          {cname: 'Wollongong', code: 'A-WO'}
+        ]
       },
-      set(value) {
-        const routeName = this.valueToRouteMap[value];
-        if (routeName) {
-          this.$router.push({ name: routeName });
-        }
+      {
+        name: 'Queensland',
+        cities: [
+          {cname: 'Brisbane', code: 'A-BR'},
+          {cname: 'Townsville', code: 'A-TO'}
+        ]
       }
-    }
+    ]
+  },
+  {
+    name: 'Canada',
+    code: 'CA',
+    states: [
+      {
+        name: 'Quebec',
+        cities: [
+          {cname: 'Montreal', code: 'C-MO'},
+          {cname: 'Quebec City', code: 'C-QU'}
+        ]
+      },
+      {
+        name: 'Ontario',
+        cities: [
+          {cname: 'Ottawa', code: 'C-OT'},
+          {cname: 'Toronto', code: 'C-TO'}
+        ]
+      }
+    ]
+  },
+  {
+    name: 'United States',
+    code: 'US',
+    states: [
+      {
+        name: 'California', cities: [
+          {cname: 'Los Angeles', code: 'US-LA'},
+          {cname: 'San Diego', code: 'US-SD'},
+          {cname: 'San Francisco', code: 'US-SF'}
+        ]
+      },
+      {
+        name: 'Florida',
+        cities: [
+          {cname: 'Jacksonville', code: 'US-JA'},
+          {cname: 'Miami', code: 'US-MI'},
+          {cname: 'Tampa', code: 'US-TA'},
+          {cname: 'Orlando', code: 'US-OR'}
+        ]
+      },
+      {
+        name: 'Texas',
+        cities: [
+          {cname: 'Austin', code: 'US-AU'},
+          {cname: 'Dallas', code: 'US-DA'},
+          {cname: 'Houston', code: 'US-HO'}
+        ]
+      }
+    ]
   }
-};
+]);
 </script>
 
 <template>
   <div class="test-page">
-    <div><DayHead></DayHead></div>
-    <SelectButton v-model="valuePicker" :options="optionsPicker" size="small"/>
-    <router-view />
+    <div class="test-filters">
+      <CascadeSelect
+          v-model="selectedCity"
+          :options="countries"
+          optionLabel="cname"
+          optionGroupLabel="name"
+          size="small"
+          :optionGroupChildren="['states', 'cities']"
+          class="w-56"
+          placeholder="Тип теста"
+      />
+    </div>
+    <div class="test-content"></div>
+    <!--    <div><DayHead></DayHead></div>-->
+    <router-view/>
   </div>
 </template>
+<style scoped>
+.test-page {
+  @apply w-full h-full;
+
+  .test-filters {
+    @apply w-full py-2.5 bg-white rounded-md shadow-md flex justify-between;
+  }
+}
+</style>

@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="w-full h-full font-montserrat bg-slate-100">
+  <div class="w-full h-full font-montserrat" style="background: #e8ecf1;">
     <router-view></router-view>
   </div>
 </template>

@@ -13,25 +13,25 @@ export default {
       <MainSideBar></MainSideBar>
     </div>
     <div class="main-content">
-      <div class="h-full w-full" style="max-width: 1240px; margin: 0 auto">
+<!--      <div class="h-full w-full" style="max-width: 1240px; margin: 0 auto">-->
         <router-view/>
-      </div>
+<!--      </div>-->
     </div>
   </div>
 </template>
 
 <style scoped>
 .app-layout {
-  @apply flex w-full h-full overflow-hidden p-2 gap-2;
+  @apply flex w-full h-full overflow-hidden gap-2;
 }
 
 .sidebar-box {
   width: 400px;
   min-width: 400px;
-  @apply overflow-hidden h-full shadow-md rounded-lg;
+  @apply overflow-hidden h-full;
 }
 
 .main-content {
-  @apply w-full overflow-y-auto;
+  @apply w-full overflow-y-auto p-2;
 }
 </style>
