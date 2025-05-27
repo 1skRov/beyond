@@ -1,6 +1,9 @@
 <script>
+import DayHead from "@/pages/Test/DayHead.vue";
+
 export default {
   name: "MainTestPage",
+  components: {DayHead},
   data() {
     return {
       optionsPicker: ["Тесты по предметам", "Комплексные тесты"],
@@ -39,6 +42,7 @@ export default {
 
 <template>
   <div class="test-page">
+    <div><DayHead></DayHead></div>
     <SelectButton v-model="valuePicker" :options="optionsPicker" size="small"/>
     <router-view />
   </div>

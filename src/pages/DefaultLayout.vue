@@ -1,5 +1,6 @@
 <script>
 import MainSideBar from "@/components/MainComponents/SideBar.vue"
+
 export default {
   name: "DefaultLayout",
   components: {MainSideBar},
@@ -12,7 +13,9 @@ export default {
       <MainSideBar></MainSideBar>
     </div>
     <div class="main-content">
-      <router-view/>
+      <div class="h-full w-full" style="max-width: 1240px; margin: 0 auto">
+        <router-view/>
+      </div>
     </div>
   </div>
 </template>
@@ -21,13 +24,14 @@ export default {
 .app-layout {
   @apply flex w-full h-full overflow-hidden p-2 gap-2;
 }
+
 .sidebar-box {
   width: 400px;
   min-width: 400px;
-  height: 100%;
-  @apply overflow-hidden shadow-md rounded-lg;
+  @apply overflow-hidden h-full shadow-md rounded-lg;
 }
+
 .main-content {
-  @apply w-full h-full overflow-y-auto shadow-md bg-slate-50 rounded-lg p-2;
+  @apply w-full overflow-y-auto;
 }
 </style>
