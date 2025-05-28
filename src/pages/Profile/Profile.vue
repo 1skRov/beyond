@@ -1,5 +1,6 @@
 <script setup>
 import DayHead from "@/pages/Test/DayHead.vue";
+import TestCharts from "@/pages/Profile/TestCharts.vue";
 
 const programs = [
   'Программная инженерия',
@@ -126,6 +127,9 @@ const programs = [
         </div>
       </div>
     </div>
+    <div class="test-results">
+      <TestCharts></TestCharts>
+    </div>
   </div>
 </template>
 
@@ -137,9 +141,6 @@ const programs = [
 .profile-head {
   @apply w-full px-2 py-2.5 rounded-md flex gap-3;
   background: #f2f7fa;
-  //background-image: radial-gradient(ellipse 75% 65% at 80% 55%, #d0e8c9 0%, rgba(225, 236, 230, 0) 70%),
-  //radial-gradient(ellipse 75% 65% at 20% 80%, #b2d0e8 0%, rgba(228, 225, 234, 0) 70%);
-  //color: #2f3542;
 
   .profile-image {
     @apply overflow-hidden;
@@ -225,5 +226,9 @@ const programs = [
       background: #b7d1f3;
     }
   }
+}
+.test-results {
+  @apply w-full px-2.5 py-2 rounded-md mt-3;
+  background: #f2f7fa;
 }
 </style>
