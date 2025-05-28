@@ -1,5 +1,33 @@
 <script setup>
-import MainHeader from "@/components/MainComponents/MainHeader.vue"
+import MainHeader from "@/components/MainComponents/MainHeader.vue";
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { login } from '@/services/authService';
+const router = useRouter();
+const form = reactive({ username: '', password: '' });
+const loading = ref(false);
+const error = ref('');
+
+async function submit() {
+  error.value = '';
+  if (!form.username || !form.password) {
+    error.value = 'Введите логин и пароль';
+    return;
+  }
+  try {
+    loading.value = true;
+    await login(form);
+    router.replace('/profile'); // первый приватный маршрут
+  } catch (e) {
+    error.value = e.response?.data?.detail || 'Неверные учётные данные';
+  } finally {
+    loading.value = false;
+  }
+}
+
+function goToRegister() {
+  router.push('/register');
+}
 </script>
 
 <template>
@@ -39,7 +67,31 @@ import MainHeader from "@/components/MainComponents/MainHeader.vue"
       </section>
     </main>
   </div>
-  <main-header/>
+  <main-header />
+  <div>
+    <form class="mt-10 bg-white/80 p-6 rounded-xl shadow-lg w-full max-w-xs backdrop-blur" @submit.prevent="submit">
+      <h2 class="text-xl font-semibold mb-4 text-sky-700">Вход</h2>
+      <label class="block mb-3">
+        <span class="text-sm">Логин</span>
+        <input v-model="form.username" type="text" autocomplete="username" class="border rounded w-full px-3 py-2" />
+      </label>
+      <label class="block mb-4">
+        <span class="text-sm">Пароль</span>
+        <input v-model="form.password" type="password" autocomplete="current-password"
+          class="border rounded w-full px-3 py-2" />
+      </label>
+
+      <button type="submit" :disabled="loading" class="bg-sky-600 hover:bg-sky-700 text-white w-full py-2 rounded">
+        {{ loading ? 'Входим...' : 'Войти' }}
+      </button>
+
+      <p v-if="error" class="mt-3 text-red-600 text-sm">{{ error }}</p>
+
+      <button type="button" @click="goToRegister" class="mt-4 text-sky-700 underline text-sm">
+        Регистрация
+      </button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
@@ -54,15 +106,20 @@ import MainHeader from "@/components/MainComponents/MainHeader.vue"
   color: black;
   text-align: center;
   font-size: clamp(13px, 5.5vw, 30px);
-  background: linear-gradient(
-      to bottom,
-      #0d97ff,       /* насыщенный синий */
-      #3eacff,       /* насыщенный синий */
-      #60bafd 30%,   /* голубой */
-      #b0e0e6 65%,   /* светло-голубой */
-      #ffffff 100%   /* белый туман */
-  );
+  background: linear-gradient(to bottom,
+      #0d97ff,
+      /* насыщенный синий */
+      #3eacff,
+      /* насыщенный синий */
+      #60bafd 30%,
+      /* голубой */
+      #b0e0e6 65%,
+      /* светло-голубой */
+      #ffffff 100%
+      /* белый туман */
+    );
 }
+
 .hot-air-balloon {
   position: absolute;
   width: 80px;
@@ -80,24 +137,28 @@ import MainHeader from "@/components/MainComponents/MainHeader.vue"
   animation-delay: 0s, 0s;
   transform: scale(0.9);
 }
+
 .balloon-2 {
   top: 20%;
   left: 30%;
   animation-delay: 1s, -5s;
   transform: scale(1.1);
 }
+
 .balloon-3 {
   top: 30%;
   left: 85%;
   animation-delay: 2s, -10s;
   transform: scale(0.8);
 }
+
 .balloon-4 {
   top: 60%;
   left: 35%;
   animation-delay: 3s, -15s;
   transform: scale(1);
 }
+
 .balloon-5 {
   top: 33%;
   left: 60%;
@@ -107,17 +168,39 @@ import MainHeader from "@/components/MainComponents/MainHeader.vue"
 
 
 @keyframes float {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-35px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-35px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @keyframes drift {
-  0%   { transform: translateX(0) rotate(0deg); }
-  25%  { transform: translateX(10px) rotate(1deg); }
-  50%  { transform: translateX(20px) rotate(2deg); }
-  75%  { transform: translateX(10px) rotate(1deg); }
-  100% { transform: translateX(0) rotate(-1deg); }
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateX(10px) rotate(1deg);
+  }
+
+  50% {
+    transform: translateX(20px) rotate(2deg);
+  }
+
+  75% {
+    transform: translateX(10px) rotate(1deg);
+  }
+
+  100% {
+    transform: translateX(0) rotate(-1deg);
+  }
 }
 
 
@@ -152,15 +235,14 @@ canvas {
   --opacity: 0.5;
   --moveX: 300px;
 
-  animation-delay: calc(
-      (var(--duration) / var(--layerNum)) * var(--index) * -1
-  );
+  animation-delay: calc((var(--duration) / var(--layerNum)) * var(--index) * -1);
   opacity: 0;
 }
 
 #cloud div::before {
   --index: 0;
 }
+
 #cloud div::after {
   --index: 2;
   transform: scaleX(-1);
@@ -170,9 +252,11 @@ canvas {
 #cloud_layer2::after {
   background-image: url(https://raw.githubusercontent.com/happy358/misc/main/image/cloud.png);
 }
+
 #cloud_layer2::before {
   --index: 3;
 }
+
 #cloud_layer2::after {
   --index: 1;
 }
@@ -183,12 +267,15 @@ canvas {
     background-position: right var(--moveX) bottom calc(-1 * var(--lowHeight));
     background-size: calc(1 * var(--lowHeight)) var(--lowHeight);
   }
+
   5% {
     opacity: var(--opacity);
   }
+
   80% {
     opacity: var(--opacity);
   }
+
   100% {
     opacity: 0;
     background-position: right bottom;
@@ -234,21 +321,26 @@ section {
 .arrows div:nth-of-type(3) {
   animation-delay: -0.8s;
 }
+
 .arrows div:nth-of-type(2) {
   animation-delay: -0.4s;
 }
+
 .arrows div:nth-of-type(1) {
   animation-delay: 0s;
 }
 
 @keyframes arrow {
+
   0%,
   100% {
     opacity: 0;
   }
+
   40% {
     opacity: 1;
   }
+
   80% {
     opacity: 0;
   }

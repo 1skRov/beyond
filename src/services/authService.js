@@ -1,31 +1,32 @@
-import axios from "axios";
+// src/services/authService.ts
+import axios from 'axios';
 
-const API_URL = "/api";
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '/api',
+  headers: { 'Content-Type': 'application/json' }
+});
 
-export const login = async (username, password) => {
-    const response = await axios.post($`{API_URL}/app1/login`, {
-        username,
-        password,
-    });
-    localStorage.setItem("token", response.data.token);
-    return response.data;
-};
+// автоматически пробрасываем JWT
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('jwt');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
-export const register = async (userData) => {
-    return await axios.post($`{API_URL}/app1/register`, userData);
-};
+export async function login({ username, password }) {
+  const { data } = await API.post('/app1/login', { username, password });
+  localStorage.setItem('jwt', data.token);       // ожидаем { token: '...' }
+  return data;
+}
 
-export const logout = () => {
-    localStorage.removeItem("token");
-};
+export async function register(payload) {
+  return API.post('/app1/register', payload);
+}
 
-export const getUserById = async (id) => {
-    const token = localStorage.getItem("token");
-    const response = await axios.get($`{API_URL}/app2/api/v1/user/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+export function logout() {
+  localStorage.removeItem('jwt');
+}
 
-    return response.data;
-};
+export function isLoggedIn() {
+  return Boolean(localStorage.getItem('jwt'));
+}

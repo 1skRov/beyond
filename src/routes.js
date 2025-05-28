@@ -1,4 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router';
+import { isLoggedIn } from '@/services/authService';
 import MainPage from '@/pages/MainPage/MainPage.vue';
 import Profile from "@/pages/Profile/Profile.vue";
 import University from "@/pages/University/UniversityItem2.vue";
@@ -20,12 +21,16 @@ import EmptyLayout from '@/pages/EmptyLayout.vue';
 // an
 import Analytics from "@/pages/Analytics/Analytics.vue"
 
+//reg
+import RegisterPage from "@/pages/Register/Register.vue"
+
 const routes = [
     {
         path: '/',
         component: EmptyLayout,
         children: [
             {path: '', name: 'Home', component: MainPage},
+            { path: '/register',name: 'Register',component: RegisterPage },
             {path: 'courses-item', name: 'CoursesItem', component: CourseItemPage},
         ]
     },
@@ -39,6 +44,7 @@ const routes = [
     {
         path: '/',
         component: DefaultLayout,
+        meta: { requiresAuth: true },
         children: [
             {path: 'profile', name: 'Profile', component: Profile},
             {path: 'university', name: 'University', component: University},
@@ -61,6 +67,16 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+});
+
+router.beforeEach((to, _from, next) => {
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next({ name: 'Home', query: { redirect: to.fullPath } });
+  } else if ((to.name === 'Home' || to.name === 'Register') && isLoggedIn()) {
+    next({ name: 'Profile' });
+  } else {
+    next();
+  }
 });
 
 export default router;
