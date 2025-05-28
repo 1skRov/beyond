@@ -1,4 +1,12 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useAuthStore } from '@/store/authStore';
+
+const auth = useAuthStore();
+
+onMounted(() => {
+  if (!auth.user) auth.loadProfile();
+});
 import DayHead from "@/pages/Test/DayHead.vue";
 import TestCharts from "@/pages/Profile/TestCharts.vue";
 
@@ -22,6 +30,7 @@ const programs = [
 </script>
 
 <template>
+  <pre>{{auth}}</pre>
   <div class="profile">
     <div class="profile-head">
       <div class="profile-image">

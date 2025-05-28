@@ -2,11 +2,13 @@
 import MainHeader from "@/components/MainComponents/MainHeader.vue";
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { login } from '@/services/authService';
+import { useAuthStore } from '@/store/authStore';
+
 const router = useRouter();
-const form = reactive({ username: '', password: '' });
-const loading = ref(false);
-const error = ref('');
+const auth   = useAuthStore();
+
+const form   = reactive({ username: '', password: '' });
+const error  = ref('');
 
 async function submit() {
   error.value = '';
@@ -15,13 +17,10 @@ async function submit() {
     return;
   }
   try {
-    loading.value = true;
-    await login(form);
-    router.replace('/profile'); // первый приватный маршрут
-  } catch (e) {
-    error.value = e.response?.data?.detail || 'Неверные учётные данные';
-  } finally {
-    loading.value = false;
+    await auth.login(form);
+    router.replace('/profile');
+  } catch (_) {
+    error.value = auth.error || 'Неверные учётные данные';
   }
 }
 
