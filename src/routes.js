@@ -1,5 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router';
-import { isLoggedIn } from '@/services/authService';
+import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/MainPage/MainPage.vue';
 import Profile from "@/pages/Profile/Profile.vue";
 import University from "@/pages/University/UniversityItem2.vue";
@@ -21,24 +20,26 @@ import EmptyLayout from '@/pages/EmptyLayout.vue';
 // an
 import Analytics from "@/pages/Analytics/Analytics.vue"
 
-//reg
-import RegisterPage from "@/pages/Register/Register.vue"
+//auth
+import Login from '@/pages/Register/Login.vue';
+import Register from '@/pages/Register/Register.vue';
 
 const routes = [
     {
         path: '/',
         component: EmptyLayout,
         children: [
-            {path: '', name: 'Home', component: MainPage},
-            { path: '/register',name: 'Register',component: RegisterPage },
-            {path: 'courses-item', name: 'CoursesItem', component: CourseItemPage},
+            { path: '', name: 'Home', component: MainPage },
+            { path: 'courses-item', name: 'CoursesItem', component: CourseItemPage },
+            { path: "login", name: "Login", component: Login },
+            { path: "register", name: "Register", component: Register },
         ]
     },
     {
         path: '/test-item',
         component: EmptyLayout,
         children: [
-            {path: '', name: 'testItem', component: TestItem}
+            { path: '', name: 'testItem', component: TestItem }
         ]
     },
     {
@@ -46,22 +47,23 @@ const routes = [
         component: DefaultLayout,
         meta: { requiresAuth: true },
         children: [
-            {path: 'profile', name: 'Profile', component: Profile},
-            {path: 'university', name: 'University', component: University},
+            { path: 'profile', name: 'Profile', component: Profile },
+            { path: 'university', name: 'University', component: University },
             {
                 path: 'tests', name: 'tests', component: TestMainPage, children: [
-                    {path: '', redirect: {name: 'single-tests'}},
-                    {path: 'single-test', name: 'single-tests', component: SingleTestPage},
-                    {path: 'multiple-test', name: 'multiple-tests', component: MultipleTestPage},
+                    { path: '', redirect: { name: 'single-tests' } },
+                    { path: 'single-test', name: 'single-tests', component: SingleTestPage },
+                    { path: 'multiple-test', name: 'multiple-tests', component: MultipleTestPage },
                 ]
             },
-            {path: 'result', name: 'Result', component: Result},
-            {path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage, children: []},
-            {path: 'road-item', name: 'RoadItem', component: RoadItem},
-            {path: 'courses', name: 'Courses', component: MainCoursesPage},
-            {path: 'analytics', name: 'Analytics', component: Analytics},
+            { path: 'result', name: 'Result', component: Result },
+            { path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage, children: [] },
+            { path: 'road-item', name: 'RoadItem', component: RoadItem },
+            { path: 'courses', name: 'Courses', component: MainCoursesPage },
+            { path: 'analytics', name: 'Analytics', component: Analytics },
         ]
-    }
+    },
+    { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
 const router = createRouter({
@@ -69,14 +71,21 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, _from, next) => {
-  if (to.meta.requiresAuth && !isLoggedIn()) {
-    next({ name: 'Home', query: { redirect: to.fullPath } });
-  } else if ((to.name === 'Home' || to.name === 'Register') && isLoggedIn()) {
-    next({ name: 'Profile' });
-  } else {
-    next();
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("jwt");
+
+  if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
+    return next({ name: "Login" });
   }
+
+  if (
+    (to.name === "Login" || to.name === "Register") &&
+    token
+  ) {
+    return next({ name: "Profile" });
+  }
+
+  next();
 });
 
 export default router;

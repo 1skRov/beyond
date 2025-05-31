@@ -1,14 +1,10 @@
 <script setup>
-import { onMounted } from 'vue';
-import { useAuthStore } from '@/store/authStore';
-
-const auth = useAuthStore();
-
-onMounted(() => {
-  if (!auth.user) auth.loadProfile();
-});
 import DayHead from "@/pages/Test/DayHead.vue";
 import TestCharts from "@/pages/Profile/TestCharts.vue";
+import { ref, onMounted } from "vue";
+import UserShowDrawer from "@/pages/Profile/UserShowDrawer.vue";
+import { getUserById } from "@/services/userService";
+import { getUserIdFromToken } from "@/utils/jwt";
 
 const programs = [
   'Программная инженерия',
@@ -26,11 +22,30 @@ const programs = [
   'Образовательные технологии',
   'Экологическая инженерия',
   'Биоинформатика и биотехнологии'
-]
+];
+
+const user = ref(null);
+const editdrawer = ref(false);
+const openEdit = () => {
+  editdrawer.value = true;
+  console.log("test");
+};
+
+onMounted(async () => {
+  const userId = getUserIdFromToken();
+  if (!userId) return;
+
+  try {
+    user.value = await getUserById(userId);
+  } catch (err) {
+    console.error("Ошибка загрузки профиля:", err);
+  }
+});
 </script>
 
 <template>
-  <pre>{{auth}}</pre>
+  <!-- <pre>{{ user }}</pre> -->
+  <button v-tooltip="'Редактировать профиль'"><i class="fi fi-sr-file-edit"></i></button>
   <div class="profile">
     <div class="profile-head">
       <div class="profile-image">
@@ -39,11 +54,11 @@ const programs = [
       <div class="user-info">
         <div class="info-head">
           <div class="name-login">
-            <p>Элизабет Олсен</p>
-            <span>lizzie_olsen</span>
+            <p>{{ user?.name || "-" }} {{ user?.surname || "-" }}</p>
+            <span>{{ user?.username || "-" }}</span>
           </div>
           <div class="redact-buttons">
-            <button v-tooltip="'Редактировать профиль'"><i class="fi fi-sr-file-edit"></i></button>
+            <button v-tooltip="'Редактировать профиль'" @click="openEdit"><i class="fi fi-sr-file-edit"></i></button>
           </div>
         </div>
         <div class="info-body">
@@ -52,60 +67,60 @@ const programs = [
               <i class="fi fi-sr-calendar text-blue-600" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">дата рождения</span>
-                <p class="value">19.12.1997</p>
+                <p class="value">{{ user?.birth_date || "-" }}</p>
               </div>
             </div>
             <div class="flex gap-2 items-center">
               <i class="fi fi-ss-house-chimney-window text-blue-600" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">Город</span>
-                <p class="value">Шымкент</p>
+                <p class="value">{{ user?.city || "-" }}</p>
               </div>
             </div>
             <div class="flex gap-2 items-center">
               <i class="fi fi-sr-envelope text-blue-600" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">почта</span>
-                <p class="value">aslfnaslfnas@gmail.com</p>
+                <p class="value">{{ user?.email || "-" }}</p>
               </div>
             </div>
           </div>
           <div class="info-block">
             <div class="flex flex-col">
               <span class="label">id</span>
-              <p class="value">asldfhasdad-adhaidhbaoddj</p>
+              <p class="value">{{ user?.id || "-" }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">школа</span>
-              <p class="value">Аль Фараби</p>
+              <p class="value">{{ user?.school || "-" }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">класс</span>
-              <p class="value">Аль Фараби</p>
+              <p class="value">{{ user?.class_level || "-" }}</p>
             </div>
           </div>
           <div class="info-block">
             <div class="flex flex-col">
               <span class="label">Регистрация в системе</span>
-              <p class="value">12,12,1293</p>
+              <p class="value">{{ user?.created_at }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">Обновление профиля</span>
-              <p class="value">13,12,2003</p>
+              <p class="value">{{ user?.updated_at }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">Роль</span>
-              <p class="value">Абитуриент</p>
+              <p class="value">{{ user?.role }}</p>
             </div>
           </div>
           <div class="info-block">
             <div class="flex flex-col">
               <span class="label">Профильный предмет 1</span>
-              <p class="value">фыафывы</p>
+              <p class="value">{{ user?.profile_subjects?.[0] || "-" }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">Профильные предмет 2</span>
-              <p class="value">физика</p>
+              <p class="value">{{ user?.profile_subjects?.[1] || "-" }}</p>
             </div>
           </div>
         </div>
@@ -140,6 +155,7 @@ const programs = [
       <TestCharts></TestCharts>
     </div>
   </div>
+  <UserShowDrawer :visible="editdrawer" :userData="user" @update:visible="editdrawer = $event" @updated="fetchUser" />
 </template>
 
 <style scoped>
@@ -236,6 +252,7 @@ const programs = [
     }
   }
 }
+
 .test-results {
   @apply w-full px-2.5 py-2 rounded-md mt-3;
   background: #f2f7fa;

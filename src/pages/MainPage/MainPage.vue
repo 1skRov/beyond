@@ -1,32 +1,5 @@
 <script setup>
 import MainHeader from "@/components/MainComponents/MainHeader.vue";
-import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/store/authStore';
-
-const router = useRouter();
-const auth   = useAuthStore();
-
-const form   = reactive({ username: '', password: '' });
-const error  = ref('');
-
-async function submit() {
-  error.value = '';
-  if (!form.username || !form.password) {
-    error.value = 'Введите логин и пароль';
-    return;
-  }
-  try {
-    await auth.login(form);
-    router.replace('/profile');
-  } catch (_) {
-    error.value = auth.error || 'Неверные учётные данные';
-  }
-}
-
-function goToRegister() {
-  router.push('/register');
-}
 </script>
 
 <template>
@@ -67,29 +40,8 @@ function goToRegister() {
     </main>
   </div>
   <main-header />
-  <div>
-    <form class="mt-10 bg-white/80 p-6 rounded-xl shadow-lg w-full max-w-xs backdrop-blur" @submit.prevent="submit">
-      <h2 class="text-xl font-semibold mb-4 text-sky-700">Вход</h2>
-      <label class="block mb-3">
-        <span class="text-sm">Логин</span>
-        <input v-model="form.username" type="text" autocomplete="username" class="border rounded w-full px-3 py-2" />
-      </label>
-      <label class="block mb-4">
-        <span class="text-sm">Пароль</span>
-        <input v-model="form.password" type="password" autocomplete="current-password"
-          class="border rounded w-full px-3 py-2" />
-      </label>
-
-      <button type="submit" :disabled="loading" class="bg-sky-600 hover:bg-sky-700 text-white w-full py-2 rounded">
-        {{ loading ? 'Входим...' : 'Войти' }}
-      </button>
-
-      <p v-if="error" class="mt-3 text-red-600 text-sm">{{ error }}</p>
-
-      <button type="button" @click="goToRegister" class="mt-4 text-sky-700 underline text-sm">
-        Регистрация
-      </button>
-    </form>
+  <div class="auth">
+  
   </div>
 </template>
 

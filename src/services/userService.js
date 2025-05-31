@@ -1,21 +1,33 @@
-import axios from 'axios';
-import { getToken } from './tokenService';
+import axios from "axios";
 
-const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '/api',
-    headers: { 'Content-Type': 'application/json' }
+const API_BASE = import.meta.env.VITE_API_URL;
+
+const userApi = axios.create({
+  baseURL: API_BASE,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-api.interceptors.request.use(cfg => {
-    const token = getToken();
-    if (token) cfg.headers.Authorization = `Bearer ${token}`;
-    return cfg;
+userApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
-export function login(credentials) {
-    return api.post('/login', credentials);        // { data: { token } }
+// Получить профиль пользователя по ID
+export function getUserById(id) {
+  return userApi.get(`/app2/api/v1/user/${id}`).then(res => res.data);
 }
 
-export function fetchUser(id) {
-    return api.get(`/v1/user/${id}`);              // { data: { …user } }
+// Обновить данные пользователя
+export function updateUser(id, payload) {
+  return userApi.put(`/2pp2/api/v1/user/${id}`, payload).then(res => res.data);
+}
+
+// Удалить пользователя
+export function deleteUser(id) {
+  return userApi.delete(`/app2/api/v1/user/${id}`).then(res => res.data);
 }

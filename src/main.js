@@ -56,6 +56,7 @@ import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 import Timeline from 'primevue/timeline';
 import CascadeSelect from 'primevue/cascadeselect';
+import IftaLabel from 'primevue/iftalabel';
 
 
 
@@ -131,6 +132,7 @@ app.component('AccordionHeader',AccordionHeader);
 app.component('AccordionContent',AccordionContent);
 app.component('Timeline',Timeline);
 app.component("CascadeSelect",CascadeSelect);
+app.component("IftaLabel", IftaLabel);
 
 
 app.use(router);
