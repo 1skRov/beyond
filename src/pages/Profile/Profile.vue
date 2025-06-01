@@ -31,16 +31,18 @@ const openEdit = () => {
   console.log("test");
 };
 
-onMounted(async () => {
+async function fetchUser() {
   const userId = getUserIdFromToken();
   if (!userId) return;
-
   try {
     user.value = await getUserById(userId);
   } catch (err) {
     console.error("Ошибка загрузки профиля:", err);
   }
-});
+}
+фгещ
+onMounted(fetchUser);
+
 function formatDate(dateStr) {
   if (!dateStr) return "-";
   const date = new Date(dateStr);
