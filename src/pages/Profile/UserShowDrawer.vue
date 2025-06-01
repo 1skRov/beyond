@@ -36,16 +36,25 @@
       <!-- Результаты ЕНТ -->
       <div class="field">
         <label>Результаты ЕНТ</label>
-        <div v-for="(score, index) in form.ent_scores" :key="index" class="mb-3">
+
+        <!-- Заглушка, если нет результатов -->
+        <div v-if="form.ent_scores.length === 0" class="text-sm italic text-gray-500 mb-2">
+          Пока нет добавленных результатов. Нажмите "Добавить результат".
+        </div>
+
+        <!-- Список результатов -->
+        <div v-for="(score, index) in form.ent_scores" :key="index" class="mb-3 p-2 border rounded-md bg-gray-50">
           <div class="mb-1">
             <label>Дата отправки</label>
-            <Calendar v-model="score.submitted_at" showIcon dateFormat="yy-mm-dd" class="w-full" />
+            <DatePicker v-model="score.submitted_at" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
           </div>
           <div v-for="i in 5" :key="i" class="mb-1">
             <label>Предмет {{ i }}</label>
             <InputText v-model.number="score.scores['additionalProp' + i]" type="number" class="w-full" />
           </div>
         </div>
+
+        <!-- Кнопка всегда видна -->
         <Button label="Добавить результат" icon="pi pi-plus" class="mt-2" @click="addENTScore" />
       </div>
     </div>
@@ -102,7 +111,10 @@ watch(() => props.userData, (val) => {
     Object.assign(form, copy);
     form.birth_date = new Date(copy.birth_date);
     form.photo_preview = copy.photo_url;
-    if (!form.ent_scores) form.ent_scores = [];
+
+    if (!Array.isArray(form.ent_scores)) {
+      form.ent_scores = [];
+    }
   }
 }, { immediate: true });
 
