@@ -5,6 +5,13 @@
       <strong class="text-lg text-slate-600">Редактировать профиль</strong>
     </template>
     <div class="p-4 space-y-4">
+      <div class="field">
+        <label>Фото профиля</label>
+        <input type="file" @change="onPhotoChange" class="w-full" accept="image/*" />
+        <div v-if="previewUrl" class="mt-2">
+          <img :src="previewUrl" alt="Preview" class="rounded-md w-24 h-24 object-cover border" />
+        </div>
+      </div>
       <div class="field" v-for="(label, key) in personalFields" :key="key">
         <label :for="key">{{ label }}</label>
         <InputText v-model="form[key]" :id="key" class="w-full" size="small" />
@@ -59,6 +66,12 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import { getprof, updateUser, deleteUser } from '@/services/userService';
 import { getUserIdFromToken } from '@/utils/jwt';
 import { DatePicker } from 'primevue';
+import axios from 'axios';
+const API_BASE = import.meta.env.VITE_API_URL;
+
+const userApi = axios.create({
+  baseURL: API_BASE,
+});
 
 const props = defineProps({ visible: Boolean, userData: Object });
 const emit = defineEmits(['update:visible', 'updated']);
@@ -88,6 +101,15 @@ const personalFields = {
   school: 'Школа',
   class_level: 'Класс'
 };
+
+const previewUrl = ref(null);
+const selectedPhoto = ref(null);
+function onPhotoChange(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  selectedPhoto.value = file;
+  previewUrl.value = URL.createObjectURL(file);
+}
 
 watch(() => props.userData, (val) => {
   if (val) {
@@ -143,6 +165,18 @@ async function onSave() {
     }))
   };
   await updateUser(id, payload);
+
+  if (selectedPhoto.value) {
+    const formData = new FormData();
+    formData.append('photo', selectedPhoto.value);
+
+    try {
+      const res = await userApi.post(`/app2/user/${id}/photo`, formData);
+      console.log("Фото успешно загружено:", res.data);
+    } catch (err) {
+      console.error("Ошибка загрузки фото:", err);
+    }
+  }
   emit('updated');
   emit('update:visible', false);
 }
