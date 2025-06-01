@@ -1,33 +1,29 @@
 <template>
   <Drawer :visible="visible" @update:visible="$emit('update:visible', $event)" position="right" :modal="true"
     :dismissableMask="true" :header="header" :style="{ width: '600px' }">
+    <template #header>
+      <strong class="text-lg text-slate-600">Редактировать профиль</strong>
+    </template>
     <div class="p-4 space-y-4">
-
-      <!-- Личные данные -->
       <div class="field" v-for="(label, key) in personalFields" :key="key">
         <label :for="key">{{ label }}</label>
-        <InputText v-model="form[key]" :id="key" class="w-full" />
+        <InputText v-model="form[key]" :id="key" class="w-full" size="small" />
       </div>
-
-      <!-- Дата рождения -->
       <div class="field">
         <label>Дата рождения</label>
-        <DatePicker v-model="form.birth_date" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
+        <DatePicker v-model="form.birth_date" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full"
+          size="small" />
       </div>
-
-      <!-- Профильные предметы -->
       <div class="field">
         <label>Профильный предмет 1</label>
         <AutoComplete v-model="form.profile_subjects[0]" :suggestions="filteredSubjects1"
-          @complete="e => searchSubject(e, 0)" class="w-full" />
+          @complete="e => searchSubject(e, 0)" class="w-full" size="small" />
       </div>
       <div class="field">
         <label>Профильный предмет 2</label>
         <AutoComplete v-model="form.profile_subjects[1]" :suggestions="filteredSubjects2"
-          @complete="e => searchSubject(e, 1)" class="w-full" />
+          @complete="e => searchSubject(e, 1)" class="w-full" size="small" lang="ru" />
       </div>
-
-      <!-- Результаты ЕНТ -->
       <div class="field">
         <label>Результаты ЕНТ</label>
         <div v-if="form.ent_scores.length === 0" class="text-sm italic text-gray-500 mb-2">
@@ -36,23 +32,22 @@
         <div v-for="(score, index) in form.ent_scores" :key="index" class="mb-3 p-2 border rounded-md bg-gray-50">
           <div class="mb-1">
             <label>Дата отправки</label>
-            <DatePicker v-model="score.submitted_at" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
+            <DatePicker v-model="score.submitted_at" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full"
+              size="small" />
           </div>
-
           <div class="mb-1" v-for="(label, key) in score.scores" :key="key">
             <label>{{ key }}</label>
-            <InputText v-model.number="score.scores[key]" type="number" class="w-full" />
+            <InputText v-model.number="score.scores[key]" type="number" class="w-full" size="small" />
           </div>
         </div>
-        <Button label="Добавить результат" icon="pi pi-plus" class="mt-2" @click="addENTScore" />
+        <Button size="small" label="Добавить результат" icon="pi pi-plus" class="mt-2" @click="addENTScore" />
       </div>
     </div>
-
     <template #footer>
-      <div class="flex justify-end gap-2 p-4">
-        <Button label="Сохранить" icon="pi pi-check" @click="onSave" />
-        <Button label="Отмена" icon="pi pi-times" severity="danger" @click="$emit('update:visible', false)" />
-        <Button label="Удалить профиль" icon="pi pi-times" severity="danger" @click="onDelete" />
+      <div class="flex justify-end gap-2 px-4">
+        <Button size="small" label="Отмена" severity="secondary" @click="$emit('update:visible', false)" />
+        <Button size="small" label="Удалить профиль" severity="danger" @click="onDelete" />
+        <Button size="small" label="Сохранить" @click="onSave" />
       </div>
     </template>
   </Drawer>
@@ -183,13 +178,10 @@ function searchSubject(event, index) {
 
 <style scoped>
 .field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
+  @apply w-full;
 }
 
 label {
-  margin-bottom: 0.25rem;
-  font-weight: 500;
+  @apply mb-0.5 font-medium;
 }
 </style>
