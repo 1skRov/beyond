@@ -4,9 +4,6 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
 const userApi = axios.create({
   baseURL: API_BASE,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 userApi.interceptors.request.use((config) => {
@@ -23,8 +20,12 @@ export function getUserById(id) {
 }
 
 // Обновить данные пользователя
-export function updateUser(id, payload) {
-  return userApi.put(`/app2/api/v1/user/${id}`, payload).then(res => res.data);
+export function updateUser(id, payload, isMultipart = false) {
+  const headers = isMultipart
+    ? { 'Content-Type': 'multipart/form-data' }
+    : { 'Content-Type': 'application/json' };
+
+  return userApi.put(`/app2/api/v1/user/${id}`, payload, { headers }).then(res => res.data);
 }
 
 // Удалить пользователя

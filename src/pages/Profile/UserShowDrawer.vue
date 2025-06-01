@@ -2,12 +2,6 @@
   <Drawer :visible="visible" @update:visible="$emit('update:visible', $event)" position="right" :modal="true"
     :dismissableMask="true" :header="header" :style="{ width: '600px' }">
     <div class="p-4 space-y-4">
-      <!-- Фото -->
-      <div class="field">
-        <label>Фото профиля</label>
-        <input type="file" @change="onPhotoChange" />
-        <img v-if="form.photo_preview" :src="form.photo_preview" class="w-24 mt-2 rounded" />
-      </div>
 
       <!-- Личные данные -->
       <div class="field" v-for="(label, key) in personalFields" :key="key">
@@ -36,41 +30,30 @@
       <!-- Результаты ЕНТ -->
       <div class="field">
         <label>Результаты ЕНТ</label>
-
-        <!-- Заглушка, если нет результатов -->
         <div v-if="form.ent_scores.length === 0" class="text-sm italic text-gray-500 mb-2">
           Пока нет добавленных результатов. Нажмите "Добавить результат".
         </div>
-
-        <!-- Список результатов -->
         <div v-for="(score, index) in form.ent_scores" :key="index" class="mb-3 p-2 border rounded-md bg-gray-50">
           <div class="mb-1">
             <label>Дата отправки</label>
             <DatePicker v-model="score.submitted_at" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
           </div>
-          <div class="mb-1">
-            <label>История Казахстана</label>
+          <div class="mb-1"><label>История Казахстана</label>
             <InputText v-model.number="score.scores.additionalProp1" type="number" class="w-full" />
           </div>
-          <div class="mb-1">
-            <label>Грамотность чтения</label>
+          <div class="mb-1"><label>Грамотность чтения</label>
             <InputText v-model.number="score.scores.additionalProp2" type="number" class="w-full" />
           </div>
-          <div class="mb-1">
-            <label>Математическая грамотность</label>
+          <div class="mb-1"><label>Математическая грамотность</label>
             <InputText v-model.number="score.scores.additionalProp3" type="number" class="w-full" />
           </div>
-          <div class="mb-1">
-            <label>{{ form.profile_subjects[0] || 'Профильный предмет 1' }}</label>
+          <div class="mb-1"><label>{{ form.profile_subjects[0] || 'Профильный предмет 1' }}</label>
             <InputText v-model.number="score.scores.additionalProp4" type="number" class="w-full" />
           </div>
-          <div class="mb-1">
-            <label>{{ form.profile_subjects[1] || 'Профильный предмет 2' }}</label>
+          <div class="mb-1"><label>{{ form.profile_subjects[1] || 'Профильный предмет 2' }}</label>
             <InputText v-model.number="score.scores.additionalProp5" type="number" class="w-full" />
           </div>
         </div>
-
-        <!-- Кнопка всегда видна -->
         <Button label="Добавить результат" icon="pi pi-plus" class="mt-2" @click="addENTScore" />
       </div>
     </div>
@@ -83,6 +66,7 @@
     </template>
   </Drawer>
 </template>
+
 
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue';
@@ -104,9 +88,7 @@ const form = reactive({
   city: '',
   class_level: 0,
   school: '',
-  photo_url: '',
-  photo_file: null,
-  photo_preview: '',
+  photo_url: '', // оставлено для API, но не редактируется
   profile_subjects: ['', ''],
   ent_scores: []
 });
@@ -126,8 +108,6 @@ watch(() => props.userData, (val) => {
     const copy = JSON.parse(JSON.stringify(val));
     Object.assign(form, copy);
     form.birth_date = new Date(copy.birth_date);
-    form.photo_preview = copy.photo_url;
-
     if (!Array.isArray(form.ent_scores)) {
       form.ent_scores = [];
     }
@@ -138,14 +118,6 @@ onMounted(async () => {
   const res = await getprof();
   subjectOptions.value = res?.subjects || [];
 });
-
-function onPhotoChange(event) {
-  const file = event.target.files[0];
-  if (file) {
-    form.photo_file = file;
-    form.photo_preview = URL.createObjectURL(file);
-  }
-}
 
 function addENTScore() {
   form.ent_scores.push({
@@ -174,23 +146,7 @@ async function onSave() {
       scores: { ...score.scores }
     }))
   };
-
-  // Отправка как FormData, если есть файл
-  if (form.photo_file) {
-    const formData = new FormData();
-    for (const [key, value] of Object.entries(payload)) {
-      if (key === 'ent_scores') {
-        formData.append(key, JSON.stringify(value));
-      } else {
-        formData.append(key, value);
-      }
-    }
-    formData.append('photo', form.photo_file);
-    await updateUser(id, formData, true);
-  } else {
-    await updateUser(id, payload);
-  }
-
+  await updateUser(id, payload);
   emit('updated');
   emit('update:visible', false);
 }
@@ -210,6 +166,7 @@ function searchSubject(event, index) {
   }
 }
 </script>
+
 
 <style scoped>
 .field {
