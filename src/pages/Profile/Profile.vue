@@ -50,7 +50,6 @@ function formatDate(dateStr) {
 </script>
 
 <template>
-  <pre>{{user}}</pre>
   <div class="profile">
     <div class="profile-head">
       <div class="profile-image">
@@ -158,7 +157,7 @@ function formatDate(dateStr) {
     </div>
     <div class="test-results">
       <p class="font-semibold text-lg">Результаты ЕНТ</p>
-      <TestCharts></TestCharts>
+      <TestCharts v-if="user?.ent_scores?.length" :ent="user.ent_scores" />
     </div>
   </div>
   <UserShowDrawer :visible="editdrawer" :userData="user" @update:visible="editdrawer = $event" @updated="fetchUser" />

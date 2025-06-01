@@ -127,8 +127,15 @@ function addENTScore() {
 }
 
 function formatDate(date) {
-  return new Date(date).toISOString();
+  const d = new Date(date);
+  const pad = (n) => n.toString().padStart(2, '0');
+  const yyyy = d.getFullYear();
+  const MM = pad(d.getMonth() + 1);
+  const dd = pad(d.getDate());
+
+  return `${yyyy}-${MM}-${dd}`;
 }
+
 
 async function onSave() {
   const id = form.id || getUserIdFromToken();
