@@ -48,9 +48,25 @@
             <label>Дата отправки</label>
             <DatePicker v-model="score.submitted_at" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
           </div>
-          <div v-for="i in 5" :key="i" class="mb-1">
-            <label>Предмет {{ i }}</label>
-            <InputText v-model.number="score.scores['additionalProp' + i]" type="number" class="w-full" />
+          <div class="mb-1">
+            <label>История Казахстана</label>
+            <InputText v-model.number="score.scores.additionalProp1" type="number" class="w-full" />
+          </div>
+          <div class="mb-1">
+            <label>Грамотность чтения</label>
+            <InputText v-model.number="score.scores.additionalProp2" type="number" class="w-full" />
+          </div>
+          <div class="mb-1">
+            <label>Математическая грамотность</label>
+            <InputText v-model.number="score.scores.additionalProp3" type="number" class="w-full" />
+          </div>
+          <div class="mb-1">
+            <label>{{ form.profile_subjects[0] || 'Профильный предмет 1' }}</label>
+            <InputText v-model.number="score.scores.additionalProp4" type="number" class="w-full" />
+          </div>
+          <div class="mb-1">
+            <label>{{ form.profile_subjects[1] || 'Профильный предмет 2' }}</label>
+            <InputText v-model.number="score.scores.additionalProp5" type="number" class="w-full" />
           </div>
         </div>
 
