@@ -40,7 +40,6 @@ async function fetchUser() {
     console.error("Ошибка загрузки профиля:", err);
   }
 }
-фгещ
 onMounted(fetchUser);
 
 function formatDate(dateStr) {
