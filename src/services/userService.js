@@ -24,10 +24,14 @@ export function getUserById(id) {
 
 // Обновить данные пользователя
 export function updateUser(id, payload) {
-  return userApi.put(`/2pp2/api/v1/user/${id}`, payload).then(res => res.data);
+  return userApi.put(`/app2/api/v1/user/${id}`, payload).then(res => res.data);
 }
 
 // Удалить пользователя
 export function deleteUser(id) {
   return userApi.delete(`/app2/api/v1/user/${id}`).then(res => res.data);
+}
+
+export function getprof() {
+  return userApi.get(`app2/api/v1/profile-subjects`).then(res => res.data);
 }

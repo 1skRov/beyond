@@ -41,11 +41,15 @@ onMounted(async () => {
     console.error("Ошибка загрузки профиля:", err);
   }
 });
+function formatDate(dateStr) {
+  if (!dateStr) return "-";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("ru-RU");
+}
 </script>
 
 <template>
-  <!-- <pre>{{ user }}</pre> -->
-  <button v-tooltip="'Редактировать профиль'"><i class="fi fi-sr-file-edit"></i></button>
+  <pre>{{ user }}</pre>
   <div class="profile">
     <div class="profile-head">
       <div class="profile-image">
@@ -67,7 +71,7 @@ onMounted(async () => {
               <i class="fi fi-sr-calendar text-blue-600" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">дата рождения</span>
-                <p class="value">{{ user?.birth_date || "-" }}</p>
+                <p class="value">{{ formatDate(user?.birth_date) || "-" }}</p>
               </div>
             </div>
             <div class="flex gap-2 items-center">
@@ -102,11 +106,11 @@ onMounted(async () => {
           <div class="info-block">
             <div class="flex flex-col">
               <span class="label">Регистрация в системе</span>
-              <p class="value">{{ user?.created_at }}</p>
+              <p class="value">{{ formatDate(user?.created_at) }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">Обновление профиля</span>
-              <p class="value">{{ user?.updated_at }}</p>
+              <p class="value">{{ formatDate(user?.updated_at) || "Еще не было обновлений" }}</p>
             </div>
             <div class="flex flex-col">
               <span class="label">Роль</span>
@@ -152,6 +156,7 @@ onMounted(async () => {
       </div>
     </div>
     <div class="test-results">
+      <p class="font-semibold text-lg">Результаты ЕНТ</p>
       <TestCharts></TestCharts>
     </div>
   </div>

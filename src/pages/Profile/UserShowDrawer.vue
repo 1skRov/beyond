@@ -1,50 +1,52 @@
 <template>
-  <Drawer v-model:visible="visible" position="right" :modal="true" :dismissableMask="true" :header="header" :style="{ width: '500px' }">
+  <Drawer :visible="visible" @update:visible="$emit('update:visible', $event)" position="right" :modal="true"
+    :dismissableMask="true" :header="header" :style="{ width: '600px' }">
     <div class="p-4 space-y-4">
+      <!-- Фото -->
       <div class="field">
-        <label for="name">Имя</label>
-        <InputText v-model="form.name" id="name" class="w-full" />
+        <label>Фото профиля</label>
+        <input type="file" @change="onPhotoChange" />
+        <img v-if="form.photo_preview" :src="form.photo_preview" class="w-24 mt-2 rounded" />
       </div>
 
-      <div class="field">
-        <label for="surname">Фамилия</label>
-        <InputText v-model="form.surname" id="surname" class="w-full" />
+      <!-- Личные данные -->
+      <div class="field" v-for="(label, key) in personalFields" :key="key">
+        <label :for="key">{{ label }}</label>
+        <InputText v-model="form[key]" :id="key" class="w-full" />
       </div>
 
+      <!-- Дата рождения -->
       <div class="field">
-        <label for="username">Логин</label>
-        <InputText v-model="form.username" id="username" class="w-full" />
+        <label>Дата рождения</label>
+        <DatePicker v-model="form.birth_date" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
       </div>
 
+      <!-- Профильные предметы -->
       <div class="field">
-        <label for="email">Email</label>
-        <InputText v-model="form.email" id="email" class="w-full" />
+        <label>Профильный предмет 1</label>
+        <AutoComplete v-model="form.profile_subjects[0]" :suggestions="filteredSubjects1"
+          @complete="e => searchSubject(e, 0)" class="w-full" />
+      </div>
+      <div class="field">
+        <label>Профильный предмет 2</label>
+        <AutoComplete v-model="form.profile_subjects[1]" :suggestions="filteredSubjects2"
+          @complete="e => searchSubject(e, 1)" class="w-full" />
       </div>
 
+      <!-- Результаты ЕНТ -->
       <div class="field">
-        <label for="birth_date">Дата рождения</label>
-        <InputText v-model="form.birth_date" id="birth_date" class="w-full" placeholder="YYYY-MM-DD" />
-      </div>
-
-      <div class="field">
-        <label for="city">Город</label>
-        <InputText v-model="form.city" id="city" class="w-full" />
-      </div>
-
-      <div class="field">
-        <label for="school">Школа</label>
-        <InputText v-model="form.school" id="school" class="w-full" />
-      </div>
-
-      <div class="field">
-        <label for="class_level">Класс</label>
-        <InputText v-model.number="form.class_level" id="class_level" class="w-full" type="number" />
-      </div>
-
-      <div class="field">
-        <label for="profile_subjects">Профильные предметы</label>
-        <InputText v-model="form.profile_subjects[0]" placeholder="Предмет 1" class="w-full mb-2" />
-        <InputText v-model="form.profile_subjects[1]" placeholder="Предмет 2" class="w-full" />
+        <label>Результаты ЕНТ</label>
+        <div v-for="(score, index) in form.ent_scores" :key="index" class="mb-3">
+          <div class="mb-1">
+            <label>Дата отправки</label>
+            <Calendar v-model="score.submitted_at" showIcon dateFormat="yy-mm-dd" class="w-full" />
+          </div>
+          <div v-for="i in 5" :key="i" class="mb-1">
+            <label>Предмет {{ i }}</label>
+            <InputText v-model.number="score.scores['additionalProp' + i]" type="number" class="w-full" />
+          </div>
+        </div>
+        <Button label="Добавить результат" icon="pi pi-plus" class="mt-2" @click="addENTScore" />
       </div>
     </div>
 
@@ -58,16 +60,15 @@
 </template>
 
 <script setup>
-import { ref, watch, reactive } from 'vue';
-import { updateUser } from '@/services/userService';
+import { ref, reactive, watch, onMounted } from 'vue';
+import { getprof, updateUser } from '@/services/userService';
 import { getUserIdFromToken } from '@/utils/jwt';
+import { DatePicker } from 'primevue';
 
-const props = defineProps({
-  visible: Boolean,
-  userData: Object,
-});
+const props = defineProps({ visible: Boolean, userData: Object });
 const emit = defineEmits(['update:visible', 'updated']);
 
+const subjectOptions = ref([]);
 const form = reactive({
   id: '',
   name: '',
@@ -78,39 +79,117 @@ const form = reactive({
   city: '',
   class_level: 0,
   school: '',
+  photo_url: '',
+  photo_file: null,
+  photo_preview: '',
   profile_subjects: ['', ''],
+  ent_scores: []
 });
 
-watch(
-  () => props.userData,
-  (val) => {
-    if (val) {
-      Object.assign(form, JSON.parse(JSON.stringify(val)));
-    }
-  },
-  { immediate: true }
-);
+const personalFields = {
+  name: 'Имя',
+  surname: 'Фамилия',
+  username: 'Логин',
+  email: 'Email',
+  city: 'Город',
+  school: 'Школа',
+  class_level: 'Класс'
+};
 
-function onSave() {
-  const id = form.id || getUserIdFromToken();
-  updateUser(id, form)
-    .then(() => {
-      emit('updated');
-      emit('update:visible', false);
-    })
-    .catch((err) => {
-      console.error('Ошибка обновления:', err);
-    });
+watch(() => props.userData, (val) => {
+  if (val) {
+    const copy = JSON.parse(JSON.stringify(val));
+    Object.assign(form, copy);
+    form.birth_date = new Date(copy.birth_date);
+    form.photo_preview = copy.photo_url;
+    if (!form.ent_scores) form.ent_scores = [];
+  }
+}, { immediate: true });
+
+onMounted(async () => {
+  const res = await getprof();
+  subjectOptions.value = res?.subjects || [];
+});
+
+function onPhotoChange(event) {
+  const file = event.target.files[0];
+  if (file) {
+    form.photo_file = file;
+    form.photo_preview = URL.createObjectURL(file);
+  }
 }
 
-const header = 'Редактировать профиль';
+function addENTScore() {
+  form.ent_scores.push({
+    submitted_at: new Date(),
+    scores: {
+      additionalProp1: 0,
+      additionalProp2: 0,
+      additionalProp3: 0,
+      additionalProp4: 0,
+      additionalProp5: 0
+    }
+  });
+}
+
+function formatDate(date) {
+  return new Date(date).toISOString();
+}
+
+async function onSave() {
+  const id = form.id || getUserIdFromToken();
+  const payload = {
+    ...form,
+    birth_date: formatDate(form.birth_date),
+    ent_scores: form.ent_scores.map(score => ({
+      submitted_at: formatDate(score.submitted_at),
+      scores: { ...score.scores }
+    }))
+  };
+
+  // Отправка как FormData, если есть файл
+  if (form.photo_file) {
+    const formData = new FormData();
+    for (const [key, value] of Object.entries(payload)) {
+      if (key === 'ent_scores') {
+        formData.append(key, JSON.stringify(value));
+      } else {
+        formData.append(key, value);
+      }
+    }
+    formData.append('photo', form.photo_file);
+    await updateUser(id, formData, true);
+  } else {
+    await updateUser(id, payload);
+  }
+
+  emit('updated');
+  emit('update:visible', false);
+}
+
+const filteredSubjects1 = ref([]);
+const filteredSubjects2 = ref([]);
+
+function searchSubject(event, index) {
+  const query = event.query.toLowerCase();
+  const filtered = subjectOptions.value.filter(subject =>
+    subject.toLowerCase().includes(query)
+  );
+  if (index === 0) {
+    filteredSubjects1.value = filtered;
+  } else {
+    filteredSubjects2.value = filtered;
+  }
+}
 </script>
 
 <style scoped>
 .field {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
+
 label {
   margin-bottom: 0.25rem;
   font-weight: 500;

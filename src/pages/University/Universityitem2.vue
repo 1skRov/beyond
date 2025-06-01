@@ -1,9 +1,10 @@
 <script>
+import UniversityList from "./UniversityList.vue";
 import OptionsInformation from "@/pages/University/OptionsInformation.vue";
 
 export default {
   name: "UniversityPage",
-  components: {OptionsInformation},
+  components: {OptionsInformation, UniversityList},
   data() {
     return {
       images: [],
@@ -33,7 +34,8 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="w-full h-full">
+    <UniversityList></UniversityList>
     <div class="un-top">
       <p class="u-title">Евразийский национальный университет имени Л.Н. Гумилёва (ЕНУ)
       </p>
