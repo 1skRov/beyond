@@ -58,6 +58,7 @@ import Timeline from 'primevue/timeline';
 import CascadeSelect from 'primevue/cascadeselect';
 import IftaLabel from 'primevue/iftalabel';
 import DatePicker from 'primevue/datepicker';
+import Slider from 'primevue/slider';
 
 
 
@@ -178,6 +179,7 @@ app.component('Timeline', Timeline);
 app.component("CascadeSelect", CascadeSelect);
 app.component("IftaLabel", IftaLabel);
 app.component("DatePicker", DatePicker);
+app.component("Slider", Slider);
 
 
 app.use(router);
