@@ -14,6 +14,17 @@ userApi.interceptors.request.use((config) => {
   return config;
 });
 
+userApi.interceptors.response.use(
+  res => res,
+  err => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem("jwt");
+      window.location.href = "/login";
+    }
+    return Promise.reject(err);
+  }
+);
+
 // Получить профиль пользователя по ID
 export function getUserById(id) {
   return userApi.get(`/app2/api/v1/user/${id}`).then(res => res.data);

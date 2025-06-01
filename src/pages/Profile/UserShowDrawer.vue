@@ -62,6 +62,7 @@
       <div class="flex justify-end gap-2 p-4">
         <Button label="Сохранить" icon="pi pi-check" @click="onSave" />
         <Button label="Отмена" icon="pi pi-times" severity="danger" @click="$emit('update:visible', false)" />
+        <Button label="Удалить профиль" icon="pi pi-times" severity="danger" @click="onDelete" />
       </div>
     </template>
   </Drawer>
@@ -70,7 +71,7 @@
 
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue';
-import { getprof, updateUser } from '@/services/userService';
+import { getprof, updateUser, deleteUser } from '@/services/userService';
 import { getUserIdFromToken } from '@/utils/jwt';
 import { DatePicker } from 'primevue';
 
@@ -149,6 +150,18 @@ async function onSave() {
   await updateUser(id, payload);
   emit('updated');
   emit('update:visible', false);
+}
+
+async function onDelete() {
+  const id = getUserIdFromToken();
+  try {
+    await deleteUser(id);
+    localStorage.removeItem("jwt");
+    window.location.href = "/login";
+  } catch (err) {
+    console.error("Ошибка удаления пользователя:", err);
+    alert("Не удалось удалить профиль");
+  }
 }
 
 const filteredSubjects1 = ref([]);
