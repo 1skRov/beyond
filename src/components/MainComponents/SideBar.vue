@@ -4,19 +4,23 @@ export default {
   data() {
     return {
       menu: [
-        {title: "Главная", icon: "fi fi-rr-store-alt", link: "/"},
-        {title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests/single-test"},
-        {title: "Материалы", icon: "fi fi-rr-folder", link: "/courses"},
-        {title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap"},
-        {title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university"},
-        {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
-        {title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics"},
+        { title: "Главная", icon: "fi fi-rr-store-alt", link: "/" },
+        { title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests/single-test" },
+        { title: "Материалы", icon: "fi fi-rr-folder", link: "/courses" },
+        { title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap" },
+        { title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university" },
+        { title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/" },
+        { title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics" },
       ]
     }
   },
   methods: {
     toggle(event) {
       this.$refs.op.toggle(event);
+    },
+    logout() {
+      localStorage.removeItem('jwt');
+      this.$router.push('/');
     }
   }
 }
@@ -30,30 +34,23 @@ export default {
         <p class="head-title">Beyond</p>
         <div class="hidden" v-tooltip.right="{
           value: 'Свернуть',
-            pt: {
-                arrow: {
-                    style: {
-                      borderBottomColor: 'var(--p-primary-color)'
-                    }
-                },
-                text: '!bg-primary !text-primary-contrast !font-medium'
-            }
-          }">
+          pt: {
+            arrow: {
+              style: {
+                borderBottomColor: 'var(--p-primary-color)'
+              }
+            },
+            text: '!bg-primary !text-primary-contrast !font-medium'
+          }
+        }">
           <i class="fi fi-rr-angle-double-small-left"></i>
         </div>
       </div>
       <div class="sidebar-menu">
         <div class="" v-for="m in menu" :key="m.id">
-          <router-link
-              :to="m.link"
-              class="block"
-              active-class="router-link-active"
-              exact-active-class="router-link-exact-active"
-          >
-            <div
-                class="menu-item"
-                :class="{ 'active-item': $route.path === m.link }"
-            >
+          <router-link :to="m.link" class="block" active-class="router-link-active"
+            exact-active-class="router-link-exact-active">
+            <div class="menu-item" :class="{ 'active-item': $route.path === m.link }">
               <i :class="m.icon"></i>
               <p>{{ m.title }}</p>
             </div>
@@ -92,7 +89,7 @@ export default {
               <p>Уведомления</p>
             </div>
           </router-link>
-          <div class="popover-setting">
+          <div class="popover-setting"  @click="logout">
             <div class="text-blue-600">
               <i class="fi fi-ss-arrow-left-from-arc"></i>
             </div>
