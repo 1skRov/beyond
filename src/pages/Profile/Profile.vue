@@ -50,6 +50,7 @@ function formatDate(dateStr) {
 </script>
 
 <template>
+  <pre>{{user}}</pre>
   <div class="profile">
     <div class="profile-head">
       <div class="profile-image">

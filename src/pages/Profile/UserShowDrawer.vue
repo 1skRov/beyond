@@ -38,20 +38,10 @@
             <label>Дата отправки</label>
             <DatePicker v-model="score.submitted_at" fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full" />
           </div>
-          <div class="mb-1"><label>История Казахстана</label>
-            <InputText v-model.number="score.scores.additionalProp1" type="number" class="w-full" />
-          </div>
-          <div class="mb-1"><label>Грамотность чтения</label>
-            <InputText v-model.number="score.scores.additionalProp2" type="number" class="w-full" />
-          </div>
-          <div class="mb-1"><label>Математическая грамотность</label>
-            <InputText v-model.number="score.scores.additionalProp3" type="number" class="w-full" />
-          </div>
-          <div class="mb-1"><label>{{ form.profile_subjects[0] || 'Профильный предмет 1' }}</label>
-            <InputText v-model.number="score.scores.additionalProp4" type="number" class="w-full" />
-          </div>
-          <div class="mb-1"><label>{{ form.profile_subjects[1] || 'Профильный предмет 2' }}</label>
-            <InputText v-model.number="score.scores.additionalProp5" type="number" class="w-full" />
+
+          <div class="mb-1" v-for="(label, key) in score.scores" :key="key">
+            <label>{{ key }}</label>
+            <InputText v-model.number="score.scores[key]" type="number" class="w-full" />
           </div>
         </div>
         <Button label="Добавить результат" icon="pi pi-plus" class="mt-2" @click="addENTScore" />
@@ -121,14 +111,17 @@ onMounted(async () => {
 });
 
 function addENTScore() {
+  const profile1 = form.profile_subjects[0] || 'Профильный предмет 1';
+  const profile2 = form.profile_subjects[1] || 'Профильный предмет 2';
+
   form.ent_scores.push({
     submitted_at: new Date(),
     scores: {
-      additionalProp1: 0,
-      additionalProp2: 0,
-      additionalProp3: 0,
-      additionalProp4: 0,
-      additionalProp5: 0
+      'История Казахстана': 0,
+      'Грамотность чтения': 0,
+      'Математическая грамотность': 0,
+      [profile1]: 0,
+      [profile2]: 0
     }
   });
 }
