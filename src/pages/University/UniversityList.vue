@@ -91,6 +91,14 @@ const cities = ref([
 ]);
 const value = ref(50);
 
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function goToUniversity(u) {
+    router.push({ name: 'UniversityItem' });
+}
+
 
 </script>
 <template>
@@ -121,7 +129,7 @@ const value = ref(50);
             </div>
         </div>
         <div class="list">
-            <div class="university-item" v-for="u in universities">
+            <div class="university-item" v-for="u in universities" :key="u.name" @click="goToUniversity(u)">
                 <div class="image">
                     <img src="@/assets/images/wegwfaf.jpg" alt="">
                 </div>
@@ -134,8 +142,8 @@ const value = ref(50);
                 </div>
             </div>
         </div>
+        <router-view />
     </div>
-    <router-view></router-view>
 </template>
 <style scoped lang="scss">
 .un {

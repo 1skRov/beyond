@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/MainPage/MainPage.vue';
 import Profile from "@/pages/Profile/Profile.vue";
-import University from "@/pages/University/UniversityItem2.vue";
+import UniversityList from "@/pages/University/UniversityList.vue";
+import UniversityItem from "@/pages/University/Universityitem2.vue";
 // test
 import TestMainPage from "@/pages/Test/Main.vue"
 import SingleTestPage from "@/pages/Test/SingleTestPage.vue";
@@ -48,7 +49,15 @@ const routes = [
         meta: { requiresAuth: true },
         children: [
             { path: 'profile', name: 'Profile', component: Profile },
-            { path: 'university', name: 'University', component: University },
+            {
+                path: 'university', name: 'University', component: UniversityList,
+            },
+            {
+                path: 'university-item',
+                name: 'UniversityItem',
+                component: UniversityItem,
+                props: true
+            },
             {
                 path: 'tests', name: 'tests', component: TestMainPage, children: [
                     { path: '', redirect: { name: 'single-tests' } },
@@ -72,20 +81,20 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("jwt");
 
-  if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
-    return next({ name: "Login" });
-  }
+    if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
+        return next({ name: "Login" });
+    }
 
-  if (
-    (to.name === "Login" || to.name === "Register") &&
-    token
-  ) {
-    return next({ name: "Profile" });
-  }
+    if (
+        (to.name === "Login" || to.name === "Register") &&
+        token
+    ) {
+        return next({ name: "Profile" });
+    }
 
-  next();
+    next();
 });
 
 export default router;
