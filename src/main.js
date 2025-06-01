@@ -57,7 +57,7 @@ import AccordionContent from 'primevue/accordioncontent';
 import Timeline from 'primevue/timeline';
 import CascadeSelect from 'primevue/cascadeselect';
 import IftaLabel from 'primevue/iftalabel';
-import DatePicker  from 'primevue/datepicker';
+import DatePicker from 'primevue/datepicker';
 
 
 
@@ -88,6 +88,49 @@ app.use(PrimeVue, {
             darkModeSelector: false,
             cssLayer: false
         }
+    },
+    locale: {
+        startsWith: 'Начинается с',
+        contains: 'Содержит',
+        notContains: 'Не содержит',
+        endsWith: 'Заканчивается на',
+        equals: 'Равно',
+        notEquals: 'Не равно',
+        noFilter: 'Без фильтра',
+        lt: 'Меньше чем',
+        lte: 'Меньше или равно',
+        gt: 'Больше чем',
+        gte: 'Больше или равно',
+        dateIs: 'Дата равна',
+        dateIsNot: 'Дата не равна',
+        dateBefore: 'Дата до',
+        dateAfter: 'Дата после',
+        clear: 'Очистить',
+        apply: 'Применить',
+        matchAll: 'Совпадает все',
+        matchAny: 'Совпадает любое',
+        addRule: 'Добавить правило',
+        removeRule: 'Удалить правило',
+        accept: 'Да',
+        reject: 'Нет',
+        choose: 'Выбрать',
+        upload: 'Загрузить',
+        cancel: 'Отмена',
+        dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+        dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        monthNames: [
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ],
+        monthNamesShort: [
+            'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+            'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'
+        ],
+        today: 'Сегодня',
+        weekHeader: 'Нед',
+        firstDayOfWeek: 1,
+        dateFormat: 'dd.mm.yy'
     }
 });
 app.component('Button', Button);
@@ -120,19 +163,19 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Drawer', Drawer);
 app.component('AutoComplete', AutoComplete);
-app.component('Stepper',Stepper);
-app.component('StepList',StepList);
-app.component('StepPanels',StepPanels);
-app.component('StepItem',StepItem);
-app.component('Step',Step);
-app.component('StepPanel',StepPanel);
-app.component('ProgressBar',ProgressBar);
-app.component('Accordion',Accordion);
-app.component('AccordionPanel',AccordionPanel);
-app.component('AccordionHeader',AccordionHeader);
-app.component('AccordionContent',AccordionContent);
-app.component('Timeline',Timeline);
-app.component("CascadeSelect",CascadeSelect);
+app.component('Stepper', Stepper);
+app.component('StepList', StepList);
+app.component('StepPanels', StepPanels);
+app.component('StepItem', StepItem);
+app.component('Step', Step);
+app.component('StepPanel', StepPanel);
+app.component('ProgressBar', ProgressBar);
+app.component('Accordion', Accordion);
+app.component('AccordionPanel', AccordionPanel);
+app.component('AccordionHeader', AccordionHeader);
+app.component('AccordionContent', AccordionContent);
+app.component('Timeline', Timeline);
+app.component("CascadeSelect", CascadeSelect);
 app.component("IftaLabel", IftaLabel);
 app.component("DatePicker", DatePicker);
 
