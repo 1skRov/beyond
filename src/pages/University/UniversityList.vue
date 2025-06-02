@@ -127,6 +127,9 @@ function goToUniversity(u) {
                     <p>{{ value }}т</p>
                 </div>
             </div>
+            <div class="flex items-center">
+                <Button>Добавить университет</Button>
+            </div>
         </div>
         <div class="list">
             <div class="university-item" v-for="u in universities" :key="u.name" @click="goToUniversity(u)">
