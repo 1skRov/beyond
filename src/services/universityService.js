@@ -62,7 +62,7 @@ export function updateFaculty(id, payload,) {
 }
 
 export function deleteFaculty(id) {
-  return userApi.delete(`/app2/api/v1/faculties/${id}`).then(res => res.data);
+  return userApi.delete(`/app3/api/v1/faculties/${id}`).then(res => res.data);
 }
 
 //dormitories
