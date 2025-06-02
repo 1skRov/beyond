@@ -6,7 +6,6 @@ import UniversityItem from "@/pages/University/Universityitem2.vue";
 // test
 import TestMainPage from "@/pages/Test/Main.vue"
 import SingleTestPage from "@/pages/Test/SingleTestPage.vue";
-import MultipleTestPage from "@/pages/Test/MultipleTestPage.vue";
 import TestItem from "@/pages/Test/TestItem.vue"
 import Result from "@/pages/Test/TestResult.vue"
 // roadmap
@@ -62,7 +61,6 @@ const routes = [
                 path: 'tests', name: 'tests', component: TestMainPage, children: [
                     { path: '', redirect: { name: 'single-tests' } },
                     { path: 'single-test', name: 'single-tests', component: SingleTestPage },
-                    { path: 'multiple-test', name: 'multiple-tests', component: MultipleTestPage },
                 ]
             },
             { path: 'result', name: 'Result', component: Result },
