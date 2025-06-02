@@ -7,6 +7,9 @@ export default {
       value: '0',
       faculty: null,
     }
+  },
+  mounted(){
+    console.log(this.sport)
   }
 }
 </script>

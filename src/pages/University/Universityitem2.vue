@@ -33,10 +33,6 @@ export default {
       this.univers = await getUniversityById(this.id);
       console.log("univers", this.univers);
     },
-    imageClick(index) {
-      this.activeIndex = index;
-      this.displayCustom = true;
-    },
     edit() {
       this.isEdit = !this.isEdit;
     }
@@ -122,6 +118,7 @@ export default {
             <div>
               <p class="title text-orange-900">Образования</p>
               <div class="text">
+                оплата обучения в год {{univers?.costs}}
               </div>
             </div>
           </div>
