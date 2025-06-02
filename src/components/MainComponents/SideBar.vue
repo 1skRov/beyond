@@ -7,7 +7,7 @@ export default {
         { title: "Главная", icon: "fi fi-rr-store-alt", link: "/" },
         { title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests/single-test" },
         { title: "Материалы", icon: "fi fi-rr-folder", link: "/courses" },
-        { title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap" },
+        { title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap", match: ["/roadmap", "/road-item"] },
         { title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university", match: ["/university", "/university-item"] },
         { title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/" },
         { title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics" },
