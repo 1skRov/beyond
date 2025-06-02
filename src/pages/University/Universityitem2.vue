@@ -175,7 +175,7 @@ export default {
     </div>
     <div class="options">
       <div class="options-1">
-        <options-information :sport="univers?.sports"></options-information>
+        <options-information :sport="univers?.sports" :Uid="univers?.id"></options-information>
       </div>
       <div class="options-2">
         <h1>Фотогалерея</h1>

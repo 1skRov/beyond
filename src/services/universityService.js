@@ -46,23 +46,23 @@ export function deleteUniversity(id) {
 }
 //faculty
 export function getFacultyList() {
-  return userApi.get(`/app3/api/v1/departments`).then(res => res.data);
+  return userApi.get(`/app3/api/v1/faculties`).then(res => res.data);
 }
 
 export function createFaculty(payload) {
-  return userApi.post(`/app3/api/v1/departments`, payload).then(res => res.data);
+  return userApi.post(`/app3/api/v1/faculties`, payload).then(res => res.data);
 }
 
 export function getFacultyById(id) {
-  return userApi.get(`/app3/api/v1/departments/${id}`).then(res => res.data);
+  return userApi.get(`/app3/api/v1/faculties/${id}`).then(res => res.data);
 }
 
 export function updateFaculty(id, payload,) {
-  return userApi.put(`/app3/api/v1/departments/${id}`, payload).then(res => res.data);
+  return userApi.put(`/app3/api/v1/faculties/${id}`, payload).then(res => res.data);
 }
 
 export function deleteFaculty(id) {
-  return userApi.delete(`/app2/api/v1/departments/${id}`).then(res => res.data);
+  return userApi.delete(`/app2/api/v1/faculties/${id}`).then(res => res.data);
 }
 
 //dormitories
