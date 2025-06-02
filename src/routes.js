@@ -52,7 +52,7 @@ const routes = [
                 path: 'university', name: 'University', component: UniversityList,
             },
             {
-                path: 'university-item',
+                path: 'university-item/:id',
                 name: 'UniversityItem',
                 component: UniversityItem,
                 props: true

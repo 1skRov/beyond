@@ -44,3 +44,64 @@ export function updateUniversity(id, payload,) {
 export function deleteUniversity(id) {
   return userApi.delete(`/app2/api/v1/universities/${id}`).then(res => res.data);
 }
+//faculty
+export function getFacultyList() {
+  return userApi.get(`/app3/api/v1/departments`).then(res => res.data);
+}
+
+export function createFaculty(payload) {
+  return userApi.post(`/app3/api/v1/departments`, payload).then(res => res.data);
+}
+
+export function getFacultyById(id) {
+  return userApi.get(`/app3/api/v1/departments/${id}`).then(res => res.data);
+}
+
+export function updateFaculty(id, payload,) {
+  return userApi.put(`/app3/api/v1/departments/${id}`, payload).then(res => res.data);
+}
+
+export function deleteFaculty(id) {
+  return userApi.delete(`/app2/api/v1/departments/${id}`).then(res => res.data);
+}
+
+//dormitories
+export function getdormitoriesListById(id) {
+  return userApi.get(`/app3/universities/${id}/dormitories`).then(res => res.data);
+}
+
+export function createdormitories(payload) {
+  return userApi.post(`/app3/api/v1/dormitories`, payload).then(res => res.data);
+}
+
+export function getdormitoriesById(id) {
+  return userApi.get(`/app3/api/v1/dormitories/${id}`).then(res => res.data);
+}
+
+export function updatedormitories(id, payload,) {
+  return userApi.put(`/app3/api/v1/dormitories/${id}`, payload).then(res => res.data);
+}
+
+export function deletedormitories(id) {
+  return userApi.delete(`/app2/api/v1/dormitories/${id}`).then(res => res.data);
+}
+//education-program-groups
+export function getEducation() {
+  return userApi.get(`/app3/api/v1/education-program-groups`).then(res => res.data);
+}
+
+export function createEducation(payload) {
+  return userApi.post(`/app3/api/v1/education-program-groups`, payload).then(res => res.data);
+}
+
+export function getEducationById(id) {
+  return userApi.get(`/app3/api/v1/education-program-groups/${id}`).then(res => res.data);
+}
+
+export function updateEducation(id, payload,) {
+  return userApi.put(`/app3/api/v1/education-program-groups/${id}`, payload).then(res => res.data);
+}
+
+export function deleteEducation(id) {
+  return userApi.delete(`/app3/api/v1/education-program-groups/${id}`).then(res => res.data);
+}

@@ -24,7 +24,7 @@ onMounted(() => {
 const router = useRouter();
 
 function goToUniversity(u) {
-  router.push({name: 'UniversityItem', params: {id: u.id}});
+  router.push({ name: 'UniversityItem', params: { id: u.id } });
 }
 
 const cities = ref([

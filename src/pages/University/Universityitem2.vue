@@ -1,29 +1,38 @@
 <script>
 import OptionsInformation from "@/pages/University/OptionsInformation.vue";
+import {getUniversityById} from "@/services/universityService.js";
 
 export default {
   name: "UniversityPage",
-  components: { OptionsInformation },
+  components: {OptionsInformation},
+  props: ['id'],
   data() {
     return {
       images: [],
       activeIndex: 0,
+      univers: null,
       displayCustom: false,
       responsiveOptions: [
-        { breakpoint: '1024px', numVisible: 5 },
-        { breakpoint: '768px', numVisible: 3 },
-        { breakpoint: '560px', numVisible: 1 }
+        {breakpoint: '1024px', numVisible: 5},
+        {breakpoint: '768px', numVisible: 3},
+        {breakpoint: '560px', numVisible: 1}
       ],
       isEdit: false,
     }
   },
   mounted() {
-    this.images = Array.from({ length: 6 }, (_, i) => ({
+    this.images = Array.from({length: 6}, (_, i) => ({
       src: new URL(`@/assets/images/photo${i + 1}.jpg`, import.meta.url).href,
       alt: `Photo ${i + 1}`
     }));
+    console.log('ID университета:', this.id);
+    this.getInformationById();
   },
   methods: {
+    async getInformationById() {
+      this.univers = await getUniversityById(this.id);
+      console.log("univers", this.univers);
+    },
     imageClick(index) {
       this.activeIndex = index;
       this.displayCustom = true;
@@ -38,28 +47,29 @@ export default {
 
 <template>
   <div class="w-full h-full">
+    <pre>{{ univers }}</pre>
     <div class="university-main-info">
-      <p class="u-title">Евразийский национальный университет имени Л.Н. Гумилёва (ЕНУ)
-      </p>
+      <p class="u-title">{{ univers?.name}}</p>
       <div class="flex w-full gap-3">
         <div class="u-avatar">
           <div class="flex flex-col items-center justify-center w-full">
-            <div class="p-3 rounded-lg w-48 h-48 border border-blue-800">
-              <img src="@/assets/images/wegwfaf.jpg" alt="">
+            <div class="p-3 rounded-lg w-48 h-48 border border-blue-800 flex items-center justify-center">
+              <img v-if="univers?.photo_url" :src="univers?.photo_url" alt="">
+              <i v-else class="fi fi-br-image-slash"></i>
             </div>
             <div class="font-medium mt-6 text-center text-xs text-blue-900 fonr-medium" style="letter-spacing: 1px">
-              Евразийский национальный университет имени Л.Н. Гумилёва (ЕНУ)
+              {{ univers?.name }}
             </div>
             <div class="font-medium mt-1 text-center text-blue-900" style="font-size: 10px; letter-spacing: 1.5px">
-              Государственный
-              ВУЗ.
-              <br>
-              Год основания
-              1996
+              {{ univers?.university_type }}
+              университет.
             </div>
           </div>
           <div class="w-full flex flex-col justify-center items-center gap-4 mt-3">
             <div class="s-media">
+              <div class="item">
+                <i class="fi fi-sr-envelope"></i>
+              </div>
               <div class="item">
                 <i class="fi fi-brands-instagram"></i>
               </div>
@@ -84,9 +94,8 @@ export default {
             <div>
               <p class="title text-blue-900">Краткая информация про
                 университет</p>
-              <div class="text">Евразийский национальный университет имени Л.Н. Гумилёва был основан в 1996
-                году по инициативе первого президента Казахстана Нурсултана Назарбаева. Университет назван в честь Льва
-                Николаевича Гумилёва, известного историка и этнолога, разработавшего теорию пассионарности.</div>
+              <div class="text" v-html="univers?.short_info">
+              </div>
             </div>
           </div>
           <div class="info-item">
@@ -94,10 +103,14 @@ export default {
               <i class="fi fi-ss-map-marker-home text-green-900"></i>
             </div>
             <div>
-              <p class="title text-green-900">Рассположение</p>
-              <div class="text">г. Астана, ул. Сатпаева 2<p class="m-0 leading-5 text-xs">Телефон приемной комиссии:
-                  <span class="font-medium">+7 (7172)
-                    709-500</span>
+              <p class="title text-green-900">Расположение</p>
+              <div class="text">
+                {{ univers?.location }}
+                <p class="m-0 leading-5 text-xs">
+                  Телефон приемной комиссии:
+                  <span class="font-medium">
+                    {{ univers?.admission_phone }}
+                  </span>
                 </p>
               </div>
             </div>
@@ -109,7 +122,6 @@ export default {
             <div>
               <p class="title text-orange-900">Образования</p>
               <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil facere nostrum dicta modi nisi expedita!
               </div>
             </div>
           </div>
@@ -119,8 +131,7 @@ export default {
             </div>
             <div>
               <p class="title text-indigo-900">Международное сотрудничество</p>
-              <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil facere nostrum dicta modi nisi expedita!
+              <div class="text" v-html="univers?.international_partners">
               </div>
             </div>
           </div>
@@ -130,24 +141,21 @@ export default {
             </div>
             <div>
               <p class="title text-red-900">Достижения и рейтинги</p>
-              <div class="text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil facere nostrum dicta modi nisi expedita!
+              <div class="text">---
               </div>
             </div>
           </div>
         </div>
         <div class="additional-info">
           <p class="text-sm text-gray-700 font-medium mb-3">Дополнительная информация</p>
-          <div class="info">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quaerat hic quae, nam soluta obcaecati ut.
-            Eos, nam dolore quam ab veritatis similique sunt alias amet illum tenetur odit non!
+          <div class="info" v-html="univers?.extra_info">
           </div>
         </div>
       </div>
     </div>
     <div class="options">
       <div class="options-1">
-        <options-information></options-information>
+        <options-information :sport="univers?.sports"></options-information>
       </div>
       <div class="options-2">
         <h1>Фотогалерея</h1>
@@ -203,7 +211,7 @@ export default {
       button {
         @apply border-none rounded-lg text-center py-2 text-xs w-full flex gap-1.5 justify-center items-center;
         @apply bg-blue-900 text-blue-100 font-medium border border-blue-50 duration-200 ease-in cursor-pointer;
-        ;
+      ;
 
         &:hover {
           @apply bg-blue-100 text-blue-900;
@@ -255,6 +263,7 @@ export default {
     h1 {
       @apply text-xl text-blue-900 mb-3 font-medium;
     }
+
     @apply p-3 w-1/2 bg-white rounded-md;
   }
 }
