@@ -8,7 +8,7 @@ export default {
         { title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests/single-test" },
         { title: "Материалы", icon: "fi fi-rr-folder", link: "/courses" },
         { title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap" },
-        { title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university" },
+        { title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university", match: ["/university", "/university-item"] },
         { title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/" },
         { title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics" },
       ]
@@ -50,7 +50,9 @@ export default {
         <div class="" v-for="m in menu" :key="m.id">
           <router-link :to="m.link" class="block" active-class="router-link-active"
             exact-active-class="router-link-exact-active">
-            <div class="menu-item" :class="{ 'active-item': $route.path === m.link }">
+            <div class="menu-item" :class="{
+              'active-item': m.match ? m.match.includes($route.path) : $route.path === m.link
+            }">
               <i :class="m.icon"></i>
               <p>{{ m.title }}</p>
             </div>
@@ -89,7 +91,7 @@ export default {
               <p>Уведомления</p>
             </div>
           </router-link>
-          <div class="popover-setting"  @click="logout">
+          <div class="popover-setting" @click="logout">
             <div class="text-blue-600">
               <i class="fi fi-ss-arrow-left-from-arc"></i>
             </div>
@@ -161,6 +163,6 @@ export default {
 }
 
 .active-item {
-  @apply font-medium text-white border-blue-400 bg-blue-600;
+  @apply font-medium text-blue-50 bg-blue-900;
 }
 </style>
