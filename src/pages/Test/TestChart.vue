@@ -18,7 +18,6 @@
 import Highcharts from 'highcharts';
 import {ref, onMounted} from 'vue';
 
-// === Данные ===
 const testResults = [
   {testId: 'Test 1', easy: 3, medium: 2, hard: 1},
   {testId: 'Test 2', easy: 4, medium: 3, hard: 2},
@@ -30,7 +29,6 @@ const progressData = [
   {date: '2025-05-20', easy: 4, medium: 3, hard: 2},
 ];
 
-// === refs и Drawer ===
 const resultChart = ref(null);
 const progressChart = ref(null);
 const drawerVisible = ref(false);
@@ -44,9 +42,7 @@ const openDrawer = (index) => {
   drawerVisible.value = true;
 };
 
-// === Init Charts ===
 onMounted(() => {
-  // График 1 — Horizontal Bar
   Highcharts.chart(resultChart.value, {
     chart: {
       type: 'bar'
@@ -96,7 +92,6 @@ onMounted(() => {
     ]
   });
 
-  // График 2 — Линии по времени
   Highcharts.chart(progressChart.value, {
     chart: {type: 'line'},
     title: {text: 'Прогресс по типам вопросов'},
