@@ -68,21 +68,21 @@ function formatDate(dateStr) {
         <div class="info-body">
           <div class="info-block">
             <div class="flex gap-2 items-center">
-              <i class="fi fi-sr-calendar text-blue-600" style="font-size: 20px;"></i>
+              <i class="fi fi-sr-calendar text-blue-900" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">дата рождения</span>
                 <p class="value">{{ formatDate(user?.birth_date) || "-" }}</p>
               </div>
             </div>
             <div class="flex gap-2 items-center">
-              <i class="fi fi-ss-house-chimney-window text-blue-600" style="font-size: 20px;"></i>
+              <i class="fi fi-ss-house-chimney-window text-blue-900" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">Город</span>
                 <p class="value">{{ user?.city || "-" }}</p>
               </div>
             </div>
             <div class="flex gap-2 items-center">
-              <i class="fi fi-sr-envelope text-blue-600" style="font-size: 20px;"></i>
+              <i class="fi fi-sr-envelope text-blue-900" style="font-size: 20px;"></i>
               <div class="flex flex-col">
                 <span class="label">почта</span>
                 <p class="value">{{ user?.email || "-" }}</p>
@@ -146,12 +146,12 @@ function formatDate(dateStr) {
     <div class="interests">
       <div class="w-full flex justify-between mb-5">
         <p class="font-semibold text-lg">Интересующие специальности</p>
-        <button class="bg-blue-600 text-slate-50 font-medium px-3 rounded-md">Изменить список</button>
+        <button class="bg-blue-200 text-blue-900 font-medium px-3 rounded-md">Изменить список</button>
       </div>
       <div class="list">
         <div class="list-item" v-for="p in programs">
-          <i class="fi fi-sr-bookmark text-blue-600 text-xs"></i>
-          <p class="text-sm text-blue-600 m-0">{{ p }}</p>
+          <i class="fi fi-sr-bookmark text-purple-500" style="font-size: 12px;"></i>
+          <p class="text-sm text-purple-600 m-0">{{ p }}</p>
         </div>
       </div>
     </div>
@@ -169,8 +169,7 @@ function formatDate(dateStr) {
 }
 
 .profile-head {
-  @apply w-full px-2 py-2.5 rounded-md flex gap-3;
-  background: #f2f7fa;
+  @apply w-full px-2 py-2.5 rounded-md flex gap-3 bg-white;
 
   .profile-image {
     @apply overflow-hidden;
@@ -192,7 +191,7 @@ function formatDate(dateStr) {
 
       .name-login {
         p {
-          @apply text-2xl text-blue-600 font-semibold;
+          @apply text-2xl text-blue-900 font-semibold;
         }
 
         span {
@@ -202,14 +201,14 @@ function formatDate(dateStr) {
 
       .redact-buttons {
         button {
-          @apply rounded-full w-8 h-8 bg-blue-600 flex items-center justify-center;
+          @apply rounded-full w-8 h-8 bg-blue-200 flex items-center justify-center;
 
           i {
-            @apply text-slate-50 leading-none ml-px text-sm;
+            @apply text-blue-900 leading-none ml-px text-sm;
           }
 
           &:hover {
-            @apply bg-blue-500;
+            @apply bg-blue-100;
           }
         }
       }
@@ -234,12 +233,11 @@ function formatDate(dateStr) {
 }
 
 .day-head {
-  @apply w-full py-2 px-2.5 rounded-md mt-3;
-  background: #f2f7fa;
+  @apply w-full py-2 px-2.5 rounded-md mt-3 bg-white;
 
   button {
-    @apply rounded-md py-0.5 px-4 text-sm text-slate-50;
-    @apply bg-blue-600 font-medium;
+    @apply rounded-md py-0.5 px-4 text-sm text-blue-900;
+    @apply bg-blue-100 font-medium;
     letter-spacing: 1px;
   }
 }
@@ -252,8 +250,7 @@ function formatDate(dateStr) {
     @apply w-full flex flex-wrap justify-center gap-x-2 gap-y-1.5;
 
     .list-item {
-      @apply flex items-center gap-2 rounded-md px-3 py-1 bg-blue-600 text-slate-50 font-medium text-sm;
-      background: #b7d1f3;
+      @apply flex items-center gap-2 rounded-md px-3 py-1 bg-pink-200 font-medium text-sm;
     }
   }
 }

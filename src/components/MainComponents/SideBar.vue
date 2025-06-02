@@ -62,15 +62,17 @@ export default {
     </div>
     <div class="settings">
       <div class="avatar sidebar-item">
-        <div class="flex gap-2.5 items-center">
-          <div class="image">
-            <img src="@/assets/images/user1.webp" alt="" class="w-full h-full object-cover">
+        <router-link to="/profile">
+          <div class="flex gap-2.5 items-center">
+            <div class="image">
+              <img src="@/assets/images/user1.webp" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="user-name">
+              <p class="text-slate-700 m-0 font-medium">Elizabeth olsen</p>
+              <p class="m-0 text-slate-700 text-xs">@lizzie_olsen</p>
+            </div>
           </div>
-          <div class="user-name">
-            <p class="text-slate-700 m-0 font-medium">Elizabeth olsen</p>
-            <p class="m-0 text-slate-700 text-xs">@lizzie_olsen</p>
-          </div>
-        </div>
+        </router-link>
         <div class="user-settings" @click="toggle">
           <i class="fi fi-rr-settings-sliders"></i>
         </div>
