@@ -1,108 +1,43 @@
 <script setup>
+import {ref, onMounted} from "vue";
+import {useRouter} from "vue-router";
 import CreateUniversity from "@/pages/University/CreateUniversity.vue";
+import {getUniversityList} from "@/services/universityService.js";
 
-const universities = [
-  {
-    name: "Назарбаев Университет",
-    location: "Астана",
-    photoUrl: "",
-    tuitionPerYear: 2800000,
-    facultiesCount: 8
-  },
-  {
-    name: "Евразийский национальный университет им. Л.Н. Гумилева",
-    location: "Астана",
-    photoUrl: "",
-    tuitionPerYear: 750000,
-    facultiesCount: 13
-  },
-  {
-    name: "Казахский национальный университет им. аль-Фараби",
-    location: "Алматы",
-    photoUrl: "",
-    tuitionPerYear: 800000,
-    facultiesCount: 16
-  },
-  {
-    name: "Казахстанско-Британский технический университет",
-    location: "Алматы",
-    photoUrl: "",
-    tuitionPerYear: 1600000,
-    facultiesCount: 6
-  },
-  {
-    name: "Университет Нархоз",
-    location: "Алматы",
-    photoUrl: "",
-    tuitionPerYear: 1000000,
-    facultiesCount: 5
-  },
-  {
-    name: "Астана IT Университет",
-    location: "Астана",
-    photoUrl: "",
-    tuitionPerYear: 1100000,
-    facultiesCount: 4
-  },
-  {
-    name: "Университет им. Ш. Есенова (Yessenov University)",
-    location: "Актау",
-    photoUrl: "",
-    tuitionPerYear: 700000,
-    facultiesCount: 7
-  },
-  {
-    name: "Казахский агротехнический университет им. С. Сейфуллина",
-    location: "Астана",
-    photoUrl: "",
-    tuitionPerYear: 650000,
-    facultiesCount: 9
-  },
-  {
-    name: "Казахский национальный педагогический университет им. Абая",
-    location: "Алматы",
-    photoUrl: "",
-    tuitionPerYear: 750000,
-    facultiesCount: 10
-  },
-  {
-    name: "Казахский национальный аграрный исследовательский университет",
-    location: "Алматы",
-    photoUrl: "",
-    tuitionPerYear: 680000,
-    facultiesCount: 11
-  },
-  {
-    name: "Казахский университет международных отношений и мировых языков им. Абылай хана",
-    location: "Алматы",
-    photoUrl: "",
-    tuitionPerYear: 720000,
-    facultiesCount: 6
-  }
-];
-
-import {ref} from "vue";
-
+const universities = ref([]);
 const selectedCity = ref();
-const cities = ref([
-  {name: 'New York', code: 'NY'},
-  {name: 'Rome', code: 'RM'},
-  {name: 'London', code: 'LDN'},
-  {name: 'Istanbul', code: 'IST'},
-  {name: 'Paris', code: 'PRS'}
-]);
-const value = ref(50);
 const showCreateUniversity = ref(false);
+const value = ref(50);
 
-import {useRouter} from 'vue-router';
+const loadUniversities = async () => {
+  try {
+    universities.value = await getUniversityList();
+  } catch (err) {
+    console.error("Ошибка при получении списка университетов:", err);
+  }
+};
+
+onMounted(() => {
+  loadUniversities();
+});
 
 const router = useRouter();
 
 function goToUniversity(u) {
-  router.push({name: 'UniversityItem'});
+  router.push({name: 'UniversityItem', params: {id: u.id}});
 }
 
+const cities = ref([
+  {name: 'Астана', code: 'AST'},
+  {name: 'Алматы', code: 'ALM'},
+  {name: 'Актау', code: 'AKT'},
+  {name: 'Шымкент', code: 'SHM'},
+  {name: 'Караганда', code: 'KRG'}
+]);
 
+const onCreated = () => {
+  loadUniversities();
+};
 </script>
 <template>
   <div class="un">
@@ -131,26 +66,26 @@ function goToUniversity(u) {
         </div>
       </div>
       <div class="flex items-center">
-        <Button @click="showCreateUniversity = true">Добавить университет</Button>
+        <Button @click="showCreateUniversity = true" size="small">Добавить университет</Button>
       </div>
     </div>
     <div class="list">
       <div class="university-item" v-for="u in universities" :key="u.name" @click="goToUniversity(u)">
         <div class="image">
-          <img src="@/assets/images/wegwfaf.jpg" alt="">
+          <img v-if="u?.photo_url" :src="u.photo_url" alt="">
+          <i v-else class="fi fi-br-image-slash"></i>
         </div>
         <div class="content">
           <p class="text-sm font-semibold leading-none text-slate-700">{{ u.name }}</p>
-          <p class=" text-xs text-blue-800 w-full font-medium flex justify-between"><span
-              class="flex gap-1 items-center"><i class="fi fi-rr-marker" style="font-size: 12px;"></i>{{
-              u.location
-            }}</span><span>{{ u.tuitionPerYear }}т в
-                            год</span></p>
+          <p class="text-xs text-blue-800 w-full font-medium flex items-center gap-2">
+            <i class="fi fi-rr-marker" style="font-size: 12px;"></i>
+            {{ u.location || "город не указан"}}
+          </p>
         </div>
       </div>
     </div>
   </div>
-  <CreateUniversity v-model:visible="showCreateUniversity"></CreateUniversity>
+  <CreateUniversity v-model:visible="showCreateUniversity" @created="onCreated"></CreateUniversity>
 </template>
 <style scoped lang="scss">
 .un {
@@ -176,10 +111,14 @@ function goToUniversity(u) {
       @apply flex flex-col rounded-md gap-1 w-full h-[340px] max-h-[340px] cursor-pointer p-2;
 
       .image {
-        @apply w-full h-[250px] min-h-[250px] rounded-md overflow-hidden;
+        @apply w-full h-[250px] min-h-[250px] rounded-md overflow-hidden flex items-center justify-center border border-blue-100;
 
         img {
           @apply w-full h-full rounded-md;
+        }
+        i {
+          font-size: 30px;
+          @apply text-blue-900;
         }
       }
 
