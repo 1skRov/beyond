@@ -43,9 +43,8 @@ export default {
 
 <template>
   <div class="w-full h-full">
-    <pre>{{ univers }}</pre>
     <div class="university-main-info">
-      <p class="u-title">{{ univers?.name}}</p>
+      <p class="u-title">{{ univers?.name }}</p>
       <div class="flex w-full gap-3">
         <div class="u-avatar">
           <div class="flex flex-col items-center justify-center w-full">
@@ -63,18 +62,42 @@ export default {
           </div>
           <div class="w-full flex flex-col justify-center items-center gap-4 mt-3">
             <div class="s-media">
-              <div class="item">
+              <a
+                  v-if="univers?.email"
+                  :href="`mailto:${univers.email}`"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="item"
+              >
                 <i class="fi fi-sr-envelope"></i>
-              </div>
-              <div class="item">
+              </a>
+              <a
+                  v-if="univers?.instagram_url"
+                  :href="univers.instagram_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="item"
+              >
                 <i class="fi fi-brands-instagram"></i>
-              </div>
-              <div class="item">
+              </a>
+              <a
+                  v-if="univers?.facebook_url"
+                  :href="univers.facebook_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="item"
+              >
                 <i class="fi fi-brands-facebook"></i>
-              </div>
-              <div class="item">
+              </a>
+              <a
+                  v-if="univers?.tiktok_url"
+                  :href="univers.tiktok_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="item"
+              >
                 <i class="fi fi-brands-tik-tok"></i>
-              </div>
+              </a>
             </div>
             <div class="open-web">
               <button><i class="fi fi-ss-site-alt"></i>официальный сайт</button>
@@ -118,7 +141,7 @@ export default {
             <div>
               <p class="title text-orange-900">Образования</p>
               <div class="text">
-                оплата обучения в год {{univers?.costs}}
+                оплата обучения в год {{ univers?.costs }}
               </div>
             </div>
           </div>
