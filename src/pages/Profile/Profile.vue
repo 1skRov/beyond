@@ -1,4 +1,6 @@
 <script setup>
+const API_BASE = 'http://195.133.194.73/app2';
+
 import DayHead from "@/pages/Test/DayHead.vue";
 import TestCharts from "@/pages/Profile/TestCharts.vue";
 import { ref, onMounted } from "vue";
@@ -53,7 +55,7 @@ function formatDate(dateStr) {
   <div class="profile">
     <div class="profile-head">
       <div class="profile-image">
-        <img src="@/assets/images/user1.webp" alt="">
+        <img :src="`${API_BASE}${user?.photo_url}`" :alt="`${API_BASE}${user?.photo_url}`">
       </div>
       <div class="user-info">
         <div class="info-head">

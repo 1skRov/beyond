@@ -3,7 +3,7 @@
     <h3>{{ data.title }}</h3>
     <div class="tags">
       <span v-for="tag in data.tags" :key="tag" :class="['tag', tagClass(tag)]">
-        {{ tag === 'start' ? '🚀 Старт' : tag }}
+        {{ tag === 'start' ? 'Старт' : tag }}
       </span>
     </div>
   </div>
@@ -17,9 +17,12 @@ export default {
   computed: {
     statusClass() {
       switch (this.data.status) {
-        case 'in_progress': return 'in-progress';
-        case 'completed': return 'completed';
-        default: return 'not-started';
+        case 'in_progress':
+          return 'in-progress';
+        case 'completed':
+          return 'completed';
+        default:
+          return 'not-started';
       }
     }
   },
@@ -41,34 +44,43 @@ export default {
 
 <style scoped>
 .custom-node {
-  border-radius: 8px;
-  padding: 1rem;
-  cursor: pointer;
+  @apply rounded-md px-3 py-2 cursor-pointer;
   transition: 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 .not-started {
-  background-color: #e0f2fe; /* sky */
+  @apply bg-blue-100 text-blue-900 font-medium;
 }
+
 .in-progress {
-  background-color: #fed7aa; /* orange-200 */
+  @apply bg-orange-500 text-slate-800 font-medium;
 }
+
 .completed {
-  background-color: #e5e7eb; /* gray-200 */
+  @apply bg-slate-300;
 }
+
 .tags {
   margin-top: 0.5rem;
 }
+
 .tag {
-  display: inline-block;
-  margin: 4px 4px 0 0;
-  padding: 2px 6px;
-  font-size: 12px;
-  border-radius: 4px;
-  background: #f3f4f6;
+  @apply rounded-md mt-2 mr-2 text-xs;
 }
-.tag-indigo { background: #c7d2fe; }
-.tag-gray   { background: #d1d5db; }
-.tag-yellow { background: #fde68a; }
-.tag-start  { background: #93c5fd; font-weight: bold; }
+
+.tag-indigo {
+  @apply bg-indigo-200 text-indigo-600 px-1.5;
+}
+
+.tag-gray {
+  @apply bg-gray-200 text-gray-600 px-1.5;
+}
+
+.tag-yellow {
+  @apply bg-yellow-100 text-yellow-600 px-1.5;
+}
+
+.tag-start {
+  @apply bg-green-100 text-green-600 px-1.5;
+}
 </style>

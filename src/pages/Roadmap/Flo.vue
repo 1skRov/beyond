@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100vh">
+  <div style="width: 100%; height: 100vh; background: #fff;">
     <VueFlow
         v-model:nodes="nodes"
         v-model:edges="edges"
@@ -27,7 +27,7 @@
           :key="tag"
           class="text-xs px-2 py-1 rounded bg-gray-200"
       >
-        {{ tag === 'start' ? '🚀 Старт' : tag }}
+        {{ tag === 'start' ? 'Старт' : tag }}
       </span>
         </div>
         <AutoComplete v-model="selectedNode.status" dropdown :suggestions="statusOptions" @complete="updateNodeStatus" class="w-full"/>
