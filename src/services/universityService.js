@@ -86,27 +86,6 @@ export function deletedormitories(id) {
   return userApi.delete(`/app3/api/v1/dormitories/${id}`).then(res => res.data);
 }
 
-//education-program-groups
-export function getEducation() {
-  return userApi.get(`/app3/api/v1/education-program-groups`).then(res => res.data);
-}
-
-export function createEducation(payload) {
-  return userApi.post(`/app3/api/v1/education-program-groups`, payload).then(res => res.data);
-}
-
-export function getEducationById(id) {
-  return userApi.get(`/app3/api/v1/education-program-groups/${id}`).then(res => res.data);
-}
-
-export function updateEducation(id, payload,) {
-  return userApi.put(`/app3/api/v1/education-program-groups/${id}`, payload).then(res => res.data);
-}
-
-export function deleteEducation(id) {
-  return userApi.delete(`/app3/api/v1/education-program-groups/${id}`).then(res => res.data);
-}
-
 //departments
 
 export function getDepartmentsList() {
