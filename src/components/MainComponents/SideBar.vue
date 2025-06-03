@@ -19,7 +19,7 @@ export default {
           link: "/university",
           match: ["/university", "/university-item/:id"]
         },
-        {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
+        {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/specialties"},
         {title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics"},
       ]
     }

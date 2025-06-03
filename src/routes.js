@@ -19,6 +19,7 @@ import DefaultLayout from '@/pages/DefaultLayout.vue';
 import EmptyLayout from '@/pages/EmptyLayout.vue';
 // an
 import Analytics from "@/pages/Analytics/Analytics.vue"
+import SpecialtiesList from "@/pages/Specialties/SpecialtiesList.vue";
 
 //auth
 import Login from '@/pages/Register/Login.vue';
@@ -67,6 +68,7 @@ const routes = [
             { path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage, children: [] },
             { path: 'road-item', name: 'RoadItem', component: RoadItem },
             { path: 'courses', name: 'Courses', component: MainCoursesPage },
+            { path: 'specialties', name: 'SpecialtiesList', component: SpecialtiesList },
             { path: 'analytics', name: 'Analytics', component: Analytics },
         ]
     },

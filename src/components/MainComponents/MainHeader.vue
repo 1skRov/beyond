@@ -53,7 +53,7 @@
           </g>
         </svg>
         <p>
-          <router-link to="/">Roadmap</router-link>
+          <router-link to="/roadmap">Roadmap</router-link>
         </p>
       </div>
       <div class="menu-option-c central-bg">
@@ -103,7 +103,7 @@
           </g>
         </svg>
         <p>
-          <router-link to="/">Образовательные программы</router-link>
+          <router-link to="/specialties">Образовательные программы</router-link>
         </p>
       </div>
     </div>
