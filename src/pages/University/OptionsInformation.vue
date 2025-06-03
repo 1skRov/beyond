@@ -1,5 +1,12 @@
 <script>
-import {createFaculty, deleteFaculty, getFacultyList, updateFaculty} from "@/services/universityService.js";
+import {
+  createdormitories,
+  createFaculty,
+  deleteFaculty,
+  getFacultyList,
+  updateFaculty,
+  createDepartments, getDepartmentsList, getFacultyById, deleteDepartments
+} from "@/services/universityService.js";
 
 export default {
   name: "OptionsInformation",
@@ -12,16 +19,29 @@ export default {
       isUpdateMode: false,
       facultyName: "",
       editableFacultyId: null,
+      activeCafedraFacultyId: null,
+      cafedraName: "",
+      departments: [],
+      facultyMap: {},
     }
-  }
-  ,
+  },
   mounted() {
-    this.getFaculty()
+    this.getFaculty();
   },
   methods: {
+    async caf(){
+      this.value = 3;
+      await this.getDepartments();
+    },
     async getFaculty() {
       try {
-        this.faculty = await getFacultyList();
+        const list = await getFacultyList();
+        this.faculty = list;
+
+        this.facultyMap = {};
+        for (const f of list) {
+          this.facultyMap[f.id] = f.name;
+        }
       } catch (err) {
         console.error("Ошибка при получении списка факультетов", err);
       }
@@ -29,7 +49,7 @@ export default {
     async deleteFaculty(id) {
       try {
         await deleteFaculty(id);
-        await this.getFaculty(); // обновление списка
+        await this.getFaculty();
       } catch (err) {
         console.error("Ошибка при удалении факультета", err);
       }
@@ -49,7 +69,7 @@ export default {
         this.facultyName = "";
         this.editableFacultyId = null;
         this.isUpdateMode = false;
-        await this.getFaculty(); // обновление списка
+        await this.getFaculty();
       } catch (err) {
         console.error("Ошибка при обновлении факультета", err);
       }
@@ -66,13 +86,45 @@ export default {
         await createFaculty(payload);
         this.facultyName = "";
         this.showInput = false;
-        await this.getFaculty(); // обновление списка
+        await this.getFaculty();
       } catch (err) {
         console.error("Ошибка при создании факультета:", err);
       }
+    },
+    showCafedraInput(facultyId) {
+      this.activeCafedraFacultyId = facultyId;
+      this.cafedraName = "";
+    },
+    async createCafedra(facultyId) {
+      try {
+        const payload = {
+          faculty_id: facultyId,
+          name: this.cafedraName,
+        };
+        await createDepartments(payload);
+        this.activeCafedraFacultyId = null;
+        this.cafedraName = "";
+        await this.getFaculty();
+      } catch (err) {
+        console.error("Ошибка при создании кафедры:", err);
+      }
+    },
+    async getDepartments() {
+      try {
+        this.departments = await getDepartmentsList();
+      } catch (err) {
+        console.error("Ошибка при кафедры:", err);
+      }
+    },
+    async deleteCaf(id) {
+      try {
+        await deleteDepartments(id);
+        await this.getDepartments();
+      } catch (err) {
+        console.error("Ошибка при удалении кафедры:", err);
+      }
     }
   }
-
 }
 </script>
 
@@ -82,31 +134,59 @@ export default {
       <button @click="value = 0">Факультеты</button>
       <button @click="value = 1">Общежитие</button>
       <button @click="value = 2">Спорт</button>
-      <button @click="value = 3">Кафедры</button>
+      <button @click="caf">Кафедры</button>
     </div>
 
     <div v-if="value === 0" class="w-full h-full">
-      <div class="flex flex-col">
-        <div v-for="f in faculty" :key="f.id" class="flex gap-2 items-center">
-          <p class="text-slate-600">{{ f.name }}</p>
-          <div class="rounded-md text-red-600 bg-red-100 w-5 h-5 flex items-center justify-center"
-               @click="deleteFaculty(f.id)">
-            <i class="fi fi-rr-trash" style="font-size: 12px;"></i>
+      <div class="flex flex-col gap-3">
+        <div
+            v-for="f in faculty"
+            :key="f.id"
+            class="flex flex-col bg-slate-50 px-3 py-2 rounded-md shadow-sm"
+        >
+          <div class="flex items-center justify-between">
+            <p class="text-slate-700 font-medium">{{ f.name }}</p>
+            <div class="flex gap-1">
+              <button
+                  class="icon-btn bg-red-100 text-red-600"
+                  @click="deleteFaculty(f.id)"
+                  v-tooltip.top="'Удалить факультет'"
+              >
+                <i class="fi fi-rr-trash text-xs"></i>
+              </button>
+              <button
+                  class="icon-btn bg-yellow-100 text-yellow-600"
+                  @click="startUpdateFaculty(f)"
+                  v-tooltip.top="'Редактировать данные факультета'"
+              >
+                <i class="fi fi-rr-refresh text-xs"></i>
+              </button>
+              <button
+                  class="icon-btn bg-blue-100 text-blue-600"
+                  @click="showCafedraInput(f.id)"
+                  v-tooltip.top="'Добавить кафедру'"
+              >
+                <i class="fi fi-rr-plus-small text-xs"></i>
+              </button>
+            </div>
           </div>
-          <div class="rounded-md text-yellow-600 bg-yellow-100 w-5 h-5 flex items-center justify-center"
-               @click="startUpdateFaculty(f)">
-            <i class="fi fi-rr-refresh" style="font-size: 12px;"></i>
+
+          <div v-if="activeCafedraFacultyId === f.id" class="mt-2 flex items-center gap-2">
+            <InputText v-model="cafedraName" placeholder="Название кафедры" class="w-full" size="small"/>
+            <Button size="small" @click="createCafedra(f.id)">Создать</Button>
           </div>
         </div>
       </div>
 
-      <div v-if="isUpdateMode" class="flex items-center gap-2 mt-2 w-full">
+      <div v-if="isUpdateMode" class="flex items-center gap-2 mt-4">
         <InputText v-model="facultyName" placeholder="Новое название факультета" class="w-full" size="small"/>
         <Button size="small" @click="updateFacultySubmit">Обновить</Button>
       </div>
-      <div class="w-full flex justify-end mt-3">
-        <Button size="small" @click="toggleCreate" class="flex w-full">Создать факультет</Button>
+
+      <div class="mt-5">
+        <Button size="small" @click="toggleCreate" class="w-full">Создать факультет</Button>
       </div>
+
       <div v-if="showInput" class="flex items-center gap-2 mt-2">
         <InputText v-model="facultyName" placeholder="Название факультета" class="w-full" size="small"/>
         <Button size="small" @click="createFaculty">Отправить</Button>
@@ -118,9 +198,28 @@ export default {
     </p>
     <p v-else-if="value === 2" v-html="sport">
     </p>
-    <p v-else-if="value === 3">
-      кафедра
-    </p>
+    <div v-else-if="value === 3">
+      <table class="w-full border border-slate-300 text-sm">
+        <thead class="bg-blue-100 text-blue-900 font-medium">
+        <tr>
+          <th class="p-2 border border-slate-300 text-left">Кафедра</th>
+          <th class="p-2 border border-slate-300 text-left">Факультет</th>
+          <th class="p-2 border border-slate-300 text-left">Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="d in departments" :key="d.id">
+          <td class="p-2 border border-slate-200">{{ d.name }}</td>
+          <td class="p-2 border border-slate-200">{{ facultyMap[d.faculty_id] || "—" }}</td>
+          <td class="p-2 border border-slate-200">
+            <button class="icon-btn bg-red-100 text-red-600" @click="deleteCaf(d.id)">
+              <i class="fi fi-rr-trash text-xs"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

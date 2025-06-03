@@ -42,7 +42,7 @@ export function updateUniversity(id, payload,) {
 }
 
 export function deleteUniversity(id) {
-  return userApi.delete(`/app2/api/v1/universities/${id}`).then(res => res.data);
+  return userApi.delete(`/app3/api/v1/universities/${id}`).then(res => res.data);
 }
 //faculty
 export function getFacultyList() {
@@ -83,8 +83,9 @@ export function updatedormitories(id, payload,) {
 }
 
 export function deletedormitories(id) {
-  return userApi.delete(`/app2/api/v1/dormitories/${id}`).then(res => res.data);
+  return userApi.delete(`/app3/api/v1/dormitories/${id}`).then(res => res.data);
 }
+
 //education-program-groups
 export function getEducation() {
   return userApi.get(`/app3/api/v1/education-program-groups`).then(res => res.data);
@@ -104,4 +105,25 @@ export function updateEducation(id, payload,) {
 
 export function deleteEducation(id) {
   return userApi.delete(`/app3/api/v1/education-program-groups/${id}`).then(res => res.data);
+}
+
+//departments
+
+export function getDepartmentsList() {
+  return userApi.get(`/app3/api/v1/departments`).then(res => res.data);
+}
+export function createDepartments(payload) {
+  return userApi.post(`/app3/api/v1/departments`, payload).then(res => res.data);
+}
+
+export function getDepartmentsById(id) {
+  return userApi.get(`/app3/api/v1/departments/${id}`).then(res => res.data);
+}
+
+export function updateDepartments(id, payload,) {
+  return userApi.put(`/app3/api/v1/departments/${id}`, payload).then(res => res.data);
+}
+
+export function deleteDepartments(id) {
+  return userApi.delete(`/app3/api/v1/departments/${id}`).then(res => res.data);
 }
