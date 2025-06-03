@@ -50,8 +50,9 @@
     <template #footer>
       <div class="flex justify-end gap-4">
         <button class="cancel" @click="close">Отменить</button>
+        <button v-if="props.isEdit" class="delete" @click="deleteuniversity">Удалить</button>
         <button v-if="props.isEdit" class="update" @click="update">Обновить</button>
-        <button class="create" @click="handleSubmit">Создать</button>
+        <button class="create" @click="handleSubmit" v-if="!props.isEdit">Создать</button>
       </div>
     </template>
   </Drawer>
@@ -59,10 +60,13 @@
 
 <script setup>
 import {ref, defineProps, defineEmits, watch} from 'vue';
-import {createUniversity, updateUniversity} from '@/services/universityService.js';
+import {createUniversity, updateUniversity, deleteUniversity} from '@/services/universityService.js';
 import InputText from 'primevue/inputtext';
 import Editor from 'primevue/editor';
 import Drawer from 'primevue/drawer';
+import {useRouter} from "vue-router";
+
+
 
 const props = defineProps({
   visible: Boolean,
@@ -105,6 +109,16 @@ const update = async () => {
     console.error('Ошибка при обновлении университета:', err);
   }
 };
+const deleteuniversity = async () => {
+  try {
+    await deleteUniversity((form.value.id));
+    const router = useRouter();
+    router.push({name: 'University'});
+  } catch
+      (err) {
+    console.log(err)
+  }
+};
 
 
 const handleSubmit = async () => {
@@ -134,5 +148,9 @@ const close = () => {
 
 .update {
   @apply px-4 py-2 bg-yellow-200 text-yellow-700 text-base font-medium rounded-md;
+}
+
+.delete {
+  @apply px-4 py-2 bg-red-200 text-red-700 text-base font-medium rounded-md;
 }
 </style>
