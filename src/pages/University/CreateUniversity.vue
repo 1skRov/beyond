@@ -4,7 +4,7 @@
       position="right"
       :modal="true"
       :dismissableMask="true"
-      header="Создать университет"
+      :header="props.isEdit ? 'Редактировать университет' : 'Создать университет'"
       :style="{ width: '40%' }"
   >
     <div class="p-3">
@@ -12,11 +12,11 @@
         <InputText v-model="form.name" size="small" placeholder="Название"/>
         <InputText v-model="form.email" size="small" placeholder="Почта"/>
         <InputText v-model="form.city" size="small" placeholder="Город"/>
-        <InputText v-model="form.photo" size="small" placeholder="Фото университета (URL)"/>
+        <InputText v-model="form.photo_url" size="small" placeholder="Фото университета (URL)"/>
         <InputText v-model="form.university_type" size="small"
                    placeholder="Тип университета (Государственная или Частная)"/>
-        <InputText v-model="form.website" size="small" placeholder="Ссылка на официальный сайт"/>
-        <InputText v-model="form.phone" size="small" placeholder="Телефонный номер"/>
+        <InputText v-model="form.website_url" size="small" placeholder="Ссылка на официальный сайт"/>
+        <InputText v-model="form.admission_phone" size="small" placeholder="Телефонный номер"/>
 
         <div class="flex flex-col gap-px">
           <span>Краткая информация (макс 200 символов)</span>
@@ -25,24 +25,24 @@
 
         <div class="flex flex-col gap-px">
           <span>Дополнительная информация (макс 500 символов)</span>
-          <Editor v-model="form.additional_info" editorStyle="height: 120px"/>
+          <Editor v-model="form.extra_info" editorStyle="height: 120px"/>
         </div>
 
         <div class="flex flex-col gap-px">
           <span>Международное сотрудничество, обмен и т.д.</span>
-          <Editor v-model="form.international_info" editorStyle="height: 120px"/>
+          <Editor v-model="form.international_partners" editorStyle="height: 120px"/>
         </div>
 
         <div class="flex flex-col gap-px">
           <span>Поддержка спорта</span>
-          <Editor v-model="form.sports_info" editorStyle="height: 120px"/>
+          <Editor v-model="form.sports" editorStyle="height: 120px"/>
         </div>
 
         <div class="flex flex-col gap-px">
           <span>Соцсети</span>
-          <InputText v-model="form.instagram" class="mt-1.5" size="small" placeholder="Инстаграм"/>
-          <InputText v-model="form.facebook" class="mt-1.5" size="small" placeholder="Фейсбук"/>
-          <InputText v-model="form.tiktok" class="mt-1.5" size="small" placeholder="ТикТок"/>
+          <InputText v-model="form.instagram_url" class="mt-1.5" size="small" placeholder="Инстаграм"/>
+          <InputText v-model="form.facebook_url" class="mt-1.5" size="small" placeholder="Фейсбук"/>
+          <InputText v-model="form.tiktok_url" class="mt-1.5" size="small" placeholder="ТикТок"/>
         </div>
       </div>
     </div>
@@ -50,6 +50,7 @@
     <template #footer>
       <div class="flex justify-end gap-4">
         <button class="cancel" @click="close">Отменить</button>
+        <button v-if="props.isEdit" class="update" @click="update">Обновить</button>
         <button class="create" @click="handleSubmit">Создать</button>
       </div>
     </template>
@@ -57,13 +58,17 @@
 </template>
 
 <script setup>
-import {ref, defineProps, defineEmits} from 'vue';
-import {createUniversity} from '@/services/universityService.js';
+import {ref, defineProps, defineEmits, watch} from 'vue';
+import {createUniversity, updateUniversity} from '@/services/universityService.js';
 import InputText from 'primevue/inputtext';
 import Editor from 'primevue/editor';
 import Drawer from 'primevue/drawer';
 
-const props = defineProps({visible: Boolean});
+const props = defineProps({
+  visible: Boolean,
+  isEdit: {type: Boolean, default: false},
+  initialData: {type: Object, default: () => ({})}
+});
 const emit = defineEmits(['update:visible', 'created']);
 
 const form = ref({
@@ -82,6 +87,25 @@ const form = ref({
   facebook_url: '',
   tiktok_url: ''
 });
+watch(
+    () => props.initialData,
+    (newData) => {
+      if (props.isEdit && newData?.id) {
+        form.value = {...newData};
+      }
+    },
+    {immediate: true}
+);
+const update = async () => {
+  try {
+    await updateUniversity(form.value.id, form.value);
+    emit('updated');
+    emit('update:visible', false);
+  } catch (err) {
+    console.error('Ошибка при обновлении университета:', err);
+  }
+};
+
 
 const handleSubmit = async () => {
   try {
@@ -106,5 +130,9 @@ const close = () => {
 
 .cancel {
   @apply px-4 py-2 bg-gray-200 text-slate-700 text-base font-medium rounded-md;
+}
+
+.update {
+  @apply px-4 py-2 bg-yellow-200 text-yellow-700 text-base font-medium rounded-md;
 }
 </style>

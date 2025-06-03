@@ -1,10 +1,11 @@
 <script>
 import OptionsInformation from "@/pages/University/OptionsInformation.vue";
 import {getUniversityById} from "@/services/universityService.js";
+import CreateUniversity from "@/pages/University/CreateUniversity.vue";
 
 export default {
   name: "UniversityPage",
-  components: {OptionsInformation},
+  components: {CreateUniversity, OptionsInformation},
   props: ['id'],
   data() {
     return {
@@ -192,6 +193,12 @@ export default {
       </div>
     </div>
   </div>
+  <CreateUniversity
+      v-model:visible="isEdit"
+      :initial-data="univers"
+      :is-edit="true"
+      @updated="getInformationById"
+  />
 </template>
 
 <style scoped lang="scss">
