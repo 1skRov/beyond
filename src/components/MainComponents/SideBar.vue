@@ -4,13 +4,23 @@ export default {
   data() {
     return {
       menu: [
-        { title: "Главная", icon: "fi fi-rr-store-alt", link: "/" },
-        { title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests/single-test" },
-        { title: "Материалы", icon: "fi fi-rr-folder", link: "/courses" },
-        { title: "Образовательные маршруты", icon: "fi fi-rr-code-merge", link: "/roadmap", match: ["/roadmap", "/road-item"] },
-        { title: "Университеты", icon: "fi fi-rr-graduation-cap", link: "/university", match: ["/university", "/university-item"] },
-        { title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/" },
-        { title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics" },
+        {title: "Главная", icon: "fi fi-rr-store-alt", link: "/"},
+        {title: "Тестирование", icon: "fi fi-ts-quiz-alt", link: "/tests/single-test"},
+        {title: "Материалы", icon: "fi fi-rr-folder", link: "/courses"},
+        {
+          title: "Образовательные маршруты",
+          icon: "fi fi-rr-code-merge",
+          link: "/roadmap",
+          match: ["/roadmap", "/road-item"]
+        },
+        {
+          title: "Университеты",
+          icon: "fi fi-rr-graduation-cap",
+          link: "/university",
+          match: ["/university", "/university-item/:id"]
+        },
+        {title: "Образовательные программы", icon: "fi fi-rs-book-bookmark", link: "/"},
+        {title: "Аналитика", icon: "fi fi-rr-chart-pie-alt", link: "/analytics"},
       ]
     }
   },
@@ -49,7 +59,7 @@ export default {
       <div class="sidebar-menu">
         <div class="" v-for="m in menu" :key="m.id">
           <router-link :to="m.link" class="block" active-class="router-link-active"
-            exact-active-class="router-link-exact-active">
+                       exact-active-class="router-link-exact-active">
             <div class="menu-item" :class="{
               'active-item': m.match ? m.match.includes($route.path) : $route.path === m.link
             }">
