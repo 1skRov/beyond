@@ -61,6 +61,13 @@ import DatePicker from 'primevue/datepicker';
 import Slider from 'primevue/slider';
 import Dialog from 'primevue/dialog';
 import Editor from 'primevue/editor';
+import Textarea from 'primevue/textarea';
+import FileUpload from 'primevue/fileupload';
+import RadioButtonGroup from 'primevue/radiobuttongroup';
+
+
+
+
 
 
 
@@ -186,6 +193,9 @@ app.component("DatePicker", DatePicker);
 app.component("Slider", Slider);
 app.component("Dialog", Dialog);
 app.component("Editor", Editor);
+app.component("Textarea", Textarea);
+app.component("FileUpload", FileUpload);
+app.component("RadioButtonGroup", RadioButtonGroup);
 
 
 app.use(router);
