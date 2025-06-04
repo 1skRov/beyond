@@ -53,8 +53,7 @@ export default {
 
 <template>
   <div class="flex justify-between w-full items-center mb-5">
-    <b class="text-lg text-gray-600">Математика. Основы тригонометрии</b>
-    <p class="text-sm text-gray-600 font-medium">Евгений Шевченко</p>
+    <b class="text-lg text-gray-600">Математика</b>
   </div>
   <div class="border flex flex-col justify-between p-2.5 rounded-lg" style="min-height: 87vh; height: 87vh">
     <div>

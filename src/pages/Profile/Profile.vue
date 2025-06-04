@@ -7,6 +7,7 @@ import { ref, onMounted } from "vue";
 import UserShowDrawer from "@/pages/Profile/UserShowDrawer.vue";
 import { getUserById } from "@/services/userService";
 import { getUserIdFromToken } from "@/utils/jwt";
+import Recommendation from "@/pages/Profile/Recommendation.vue";
 
 const programs = [
   'Программная инженерия',
@@ -147,14 +148,10 @@ function formatDate(dateStr) {
     </div>
     <div class="interests">
       <div class="w-full flex justify-between mb-5">
-        <p class="font-semibold text-lg">Интересующие специальности</p>
-        <button class="bg-blue-200 text-blue-900 font-medium px-3 rounded-md">Изменить список</button>
+        <p class="font-semibold text-lg">Рекоммендации</p>
       </div>
       <div class="list">
-        <div class="list-item" v-for="p in programs">
-          <i class="fi fi-sr-bookmark text-purple-500" style="font-size: 12px;"></i>
-          <p class="text-sm text-purple-600 m-0">{{ p }}</p>
-        </div>
+        <Recommendation></Recommendation>
       </div>
     </div>
     <div class="test-results">
