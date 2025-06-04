@@ -24,7 +24,7 @@
     "gojs": "^3.0.20",
     "highcharts": "^12.2.0",
     "jwt-decode": "^4.0.0",
-    "openai": "^4.93.0",
+    "openai": "^4.104.0",
     "pinia": "^3.0.2",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.5",

@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     updateAnswers(questionId, answers) {
-      this.selectedAnswers[questionId] = answers;
+      this.selectedAnswers[questionId] = Array.isArray(answers) ? answers : (answers ? [answers] : []);
     },
     startTimer() {
       this.timer = setInterval(() => {
@@ -39,13 +39,62 @@ export default {
       }, 1000);
     },
     finishTest() {
+      clearInterval(this.timer);
+      const results = {
+        totalQuestions: this.questions.length,
+        correctCount: 0,
+        incorrectCount: 0,
+        unansweredCount: 0,
+        wrongAnswersDetails: []
+      };
+
+      this.questions.forEach(question => {
+        const userAnswers = this.selectedAnswers[question.id] || [];
+        const correctAnswers = question.answers.filter(a => a.correct).map(a => a.text);
+
+        if (userAnswers.length === 0) {
+          results.unansweredCount++;
+          results.wrongAnswersDetails.push({
+            id: question.id,
+            questionText: question.text,
+            allOptions: question.answers,
+            userSelected: [],
+            correctOptions: correctAnswers,
+            questionType: question.type
+          });
+        } else {
+          let isCorrect = false;
+          if (question.type === 'single') {
+            isCorrect = userAnswers.length === 1 && correctAnswers.includes(userAnswers[0]);
+          } else {
+            isCorrect = userAnswers.length === correctAnswers.length &&
+              userAnswers.every(ua => correctAnswers.includes(ua)) &&
+              correctAnswers.every(ca => userAnswers.includes(ca));
+          }
+
+          if (isCorrect) {
+            results.correctCount++;
+          } else {
+            results.incorrectCount++;
+            results.wrongAnswersDetails.push({
+              id: question.id,
+              questionText: question.text,
+              allOptions: question.answers,
+              userSelected: userAnswers,
+              correctOptions: correctAnswers,
+              questionType: question.type
+            });
+          }
+        }
+      });
+      localStorage.setItem('testResults', JSON.stringify(results));
       this.$router.push({ name: 'Result' });
     },
     formatTime(seconds) {
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
       const s = seconds % 60;
-      return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
   }
 };
@@ -66,22 +115,21 @@ export default {
         <TabPanels>
           <TabPanel v-for="(question, index) in questions" :key="question.id" :value="index">
             <QuestionItem :question="question" :selectedAnswers="selectedAnswers[question.id] || []"
-                          @update:answers="updateAnswers(question.id, $event)"/>
+              @update:answers="updateAnswers(question.id, $event)" />
           </TabPanel>
         </TabPanels>
       </Tabs>
     </div>
     <div class="flex mt-1.5 gap-2 justify-center">
       <Button v-for="(question, index) in questions" :key="question.id" @click="value = index" rounded
-              :label="index + 1"
-              class="w-8 h-8 p-0" :outlined="value !== index"/>
+        :label="String(index + 1)" class="w-8 h-8 p-0" :outlined="value !== index" />
     </div>
   </div>
   <div class="flex justify-between items-center mt-5">
-    <p class="text-xs text-gray-500">После истечения времени тест автоматически завершится даже если вы не успели
+    <p class="text-xs text-gray-500">После истечения времени тест автоматически завершится, даже если вы не успели
       отметить все вопросы</p>
-    <p class="text-xs font-medium text-gray-700">оставшееся время <span
-        class="font-bold" style="letter-spacing: 1.5px; font-size: 15px;">{{ formatTime(timeLeft) }}</span></p>
-    <Button label="Завершить тест" severity="warn" variant="outlined" size="small" @click="finishTest"/>
+    <p class="text-xs font-medium text-gray-700">Оставшееся время: <span class="font-bold"
+        style="letter-spacing: 1.5px; font-size: 15px;">{{ formatTime(timeLeft) }}</span></p>
+    <Button label="Завершить тест" severity="warn" variant="outlined" size="small" @click="finishTest" />
   </div>
 </template>

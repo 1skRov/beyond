@@ -1,63 +1,109 @@
 <script>
+import Chart from 'primevue/chart';
+
 export default {
   name: "TestResult",
+  components: { Chart },
   data() {
     return {
       chartData: null,
       ans: null,
       chartOptions: {
         cutout: '60%'
-      }
+      },
+      totalQuestions: 0,
+      correctCount: 0,
+      incorrectCount: 0,
+      unansweredCount: 0,
+      testTime: 'Н/Д'
     };
   },
   mounted() {
-    this.chartData = this.setChartData();
-    this.chartOptions = this.setChartOptions();
-    this.server();
+    const storedResults = localStorage.getItem('testResults');
+    if (storedResults) {
+      const results = JSON.parse(storedResults);
+      this.totalQuestions = results.totalQuestions;
+      this.correctCount = results.correctCount;
+      this.incorrectCount = results.incorrectCount;
+      this.unansweredCount = results.unansweredCount;
+      this.testTime = results.timeLeft ? this.formatTime(results.totalTime - results.timeLeft) : '1 час';
+
+
+      this.chartData = this.setChartData(results.correctCount, results.incorrectCount, results.unansweredCount);
+      this.chartOptions = this.setChartOptions();
+
+      if (results.wrongAnswersDetails && results.wrongAnswersDetails.length > 0) {
+        this.fetchExplanations(results.wrongAnswersDetails);
+      } else {
+        this.ans = [];
+      }
+    } else {
+      this.ans = [];
+    }
   },
   methods: {
-    server(){
-      const wrongAnswers = [1, 2, 3, 4, 5];
-
+    fetchExplanations(wrongAnswersDetails){
       fetch('http://localhost:3000/explain', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wrongAnswers })
+        body: JSON.stringify({ detailedWrongAnswers: wrongAnswersDetails })
       })
-          .then(res => res.json())
-          .then(data => {
-            console.log('Ответ GPT:', data.result);
+        .then(res => res.json())
+        .then(data => {
+          console.log('Ответ GPT:', data.result);
+          try {
             this.ans = JSON.parse(data.result);
-          });
+          } catch (e) {
+            console.error("Ошибка парсинга ответа GPT:", e);
+            this.ans = [{ id: "Ошибка", explanation: "Не удалось обработать ответ от AI." }];
+          }
+        })
+        .catch(error => {
+            console.error("Ошибка при запросе объяснений:", error);
+            this.ans = [{ id: "Ошибка", explanation: "Ошибка при запросе объяснений к AI." }];
+        });
     },
-    setChartData() {
+    setChartData(correct, incorrect, unanswered) {
       const documentStyle = getComputedStyle(document.body);
-
       return {
-        labels: ['A', 'B', 'C'],
+        labels: ['Правильно', 'Неправильно', 'Без ответа'],
         datasets: [
           {
-            data: [540, 325, 702],
-            backgroundColor: [documentStyle.getPropertyValue('--p-cyan-500'), documentStyle.getPropertyValue('--p-orange-500'), documentStyle.getPropertyValue('--p-gray-500')],
-            hoverBackgroundColor: [documentStyle.getPropertyValue('--p-cyan-400'), documentStyle.getPropertyValue('--p-orange-400'), documentStyle.getPropertyValue('--p-gray-400')]
+            data: [correct, incorrect, unanswered],
+            backgroundColor: [
+              documentStyle.getPropertyValue('--p-green-500') || '#10B981',
+              documentStyle.getPropertyValue('--p-red-500') || '#EF4444',
+              documentStyle.getPropertyValue('--p-yellow-500') || '#F59E0B'
+            ],
+            hoverBackgroundColor: [
+              documentStyle.getPropertyValue('--p-green-400') || '#34D399',
+              documentStyle.getPropertyValue('--p-red-400') || '#F87171',
+              documentStyle.getPropertyValue('--p-yellow-400') || '#FBBF24'
+            ]
           }
         ]
       };
     },
     setChartOptions() {
       const documentStyle = getComputedStyle(document.documentElement);
-      const textColor = documentStyle.getPropertyValue('--p-text-color');
+      const textColor = documentStyle.getPropertyValue('--p-text-color') || '#4B5563';
 
       return {
         plugins: {
           legend: {
             labels: {
-              cutout: '60%',
               color: textColor
             }
           }
-        }
+        },
+        cutout: '60%'
       };
+    },
+    formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
   }
 }
@@ -70,33 +116,39 @@ export default {
     <div class="flex flex-col">
       <div class="item">
         <p class="title">Количество вопросов</p>
-        <p class="value">18</p>
+        <p class="value">{{ totalQuestions }}</p>
       </div>
       <div class="item">
         <p class="title">Правильно</p>
-        <p class="value">5</p>
+        <p class="value">{{ correctCount }}</p>
       </div>
       <div class="item">
         <p class="title">Неправильно</p>
-        <p class="value">10</p>
+        <p class="value">{{ incorrectCount }}</p>
       </div>
       <div class="item">
-        <p class="title">Вопросы которые не были отмечены</p>
-        <p class="value">3</p>
+        <p class="title">Вопросы, которые не были отмечены</p>
+        <p class="value">{{ unansweredCount }}</p>
       </div>
       <div class="item">
-        <p class="title">Время на тест</p>
-        <p class="value">1 час</p>
+        <p class="title">Затраченное время</p>
+        <p class="value">{{ testTime }}</p>
       </div>
     </div>
   </div>
-  <div class="w-full min-h-96 overflow-y-auto bg-indigo-50">
-    <p v-if="!ans">AI думает...</p>
+  <div class="w-full min-h-96 overflow-y-auto bg-indigo-50 p-4">
+    <p v-if="!ans" class="text-center text-gray-500">AI анализирует ваши ответы...</p>
+    <div v-else-if="ans.length === 0 && incorrectCount === 0 && unansweredCount === 0" class="text-center text-green-600 font-semibold">
+      🎉 Поздравляем! Все ответы верны! 🎉
+    </div>
+     <div v-else-if="ans.length === 0 && (incorrectCount > 0 || unansweredCount > 0)" class="text-center text-red-500 font-semibold">
+        Не удалось получить объяснения от AI.
+    </div>
     <div v-else>
-      <p>анализ неправильных ответов</p>
-      <div v-for="s in ans" class="mb-2.5 font-medium text-sm">
-        <p>{{s.id}} вопрос</p>
-        <p>{{s.explanation}}</p>
+      <h2 class="text-xl font-semibold mb-3 text-indigo-700">Анализ ответов:</h2>
+      <div v-for="s in ans" :key="s.id" class="mb-4 p-3 bg-white rounded-lg shadow">
+        <p class="font-bold text-indigo-600">Разбор вопроса (ID: {{s.id}})</p>
+        <div class="mt-1 text-gray-700" v-html="s.explanation"></div>
       </div>
     </div>
   </div>
@@ -106,12 +158,12 @@ export default {
 <style scoped>
 .item {
   @apply flex w-full justify-between text-sm py-3 items-center;
-  .title {
-    @apply text-gray-600;
-  }
-  .value {
-    @apply text-indigo-700 font-medium min-w-7 h-7 px-1.5 rounded-lg bg-indigo-100 flex text-center items-center justify-center;
-  }
+}
+.item .title { /* Исправлено для Tailwind JIT */
+  @apply text-gray-600;
+}
+.item .value { /* Исправлено для Tailwind JIT */
+  @apply text-indigo-700 font-medium min-w-7 h-7 px-1.5 rounded-lg bg-indigo-100 flex text-center items-center justify-center;
 }
 .item + .item {
   @apply border-0 border-solid border-t border-gray-200;
