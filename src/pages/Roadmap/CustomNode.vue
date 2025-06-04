@@ -2,26 +2,10 @@
   <div class="custom-node" :class="nodeClass">
     <div class="node-header">
       <div class="node-title">{{ data.title }}</div>
-      <!-- При клике вызываем addNode, передаём nodeId наверх -->
       <button @click.stop="addNode" class="add-node-btn">+</button>
-      <!-- При клике открываем Drawer -->
-      <button @click.stop="openDrawer" class="edit-node-btn">...</button>
+      <button @click.stop="openDrawer" class="edit-node-btn">…</button>
     </div>
-    <div v-if="data.tags && data.tags.length" class="node-tags">
-      <span
-          v-for="tag in data.tags"
-          :key="tag"
-          class="node-tag"
-          :class="{
-          'node-tag-start': tag === 'start',
-          'node-tag-recommendation': tag === 'персональная рекомендация',
-          'node-tag-alternative': tag === 'альтернатива',
-          'node-tag-optional': tag === 'не обязательно, но интересно'
-        }"
-      >
-        {{ tag === 'start' ? 'Старт' : tag }}
-      </span>
-    </div>
+    <div v-if="data.tag" class="node-tag">{{ data.tag }}</div>
   </div>
 </template>
 
@@ -41,24 +25,19 @@ const props = defineProps({
 
 const emit = defineEmits(['open-drawer', 'add-node']);
 
-// Открываем Drawer и передаём в него объект data
 const openDrawer = () => {
-  emit('open-drawer', props.data);
+  emit('open-drawer', props.nodeId);
 };
 
-// Добавляем новый узел, передаём наверх nodeId родителя
 const addNode = () => {
   emit('add-node', props.nodeId);
 };
 
-// Классы для рамки в зависимости от статуса
-const nodeClass = computed(() => {
-  return {
-    'status-not_started': props.data.status === 'not_started',
-    'status-in_progress': props.data.status === 'in_progress',
-    'status-completed': props.data.status === 'completed',
-  };
-});
+const nodeClass = computed(() => ({
+  'status-not_started': props.data.status === 'not_started',
+  'status-in_progress': props.data.status === 'in_progress',
+  'status-completed': props.data.status === 'completed'
+}));
 </script>
 
 <style scoped>
@@ -67,19 +46,18 @@ const nodeClass = computed(() => {
   border-radius: 8px;
   background: #fff;
   padding: 10px 15px;
-  min-width: 180px;
+  min-width: 160px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  text-align: center;
   position: relative;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s;
+  font-family: Arial, sans-serif;
 }
 
 .node-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .node-title {
@@ -89,9 +67,10 @@ const nodeClass = computed(() => {
   text-align: left;
 }
 
-.add-node-btn, .edit-node-btn {
+.add-node-btn,
+.edit-node-btn {
   background: #007bff;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 50%;
   width: 24px;
@@ -99,11 +78,10 @@ const nodeClass = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1.1em;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 4px;
   transition: background-color 0.2s;
-  flex-shrink: 0;
 }
 
 .edit-node-btn {
@@ -118,40 +96,13 @@ const nodeClass = computed(() => {
   background: #5a6268;
 }
 
-.node-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  justify-content: center;
-  margin-top: 5px;
-}
-
 .node-tag {
-  font-size: 0.7em;
-  padding: 3px 8px;
+  font-size: 0.75em;
+  padding: 2px 6px;
   border-radius: 4px;
-  background-color: #e0e0e0;
-  color: #555;
-}
-
-.node-tag-start {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.node-tag-recommendation {
-  background-color: #ffeeba;
-  color: #856404;
-}
-
-.node-tag-alternative {
-  background-color: #cce5ff;
-  color: #004085;
-}
-
-.node-tag-optional {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #e2e8f0;
+  color: #334155;
+  text-align: center;
 }
 
 .status-not_started {
