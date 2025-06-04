@@ -168,19 +168,6 @@ export default {
       <div class="options-1">
         <options-information :sport="univers?.sports" :Uid="univers?.id"></options-information>
       </div>
-      <div class="options-2">
-        <h1>Фотогалерея</h1>
-        <div>
-          <div class="card flex flex-wrap gap-2.5">
-            <img src="@/assets/images/Без%20имени.jpg" alt="" style="width: 150px; height: 150px">
-            <img src="@/assets/images/avwwfcawer.jpg" alt="" style="width: 150px; height: 150px">
-            <img src="@/assets/images/erhgasdcfefwcwf.jpg" alt="" style="width: 150px; height: 150px">
-            <img src="@/assets/images/sdfsdfsdfsdfsdfsdf.jpg" alt="" style="width: 150px; height: 150px">
-            <img src="@/assets/images/sdfsdfsf.jpg" alt="" style="width: 150px; height: 150px">
-            <img src="@/assets/images/wegwfaf.jpg" alt="" style="width: 150px; height: 150px">
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   <CreateUniversity

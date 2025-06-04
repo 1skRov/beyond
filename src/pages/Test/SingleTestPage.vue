@@ -9,6 +9,19 @@ import {
   deleteTopicById
 } from "@/services/testServices.js";
 
+import Drawer from 'primevue/drawer';
+import Dropdown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
+import RadioButton from 'primevue/radiobutton';
+import Button from 'primevue/button';
+import Checkbox from 'primevue/checkbox';
+import Dialog from 'primevue/dialog';
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import TabPanels from 'primevue/tabpanels';
+import TabPanel from 'primevue/tabpanel';
+
 
 export default {
   name: "SingleTestPage",
@@ -40,7 +53,7 @@ export default {
 
       value: 'С временем',
       selectedCity: null,
-      cities: [{ name: 'Сложный', code: 'NY' }, { name: 'Простой', code: 'RM' }, { name: 'Средний', code: 'LDN' }], // Не используется, но было
+      cities: [{ name: 'Сложный', code: 'NY' }, { name: 'Простой', code: 'RM' }, { name: 'Средний', code: 'LDN' }],
       options: ['С временем', 'Без времени'],
 
       subName: "",
@@ -57,8 +70,14 @@ export default {
         question: "",
         options: [{ text: "", id: 1 }, { text: "", id: 2 }],
         correctAnswerId: null,
+        difficulty: null,
         image: null, video: null, audio: null, file: null,
       },
+      testDifficultyOptions: [
+        { label: 'Легкий', value: 'easy' },
+        { label: 'Средний', value: 'medium' },
+        { label: 'Сложный', value: 'hard' }
+      ],
       createdTests: [],
       availableTopicsForSelectedSubject: [],
       testName: "",
@@ -173,6 +192,7 @@ export default {
         subject: null, topic: null, question: "",
         options: [{ text: "", id: Date.now() + 1 }, { text: "", id: Date.now() + 2 }],
         correctAnswerId: null,
+        difficulty: null,
         image: null, video: null, audio: null, file: null,
       };
       this.availableTopicsForSelectedSubject = [];
@@ -203,6 +223,9 @@ export default {
       if (!this.newTest.subject || !this.newTest.topic || !this.newTest.question.trim()) {
         alert("Выберите предмет, тему и введите вопрос."); return;
       }
+      if (!this.newTest.difficulty) {
+        alert("Выберите сложность теста."); return;
+      }
       if (this.newTest.options.some(opt => !opt.text.trim()) || this.newTest.options.length < 2) {
         alert("Все варианты ответов должны быть заполнены (минимум 2)."); return;
       }
@@ -224,6 +247,10 @@ export default {
       this.createdTests = this.createdTests.filter(test => test.id !== testId);
       this.saveTestsToLocalStorage();
     },
+    getDifficultyLabel(value) {
+      const option = this.testDifficultyOptions.find(opt => opt.value === value);
+      return option ? option.label : 'N/A';
+    }
   }
 }
 </script>
@@ -383,6 +410,7 @@ export default {
                     <th align="left">Вопрос</th>
                     <th align="left">Предмет</th>
                     <th align="left">Тема</th>
+                    <th align="left">Сложность</th>
                     <th align="left" class="w-24">Медиа</th>
                     <th align="left" class="w-20">Действия</th>
                   </tr>
@@ -392,6 +420,7 @@ export default {
                     <td class="max-w-xs truncate" :title="test.question">{{ test.question }}</td>
                     <td>{{ test.subject?.name || 'N/A' }}</td>
                     <td>{{ test.topic?.name || 'N/A' }}</td>
+                    <td>{{ getDifficultyLabel(test.difficulty) }}</td>
                     <td class="text-center">
                       <span v-if="test.image" class="pi pi-image mr-1 text-teal-500" title="Изображение"></span>
                       <span v-if="test.video" class="pi pi-video mr-1 text-purple-500" title="Видео"></span>
@@ -406,7 +435,7 @@ export default {
                     </td>
                   </tr>
                   <tr v-if="!createdTests.length">
-                    <td colspan="5" class="text-center py-3 text-gray-500">Вы еще не создали ни одного теста.</td>
+                    <td colspan="6" class="text-center py-3 text-gray-500">Вы еще не создали ни одного теста.</td>
                   </tr>
                 </tbody>
               </table>
@@ -431,6 +460,12 @@ export default {
             :disabled="!newTest.subject || !availableTopicsForSelectedSubject.length" />
           <small v-if="newTest.subject && !availableTopicsForSelectedSubject.length && subjects.length > 0"
             class="p-error mt-1 block">Для выбранного предмета нет тем. Сначала создайте тему в таблице выше.</small>
+        </div>
+
+        <div class="field mb-4">
+          <label for="testDifficulty" class="font-semibold block mb-2">Сложность теста *</label>
+          <Dropdown id="testDifficulty" v-model="newTest.difficulty" :options="testDifficultyOptions"
+            optionLabel="label" optionValue="value" placeholder="Выберите сложность" class="w-full" />
         </div>
 
         <div class="field mb-4">
@@ -545,7 +580,7 @@ export default {
 
         button {
           @apply px-3 py-1.5 rounded-md text-sm text-blue-50 bg-blue-900;
-          @apply flex items-center justify-end gap-3; // Изменено justify-end
+          @apply flex items-center justify-end gap-3;
 
           i {
             font-size: 14px;

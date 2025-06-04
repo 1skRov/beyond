@@ -1,8 +1,8 @@
 <script setup>
-import {ref, onMounted} from "vue";
-import {useRouter} from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import CreateUniversity from "@/pages/University/CreateUniversity.vue";
-import {getUniversityList} from "@/services/universityService.js";
+import { getUniversityList } from "@/services/universityService.js";
 
 const universities = ref([]);
 const selectedCity = ref();
@@ -28,11 +28,11 @@ function goToUniversity(u) {
 }
 
 const cities = ref([
-  {name: 'Астана', code: 'AST'},
-  {name: 'Алматы', code: 'ALM'},
-  {name: 'Актау', code: 'AKT'},
-  {name: 'Шымкент', code: 'SHM'},
-  {name: 'Караганда', code: 'KRG'}
+  { name: 'Астана', code: 'AST' },
+  { name: 'Алматы', code: 'ALM' },
+  { name: 'Актау', code: 'AKT' },
+  { name: 'Шымкент', code: 'SHM' },
+  { name: 'Караганда', code: 'KRG' }
 ]);
 
 const onCreated = () => {
@@ -41,7 +41,7 @@ const onCreated = () => {
 </script>
 <template>
   <div class="un">
-    <div class="filters">
+    <!-- <div class="filters">
       <div class="filter-item">
         <span>Название университета</span>
         <AutoComplete size="small" class="w-full md:w-56"/>
@@ -68,7 +68,7 @@ const onCreated = () => {
       <div class="flex items-center">
         <Button @click="showCreateUniversity = true" size="small">Добавить университет</Button>
       </div>
-    </div>
+    </div> -->
     <div class="list">
       <div class="university-item" v-for="u in universities" :key="u.name" @click="goToUniversity(u)">
         <div class="image">
@@ -79,7 +79,7 @@ const onCreated = () => {
           <p class="text-sm font-semibold leading-none text-slate-700">{{ u.name }}</p>
           <p class="text-xs text-blue-800 w-full font-medium flex items-center gap-2">
             <i class="fi fi-rr-marker" style="font-size: 12px;"></i>
-            {{ u.location || "город не указан"}}
+            {{ u.location || "город не указан" }}
           </p>
         </div>
       </div>
@@ -116,6 +116,7 @@ const onCreated = () => {
         img {
           @apply w-full h-full rounded-md;
         }
+
         i {
           font-size: 30px;
           @apply text-blue-900;
