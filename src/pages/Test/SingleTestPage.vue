@@ -9,20 +9,6 @@ import {
   deleteTopicById
 } from "@/services/testServices.js";
 
-// Импортируем нужные компоненты PrimeVue
-import Drawer from 'primevue/drawer';
-import Dropdown from 'primevue/dropdown';
-import InputText from 'primevue/inputtext';
-import Textarea from 'primevue/textarea';
-import RadioButton from 'primevue/radiobutton';
-import Button from 'primevue/button';
-import Checkbox from 'primevue/checkbox'; // Был в вашем исходном коде для TabPanel 0
-import Dialog from 'primevue/dialog';   // Был в вашем исходном коде для TabPanel 0
-import Tabs from 'primevue/tabs';
-import TabList from 'primevue/tablist';
-import TabPanels from 'primevue/tabpanels';
-import TabPanel from 'primevue/tabpanel';
-
 
 export default {
   name: "SingleTestPage",
@@ -34,8 +20,8 @@ export default {
     Textarea,
     RadioButton,
     Button,
-    Checkbox, // Для TabPanel 0
-    Dialog,   // Для TabPanel 0
+    Checkbox,
+    Dialog,
     Tabs,
     TabList,
     TabPanels,
@@ -43,7 +29,6 @@ export default {
   },
   data() {
     return {
-      // Данные для TabPanel 0 (как в вашем исходном коде)
       testItems: [
         { name: "Математика", time: "40", questionsCount: "25", difficulty: { title: "средняя", type: "warn" }, countUser: "485", rating: "1.2" },
         { name: "Физика", time: "50", questionsCount: "30", difficulty: { title: "высокая", type: "danger" }, countUser: "320", rating: "4.8" },
@@ -51,22 +36,19 @@ export default {
         { name: "География", time: "45", questionsCount: "28", difficulty: { title: "средняя", type: "warn" }, countUser: "410", rating: "4.0" },
         { name: "Информатика", time: "60", questionsCount: "35", difficulty: { title: "высокая", type: "danger" }, countUser: "540", rating: "4.7" }
       ],
-      visible: false, // для Dialog в TabPanel 0
+      visible: false,
 
-      // Общие данные состояния
-      value: 'С временем', // Не используется в текущей логике, но было в data
-      selectedCity: null,  // Не используется, но было в data
+      value: 'С временем',
+      selectedCity: null,
       cities: [{ name: 'Сложный', code: 'NY' }, { name: 'Простой', code: 'RM' }, { name: 'Средний', code: 'LDN' }], // Не используется, но было
-      options: ['С временем', 'Без времени'], // Не используется, но было
+      options: ['С временем', 'Без времени'],
 
-      // Данные для управления предметами и темами
       subName: "",
-      topicName: "", // Для инпута создания темы у конкретного предмета
+      topicName: "",
       subjects: [],
       allTopicsWithSubjectDetails: [],
-      topics: [], // Изначально было, возможно для каких-то других нужд
+      topics: [],
 
-      // Данные для создания и отображения тестов
       isTestDrawerVisible: false,
       newTest: {
         id: null,
@@ -79,7 +61,7 @@ export default {
       },
       createdTests: [],
       availableTopicsForSelectedSubject: [],
-      testName: "", // Было для инпута "Контент теста" в таблице предметов, сейчас не используется для создания тестов
+      testName: "",
     };
   },
   mounted() {
@@ -100,7 +82,7 @@ export default {
     }
   },
   methods: {
-    startTest() { // Для TabPanel 0
+    startTest() {
       const routeData = this.$router.resolve({ name: 'testItem' });
       window.open(routeData.href, '_blank');
     },
@@ -178,7 +160,6 @@ export default {
       }
     },
 
-    // Методы для создания тестов
     openTestDrawer() {
       this.resetNewTestForm();
       this.isTestDrawerVisible = true;
@@ -190,7 +171,7 @@ export default {
       this.newTest = {
         id: Date.now(),
         subject: null, topic: null, question: "",
-        options: [{ text: "", id: Date.now() + 1 }, { text: "", id: Date.now() + 2 }], // Уникальные ID для опций
+        options: [{ text: "", id: Date.now() + 1 }, { text: "", id: Date.now() + 2 }],
         correctAnswerId: null,
         image: null, video: null, audio: null, file: null,
       };
@@ -515,7 +496,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-// Стили для TabPanel 0 (как в вашем исходном коде)
 .test-list {
   width: 45%;
   @apply p-3 h-full overflow-y-auto bg-white rounded-md max-w-[450px];
@@ -588,7 +568,6 @@ export default {
   }
 }
 
-// Общие стили для таблиц, использованных в TabPanel 1
 .custom-table {
   border-collapse: collapse;
   width: 100%;
@@ -598,40 +577,38 @@ export default {
     border: 1px solid #e9ecef;
     padding: 0.75rem;
     text-align: left;
-    font-size: 0.9rem; // Немного уменьшил шрифт для компактности
+    font-size: 0.9rem;
   }
 
   th {
     background-color: #f8f9fa;
-    font-weight: 600; // Немного жирнее
+    font-weight: 600;
   }
 
   tbody tr:hover {
-    background-color: #f1f5f9; // Более мягкий hover цвет
+    background-color: #f1f5f9;
   }
 
   td.max-w-xs {
-    // Для усечения длинного текста вопроса
-    max-width: 20rem; // или другое значение по вкусу
+    max-width: 20rem;
   }
 }
 
-// Стили для инпутов загрузки файлов, чтобы они выглядели прилично
 input[type="file"].p-inputtext {
-  border: 1px solid #ced4da !important; // PrimeVue border color
-  border-radius: 6px !important; // PrimeVue border-radius
-  padding: 0 !important; // Убираем внутренний паддинг инпута, чтобы кнопка была с краю
+  border: 1px solid #ced4da !important;
+  border-radius: 6px !important;
+  padding: 0 !important;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
 input[type="file"].p-inputtext::file-selector-button {
-  height: 100%; // Занимает всю высоту инпута
+  height: 100%;
   margin-right: .75rem;
   border: none;
-  background: #6366f1; // primary color (indigo-500)
+  background: #6366f1;
   padding: .5rem .75rem;
-  border-radius: 5px 0 0 5px; // Скругление только слева
+  border-radius: 5px 0 0 5px;
   color: #fff;
   cursor: pointer;
   transition: background-color .2s;
@@ -639,10 +616,6 @@ input[type="file"].p-inputtext::file-selector-button {
 }
 
 input[type="file"].p-inputtext::file-selector-button:hover {
-  background: #4f46e5; // indigo-600
+  background: #4f46e5;
 }
-
-// Старые стили из вашего кода, если они еще нужны где-то, хотя .custom-table их перекрывает
-// th { @apply text-gray-400 font-medium pb-2 mx-2; }
-// td { @apply border border-gray-200 py-2.5 cursor-pointer text-gray-600; font-size: 15px; }
-// tr:hover { @apply bg-blue-50; }</style>
+</style>
