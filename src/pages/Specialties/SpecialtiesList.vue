@@ -1,5 +1,10 @@
 <script>
-import {createSpecialties, getSpecialtiesList, getEducation} from "@/services/specialtiesServices.js";
+import {
+  createSpecialties,
+  getSpecialtiesList,
+  getEducation,
+  getSpecialtiesById
+} from "@/services/specialtiesServices.js";
 
 export default {
   name: "SpecialtiesList",
@@ -10,12 +15,14 @@ export default {
     }
   },
   mounted() {
-    this.getS();
+    this.getEducation();
   },
   methods: {
-    async getS() {
-      this.specialties = await getSpecialtiesList();
+    async getEducation() {
       this.education = await getEducation();
+    },
+    async getS(id) {
+      return this.specialties = await getSpecialtiesById(id,);
     }
   }
 }
@@ -24,11 +31,9 @@ export default {
 <template>
   <div class="w-full p-3 bg-white rounded-md mb-3">Добавить</div>
   <div class="w-full p-3 bg-white rounded-md">
-    <pre>{{education}}</pre>
-    <DataTable :value="specialties" tableStyle="min-width: 50rem">
+    <DataTable :value="education" tableStyle="min-width: 50rem">
+      <Column field="code" header="Код"></Column>
       <Column field="name" header="Название"></Column>
-      <Column field="description" header="описание"></Column>
-      <Column field="min_score" header="проходной балл"></Column>
     </DataTable>
   </div>
 </template>

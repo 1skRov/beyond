@@ -66,7 +66,7 @@ const routes = [
             },
             { path: 'result', name: 'Result', component: Result },
             { path: 'roadmap', name: 'Roadmap', component: MainRoadMapPage, children: [] },
-            { path: 'road-item', name: 'RoadItem', component: RoadItem },
+            { path: 'roadmap/:id', name: 'RoadItem', component: RoadItem, props: true },
             { path: 'courses', name: 'Courses', component: MainCoursesPage },
             { path: 'specialties', name: 'SpecialtiesList', component: SpecialtiesList },
             { path: 'analytics', name: 'Analytics', component: Analytics },

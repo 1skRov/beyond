@@ -45,6 +45,18 @@ export function deleteSpecialties(id) {
     return userApi.delete(`/app3/api/v1/specialties/${id}`).then(res => res.data);
 }
 
+export function createSpecialtiesQ(id, payload) {
+    return userApi.post(`/app3/api/v1/specialties/${id}/subjects`, payload).then(res => res.data);
+}
+
+export function getSpecialtiesQById(id) {
+    return userApi.get(`/app3/api/v1/specialties/${id}/subjects`).then(res => res.data);
+}
+
+export function deleteSpecialtiesQ(id, subject_id) {
+    return userApi.delete(`/app3/api/v1/specialties/${id}/subjects/${subject_id}`).then(res => res.data);
+}
+
 
 //education-program-groups
 export function getEducation() {

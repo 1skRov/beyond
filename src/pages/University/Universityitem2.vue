@@ -156,16 +156,6 @@ export default {
               </div>
             </div>
           </div>
-          <div class="info-item">
-            <div class="item-icon bg-red-100">
-              <i class="fi fi-sr-globe text-red-900"></i>
-            </div>
-            <div>
-              <p class="title text-red-900">Достижения и рейтинги</p>
-              <div class="text">---
-              </div>
-            </div>
-          </div>
         </div>
         <div class="additional-info">
           <p class="text-sm text-gray-700 font-medium mb-3">Дополнительная информация</p>

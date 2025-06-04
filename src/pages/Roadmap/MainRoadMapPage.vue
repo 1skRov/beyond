@@ -1,68 +1,104 @@
 <script>
-import RoadFlow from "@/pages/Roadmap/Flo.vue";
 import RoadMapMainPage from "@/pages/Roadmap/RoadMapItem.vue";
+import {getRoadmap, deleteRoadmap, createRoadmap} from "@/services/roadmapServices.js";
+import {getUserIdFromToken} from "@/utils/jwt.js";
 
 export default {
   name: "MainRoadMapPage",
-  components: {RoadMapMainPage, RoadFlow},
+  components: {RoadMapMainPage},
+
   data() {
     return {
-      map:
-          [
-            {title: "Механика", value: 75},
-            {title: "Геометрия", value: 60},
-            {title: "Алгебра", value: 0},
-            {title: "Гидростатика", value: 40},
-            {title: "Химические реакции", value: 0},
-            {title: "Орфография", value: 70},
-            {title: "История Казахстана", value: 55},
-            {title: "Биосфера", value: 30},
-            {title: "Лексика", value: 100},
-            {title: "Электродинамика", value: 0},
-            {title: "Грамматика", value: 82},
-            {title: "Анатомия человека", value: 65},
-            {title: "Социальная философия", value: 25},
-            {title: "Экономика", value: 78},
-            {title: "Культура Казахстана", value: 90}
-
-          ]
-    }
+      roadMapTitle: "",
+      roadList: [],
+      user_id: ""
+    };
   },
+
+  async mounted() {
+    this.user_id = getUserIdFromToken();
+    await this.fetchAllRoadmaps();
+  },
+
   methods: {
-    go() {
-      this.$router.push({name: "RoadItem"});
+    async fetchAllRoadmaps() {
+      try {
+        this.roadList = await getRoadmap();
+      } catch (err) {
+        console.error("Ошибка при получении списка роадмапов:", err);
+      }
+    },
+
+    goToRoadmap(id) {
+      this.$router.push({name: "RoadItem", params: {id}});
+    },
+
+    async deleteRoadmapHandler(id) {
+      try {
+        await deleteRoadmap(id);
+        await this.fetchAllRoadmaps();
+      } catch (err) {
+        console.error("Ошибка при удалении роадмапа:", err.response || err);
+      }
+    },
+
+    async createRoadmap() {
+      if (!this.roadMapTitle.trim()) {
+        return alert("Введите название маршрута");
+      }
+      try {
+        const payload = {
+          title: this.roadMapTitle,
+          user_id: this.user_id
+        };
+        await createRoadmap(payload);
+        this.roadMapTitle = "";
+        await this.fetchAllRoadmaps();
+      } catch (err) {
+        console.error("Ошибка при создании роадмапа:", err.response || err);
+      }
     }
   }
-}
+};
 </script>
 
 <template>
-  <div class="w0full h-full">
-    <div class="p-3 bg-white rounded-md flex mb-3 w-full">
-      <div class="flex flex-col gap-0.5">
-        <span class="text-slate-700 text-xs">Поиск</span>
-        <AutoComplete size="small" class="w-full"/>
-      </div>
-      <div class="flex items-center justify-end w-full">
-        <button>создать маршрут</button>
-      </div>
+  <div class="w-full h-full p-3 bg-white">
+    <div class="mb-4 flex items-center gap-2">
+      <InputText
+          v-model="roadMapTitle"
+          placeholder="Название маршрута"
+          size="small"
+          class="w-64"
+      />
+      <Button size="small" @click="createRoadmap">
+        Добавить образовательный маршрут
+      </Button>
     </div>
-    <div class="w-full h-full p-3 bg-white rounded-md">
-      <div class="w-full flex flex-wrap items-start gap-3">
-        <road-map-main-page v-for="m in map" :key="m.id" :title="m.title" :value="m.value"
-                            @click="go"></road-map-main-page>
-      </div>
-    </div>
+
+    <table class="w-full border border-slate-300 text-sm">
+      <thead class="bg-blue-100 text-blue-900 font-medium">
+      <tr>
+        <th class="p-2 border border-slate-300 text-left">Название</th>
+        <th class="p-2 border border-slate-300 text-left">Автор</th>
+        <th class="p-2 border border-slate-300 text-left">Создан</th>
+        <th class="p-2 border border-slate-300 text-left">Рейтинг</th>
+        <th class="p-2 border border-slate-300 text-left">Пользователи</th>
+        <th class="p-2 border border-slate-300 text-left">Действие</th>
+      </tr>
+      </thead>
+      <tbody>
+      <road-map-main-page
+          v-for="r in roadList"
+          :key="r.id"
+          :road="r"
+          @click="goToRoadmap"
+          @delete="deleteRoadmapHandler"
+      />
+      </tbody>
+    </table>
   </div>
 </template>
 
 <style scoped>
-button {
-  @apply px-3 py-1.5 rounded-md text-sm text-blue-50 bg-blue-900 flex justify-end;
-  @apply flex items-center gap-3;
-
-  i {
-    font-size: 14px;
-  }
-}
 </style>

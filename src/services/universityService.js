@@ -66,8 +66,8 @@ export function deleteFaculty(id) {
 }
 
 //dormitories
-export function getdormitoriesListById(id) {
-  return userApi.get(`/app3/universities/${id}/dormitories`).then(res => res.data);
+export function getdormitoriesListById(id, payload) {
+  return userApi.get(`/app3/universities/${id}/dormitories`, payload).then(res => res.data);
 }
 
 export function createdormitories(payload) {

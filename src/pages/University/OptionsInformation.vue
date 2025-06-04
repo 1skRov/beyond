@@ -29,7 +29,7 @@ export default {
     this.getFaculty();
   },
   methods: {
-    async caf(){
+    async caf() {
       this.value = 3;
       await this.getDepartments();
     },

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {defineComponent, ref} from 'vue';
+import {defineComponent, ref, defineProps} from 'vue';
 import {
   VueFlow,
   MarkerType
@@ -247,6 +247,7 @@ export default defineComponent({
       {id: 'e4-19', source: '4', target: '19', markerEnd: MarkerType.ArrowClosed},
       {id: 'e19-20', source: '19', target: '20', markerEnd: MarkerType.ArrowClosed}
     ]);
+    const props = defineProps({ id: String })
 
 
     const drawerVisible = ref(false);
