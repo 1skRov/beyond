@@ -32,7 +32,7 @@ export default {
     };
 
     const goToRoadmap = (roadmap) => {
-      router.push({ name: "RoadmapView", params: { roadmapId: roadmap.id } });
+      router.push({ name: "RoadItem", params: { roadmapId: roadmap.id } });
     };
 
     // Функциональность создания и удаления статичных карт не нужна,
