@@ -1,125 +1,101 @@
 <script>
-import RoadMapMainPage from "@/pages/Roadmap/RoadMapItem.vue";
-import {getRoadmap, deleteRoadmap, createRoadmap, createNode} from "@/services/roadmapServices.js";
-import {getUserIdFromToken} from "@/utils/jwt.js";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { STATIC_ROADMAPS_LIST } from '@/config/staticRoadmaps'; // Путь к вашему файлу
+import Button from 'primevue/button';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Tag from 'primevue/tag'; // Для отображения тегов или статуса, если нужно
+
+// Это компонент для строки таблицы, если вы хотите его оставить
+// import RoadmapListItem from './RoadmapListItem.vue'; // Предполагаемое имя для вашей второй части кода
 
 export default {
-  name: "MainRoadMapPage",
-  components: {RoadMapMainPage},
+  name: "RoadmapListPage",
+  components: { Button, DataTable, Column, Tag /*, RoadmapListItem */ },
+  setup() {
+    const router = useRouter();
+    const roadList = ref([]);
+    const user_id = ref("static_user"); // Или получите реального, если нужно для чего-то
 
-  data() {
+    onMounted(() => {
+      fetchAllRoadmaps();
+    });
+
+    const fetchAllRoadmaps = () => {
+      // Загружаем статичные роадмапы
+      roadList.value = STATIC_ROADMAPS_LIST.map(road => ({
+        ...road,
+        // Можно добавить вычисляемые или форматированные поля здесь, если нужно
+        created_at_formatted: new Date(road.created_at).toLocaleDateString("ru-RU"),
+      }));
+    };
+
+    const goToRoadmap = (roadmap) => {
+      router.push({ name: "RoadmapView", params: { roadmapId: roadmap.id } });
+    };
+
+    // Функциональность создания и удаления статичных карт не нужна,
+    // но если хотите оставить возможность создавать ДИНАМИЧESКИЕ сверх этих,
+    // то нужно будет адаптировать ваш старый код и localStorage.
+    // Пока что удаляем, чтобы сфокусироваться на статике.
+
     return {
-      roadMapTitle: "",
-      roadList: [],
-      user_id: ""
+      roadList,
+      user_id,
+      goToRoadmap,
+      // Format date directly in template or use a computed property if complex
     };
   },
-
-  async mounted() {
-    this.user_id = getUserIdFromToken();
-    await this.fetchAllRoadmaps();
-  },
-
-  methods: {
-    async fetchAllRoadmaps() {
-      try {
-        this.roadList = await getRoadmap();
-      } catch (err) {
-        console.error("Ошибка при получении списка роадмапов:", err);
-      }
-    },
-
-    goToRoadmap(id) {
-      this.$router.push({name: "RoadItem", params: {id}});
-    },
-
-    async deleteRoadmapHandler(id) {
-      try {
-        await deleteRoadmap(id);
-        await this.fetchAllRoadmaps();
-      } catch (err) {
-        console.error("Ошибка при удалении роадмапа:", err.response || err);
-      }
-    },
-
-    async createRoadmap() {
-      if (!this.roadMapTitle.trim()) {
-        return alert("Введите название маршрута");
-      }
-      try {
-        const payload = {
-          title: this.roadMapTitle,
-          user_id: this.user_id
-        };
-        await createRoadmap(payload);
-        this.roadMapTitle = "";
-        await this.fetchAllRoadmaps();
-      } catch (err) {
-        console.error("Ошибка при создании роадмапа:", err.response || err);
-      }
-    },
-    generateNodeId() {
-      return crypto.randomUUID();
-    },
-    async createFirstNode() {
-      let id = "399fc6a0-051c-4f59-8ad7-df7e3725abdd";
-      const payload = {
-        description: "Краткий обзор того, как классическая физика потерпела крах на рубеже XIX–XX веков, и какие ключевые эксперименты подтолкнули к «рождению» квантовой теории.",
-        material_links: [],
-        node_id: this.generateNodeId(),
-        parent_id: "f45a49c8-fd27-4172-a449-5aa8d1fe87f1",
-        posX: "10",
-        posY: "10",
-        tag: "для изучения",
-        title: "История и базовые эксперименты",
-      }
-      let result = await createNode(id, payload);
-      console.log("res", result);
-    }
-  }
 };
 </script>
 
 <template>
-  0d0fe0ce-2af8-4797-a900-a2a2e6f464e5
-  <button @click="createFirstNode">send</button>
   <div class="w-full h-full p-3 bg-white">
-    <div class="mb-4 flex items-center gap-2">
-      <InputText
-          v-model="roadMapTitle"
-          placeholder="Название маршрута"
-          size="small"
-          class="w-64"
-      />
-      <Button size="small" @click="createRoadmap">
-        Добавить образовательный маршрут
-      </Button>
+    <div class="mb-4">
+      <h1 class="text-2xl font-semibold">Образовательные маршруты</h1>
     </div>
 
-    <table class="w-full border border-slate-300 text-sm">
-      <thead class="bg-blue-100 text-blue-900 font-medium">
-      <tr>
-        <th class="p-2 border border-slate-300 text-left">Название</th>
-        <th class="p-2 border border-slate-300 text-left">Автор</th>
-        <th class="p-2 border border-slate-300 text-left">Создан</th>
-        <th class="p-2 border border-slate-300 text-left">Рейтинг</th>
-        <th class="p-2 border border-slate-300 text-left">Пользователи</th>
-        <th class="p-2 border border-slate-300 text-left">Действие</th>
-      </tr>
-      </thead>
-      <tbody>
-      {{ roadList }}
-      <road-map-main-page
-          v-for="r in roadList"
-          :key="r.id"
-          :road="r"
-          @click="goToRoadmap"
-          @delete="deleteRoadmapHandler"
-      />
-      </tbody>
-    </table>
+    <DataTable :value="roadList" responsiveLayout="scroll" class="p-datatable-sm">
+      <Column field="title" header="Название" :sortable="true">
+        <template #body="slotProps">
+          <span class="font-semibold">{{ slotProps.data.title }}</span>
+        </template>
+      </Column>
+      <Column field="author" header="Автор" :sortable="true"></Column>
+      <Column field="created_at_formatted" header="Создан" :sortable="true"></Column>
+      <Column field="votes_sum" header="Рейтинг" :sortable="true">
+        <template #body="slotProps">
+          <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
+          {{ slotProps.data.votes_sum }}
+        </template>
+      </Column>
+      <Column field="participants_count" header="Пользователи" :sortable="true">
+        <template #body="slotProps">
+          <i class="pi pi-users mr-1"></i>
+          {{ slotProps.data.participants_count }}
+        </template>
+      </Column>
+      <Column header="Действие">
+        <template #body="slotProps">
+          <Button
+              label="Перейти"
+              icon="pi pi-arrow-right"
+              class="p-button-sm p-button-raised p-button-info"
+              @click="goToRoadmap(slotProps.data)"
+          />
+        </template>
+      </Column>
+    </DataTable>
   </div>
 </template>
 
 <style scoped>
+/* Добавьте стили, если необходимо */
+.p-datatable-sm .p-column-header-content {
+  font-size: 0.9rem;
+}
+.p-datatable-sm .p-datatable-tbody > tr > td {
+  padding: 0.6rem 0.8rem;
+}
 </style>

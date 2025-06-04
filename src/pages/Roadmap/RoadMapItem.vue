@@ -55,17 +55,12 @@ export default {
 <template>
   <tr>
     <td class="p-2 border border-slate-200">{{ road.title }}</td>
-
     <td class="p-2 border border-slate-200">
       {{ authorName || "Загрузка..." }}
     </td>
-
     <td class="p-2 border border-slate-200">{{ createDate }}</td>
-
     <td class="p-2 border border-slate-200">{{ rating }}</td>
-
     <td class="p-2 border border-slate-200">{{ countUsers }}</td>
-
     <td class="p-2 border border-slate-200">
       <div class="flex gap-3">
         <button
