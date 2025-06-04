@@ -1,86 +1,168 @@
 <template>
-  <div class="custom-node" :class="[statusClass]" @click="openDrawer">
-    <h3>{{ data.title }}</h3>
-    <div class="tags">
-      <span v-for="tag in data.tags" :key="tag" :class="['tag', tagClass(tag)]">
+  <div class="custom-node" :class="nodeClass">
+    <div class="node-header">
+      <div class="node-title">{{ data.title }}</div>
+      <!-- При клике вызываем addNode, передаём nodeId наверх -->
+      <button @click.stop="addNode" class="add-node-btn">+</button>
+      <!-- При клике открываем Drawer -->
+      <button @click.stop="openDrawer" class="edit-node-btn">...</button>
+    </div>
+    <div v-if="data.tags && data.tags.length" class="node-tags">
+      <span
+          v-for="tag in data.tags"
+          :key="tag"
+          class="node-tag"
+          :class="{
+          'node-tag-start': tag === 'start',
+          'node-tag-recommendation': tag === 'персональная рекомендация',
+          'node-tag-alternative': tag === 'альтернатива',
+          'node-tag-optional': tag === 'не обязательно, но интересно'
+        }"
+      >
         {{ tag === 'start' ? 'Старт' : tag }}
       </span>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CustomNode',
-  props: ['data'],
-  emits: ['open-drawer'],
-  computed: {
-    statusClass() {
-      switch (this.data.status) {
-        case 'in_progress':
-          return 'in-progress';
-        case 'completed':
-          return 'completed';
-        default:
-          return 'not-started';
-      }
-    }
+<script setup>
+import { defineProps, defineEmits, computed } from 'vue';
+
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true
   },
-  methods: {
-    openDrawer() {
-      this.$emit('open-drawer', this.data);
-    },
-    tagClass(tag) {
-      const lower = tag.toLowerCase();
-      if (lower === 'персональная рекомендация') return 'tag-indigo';
-      if (lower === 'не обязательно, но интересно') return 'tag-gray';
-      if (lower === 'альтернатива') return 'tag-yellow';
-      if (lower === 'start') return 'tag-start';
-      return '';
-    }
+  nodeId: {
+    type: String,
+    required: true
   }
+});
+
+const emit = defineEmits(['open-drawer', 'add-node']);
+
+// Открываем Drawer и передаём в него объект data
+const openDrawer = () => {
+  emit('open-drawer', props.data);
 };
+
+// Добавляем новый узел, передаём наверх nodeId родителя
+const addNode = () => {
+  emit('add-node', props.nodeId);
+};
+
+// Классы для рамки в зависимости от статуса
+const nodeClass = computed(() => {
+  return {
+    'status-not_started': props.data.status === 'not_started',
+    'status-in_progress': props.data.status === 'in_progress',
+    'status-completed': props.data.status === 'completed',
+  };
+});
 </script>
 
 <style scoped>
 .custom-node {
-  @apply rounded-md px-3 py-2 cursor-pointer;
-  transition: 0.3s ease;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px 15px;
+  min-width: 180px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  position: relative;
+  transition: border-color 0.3s ease;
 }
 
-.not-started {
-  @apply bg-blue-100 text-blue-900 font-medium;
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
-.in-progress {
-  @apply bg-orange-500 text-slate-800 font-medium;
+.node-title {
+  font-weight: bold;
+  color: #333;
+  flex-grow: 1;
+  text-align: left;
 }
 
-.completed {
-  @apply bg-slate-300;
+.add-node-btn, .edit-node-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
 }
 
-.tags {
-  margin-top: 0.5rem;
+.edit-node-btn {
+  background: #6c757d;
 }
 
-.tag {
-  @apply rounded-md mt-2 mr-2 text-xs;
+.add-node-btn:hover {
+  background: #0056b3;
 }
 
-.tag-indigo {
-  @apply bg-indigo-200 text-indigo-600 px-1.5;
+.edit-node-btn:hover {
+  background: #5a6268;
 }
 
-.tag-gray {
-  @apply bg-gray-200 text-gray-600 px-1.5;
+.node-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 5px;
 }
 
-.tag-yellow {
-  @apply bg-yellow-100 text-yellow-600 px-1.5;
+.node-tag {
+  font-size: 0.7em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  color: #555;
 }
 
-.tag-start {
-  @apply bg-green-100 text-green-600 px-1.5;
+.node-tag-start {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.node-tag-recommendation {
+  background-color: #ffeeba;
+  color: #856404;
+}
+
+.node-tag-alternative {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.node-tag-optional {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-not_started {
+  border-color: #dc3545;
+}
+
+.status-in_progress {
+  border-color: #ffc107;
+}
+
+.status-completed {
+  border-color: #28a745;
 }
 </style>

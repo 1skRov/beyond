@@ -1,6 +1,6 @@
 <script>
 import RoadMapMainPage from "@/pages/Roadmap/RoadMapItem.vue";
-import {getRoadmap, deleteRoadmap, createRoadmap} from "@/services/roadmapServices.js";
+import {getRoadmap, deleteRoadmap, createRoadmap, createNode} from "@/services/roadmapServices.js";
 import {getUserIdFromToken} from "@/utils/jwt.js";
 
 export default {
@@ -57,12 +57,32 @@ export default {
       } catch (err) {
         console.error("Ошибка при создании роадмапа:", err.response || err);
       }
+    },
+    generateNodeId() {
+      return crypto.randomUUID();
+    },
+    async createFirstNode() {
+      let id = "399fc6a0-051c-4f59-8ad7-df7e3725abdd";
+      const payload = {
+        description: "Краткий обзор того, как классическая физика потерпела крах на рубеже XIX–XX веков, и какие ключевые эксперименты подтолкнули к «рождению» квантовой теории.",
+        material_links: [],
+        node_id: this.generateNodeId(),
+        parent_id: "f45a49c8-fd27-4172-a449-5aa8d1fe87f1",
+        posX: "10",
+        posY: "10",
+        tag: "для изучения",
+        title: "История и базовые эксперименты",
+      }
+      let result = await createNode(id, payload);
+      console.log("res", result);
     }
   }
 };
 </script>
 
 <template>
+  0d0fe0ce-2af8-4797-a900-a2a2e6f464e5
+  <button @click="createFirstNode">send</button>
   <div class="w-full h-full p-3 bg-white">
     <div class="mb-4 flex items-center gap-2">
       <InputText
@@ -88,6 +108,7 @@ export default {
       </tr>
       </thead>
       <tbody>
+      {{ roadList }}
       <road-map-main-page
           v-for="r in roadList"
           :key="r.id"

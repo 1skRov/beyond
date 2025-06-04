@@ -48,3 +48,11 @@ export function updateRoadmap(id, payload,) {
 export function deleteRoadmap(id) {
     return userApi.delete(`/app5/api/v1/roadmaps/${id}`).then(res => res.data);
 }
+
+export function getNode(id) {
+    return userApi.get(`/app5/api/v1/nodes/tree/${id}`).then(res => res.data);
+}
+
+export function createNode(id, payload) {
+    return userApi.post(`/app5/api/v1/nodes/${id}`, payload).then(res => res.data);
+}
